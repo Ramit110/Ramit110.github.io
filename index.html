@@ -45,7 +45,7 @@
 
 <div class="slidecontainer">
   <p>Enter Phone number:</p>
-  <input type="range" min="00000000000" max="99999999999" value="50" class="slider" id="myRange">
+  <input type="range" min="00000000000" max="99999999999" value="0" class="slider" id="myRange">
   <p>Value: <span id="demo"></span></p>
   
 </div>
@@ -53,12 +53,21 @@
 <script>
     var slider = document.getElementById("myRange");
     var output = document.getElementById("demo");
-    output.innerHTML = slider.value;
-    
+
+    output.innerHTML = addZeros(slider.value + "");
+
     slider.oninput = function() {
-      output.innerHTML = this.value;
+      output.innerHTML = addZeros(this.value + "");
+    }
+
+    function addZeros(tbr)
+    {
+        while(tbr.length < 11)
+        {
+            tbr = "0" + tbr;
+        }
+        return tbr;
     }
 </script>
 </body>
 </html>
-
