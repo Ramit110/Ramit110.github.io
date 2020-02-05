@@ -1,75 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-.slidecontainer {
-  width: 100%;
-}
-
-.slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 25px;
-  background: #d3d3d3;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
-
-.slider:hover {
-  opacity: 1;
-}
-
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  background: #4CAF50;
-  cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  background: #4CAF50;
-  cursor: pointer;
-}
-</style>
-</head>
-<body>
-
-<h1>Custom Range Slider</h1>
-
-<div class="slidecontainer">
-  <p>Enter Phone number:</p>
-  <input type="range" min="00000000000" max="99999999999" value="0" class="slider" id="myRange">
-  <p>Value: <span id="demo"></span></p>
-  
-</div>
-
-<script>
-    var slider = document.getElementById("myRange");
-    var output = document.getElementById("demo");
-
-    output.innerHTML = addZeros(slider.value + "");
-
-    slider.oninput = function() {
-      output.innerHTML = addZeros(this.value + "");
-    }
-
-    function addZeros(tbr)
-    {
-        while(tbr.length < 11)
-        {
-            tbr = "0" + tbr;
-        }
-        return tbr;
-    }
-</script>
-  
-  <p>Now, this allows input of any phone number that is 11 digits in length.</p>
-</body>
+    <head>
+        <link rel="stylesheet" href="css/main.css">
+        <script src="js/reprocessing.js"></script>
+        <title>Ore Value Calculator</title>
+    </head>
+    <body>
+        <div class="outlined">
+            Reprocessing Percentage: <input type="text" id="ReprocessingPercentage" value="50">
+            <br/>
+            <input type="submit" value="send" onclick="calcOres()">
+        </div>
+        <div>
+            <table id="OreTable" class="centered">
+            </table>
+        </div>
+    </body>
 </html>
