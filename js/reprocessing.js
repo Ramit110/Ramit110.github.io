@@ -39,11 +39,7 @@ function loadReprocessing(value)
         toBeAssigned += "<th>" + "TODO" + "</th>";
 
         for(data in this.OreMap[ores])
-        {
-            let test = Math.floor(this.OreMap[ores][data]*value/100);
-            if(!test) test = this.OreMap[ores][data];
-            toBeAssigned += "<th>" + test + "</th>";
-        }
+            toBeAssigned += "<th>" + Math.floor(this.OreMap[ores][data]*value/100) + "</th>";
 
         // add ore value
         toBeAssigned += "<th>" + "TODO" + "</th>";
