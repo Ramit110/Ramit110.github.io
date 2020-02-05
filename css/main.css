@@ -1,0 +1,26 @@
+body {
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+div {
+    margin: 20px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th {
+    border: 1px solid white;
+}
+
+.centered {
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+.outlined {
+    border: 1px solid white;
+}
