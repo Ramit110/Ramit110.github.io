@@ -60,20 +60,22 @@ function loadReprocessing(value)
 {
     let toBeAssigned = "<tr><th>Name</th>";
     for(mins in this.minerals) toBeAssigned+= "<th>" + this.minerals[mins] + "</th>";
-    toBeAssigned+="<th>Ore Buy</th><th>Ore Sell</th><th>Mineral Sell</th></tr>";
+    toBeAssigned+="<th>Ore Buy</th><th>Ore Sell</th><th>Mineral Buy</th><th>Mineral Sell</th></tr>";
     
     for(ore in this.ores)
     {
         toBeAssigned += "<tr>";
         toBeAssigned += "<th>" + ore + "</th>";
-        var mineralValue = 0;
+        var mineralValueSell = 0;
+        var mineralValueBuy = 0;
 
         for(mins in this.minerals)
         {
             var temp =  this.ores[ore][this.minerals[mins]];
             if(temp == undefined) temp = 0;
             toBeAssigned += "<th>" + Math.floor(temp*value/100) + "</th>";
-            mineralValue+=Math.floor(temp*value/100)*buySell[minerals[mins]]['sell'];
+            mineralValueSell+=Math.floor(temp*value/100)*buySell[minerals[mins]]['sell'];
+            mineralValueBuy+=Math.floor(temp*value/100)*buySell[minerals[mins]]['buy'];
         }
 
         // while(JSON.stringify(buySell) == "{}") {}
@@ -82,8 +84,10 @@ function loadReprocessing(value)
         toBeAssigned += "<th>" + buySell[ore]['buy'] + "</th>";
         // add ore sell
         toBeAssigned += "<th>" + buySell[ore]['sell'] + "</th>";
+        // add mineral buy
+        toBeAssigned += "<th>" + mineralValueBuy + "</th>";
         // add mineral sell
-        toBeAssigned += "<th>" + mineralValue + "</th>";
+        toBeAssigned += "<th>" + mineralValueSell + "</th>";
 
         toBeAssigned += "</tr>";
     }
