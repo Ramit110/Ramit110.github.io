@@ -81,13 +81,13 @@ function loadReprocessing(value)
         // while(JSON.stringify(buySell) == "{}") {}
 
         // add ore buy
-        toBeAssigned += "<th>" + buySell[ore]['buy'] + "</th>";
+        toBeAssigned += "<th>" + buySell[ore]['buy'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); + "</th>";
         // add ore sell
-        toBeAssigned += "<th>" + buySell[ore]['sell'] + "</th>";
+        toBeAssigned += "<th>" + buySell[ore]['sell'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); + "</th>";
         // add mineral buy
-        toBeAssigned += "<th>" + mineralValueBuy + "</th>";
+        toBeAssigned += "<th>" + mineralValueBuy.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); + "</th>";
         // add mineral sell
-        toBeAssigned += "<th>" + mineralValueSell + "</th>";
+        toBeAssigned += "<th>" + mineralValueSell.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); + "</th>";
 
         toBeAssigned += "</tr>";
     }
