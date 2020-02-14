@@ -29,31 +29,34 @@ getEVEPraisal = async (params) => {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 }
             });
-        var data = await fetchResponse.json();
+        let data = await fetchResponse.json();
         data = data['appraisal']['items'];
 
-        var tbr = {};
+        let tbr = {};
         for(items in data) tbr[data[items]['name']] = {
             'buy': data[items]['prices']['buy']['max'],
             'sell': data[items]['prices']['sell']['min']
         };
-        buySell = tbr;
-        this.calcOres();
+        return tbr;
     } catch (e) { return e };
 }
 
 window.onload = async function()
 {
-    var params = "";
+    let params = "";
     for(mins in this.minerals) params += this.minerals[mins] + "%0A";
     for(ore in this.ores) params += ore + "%0A";
 
-    await this.getEVEPraisal(params);
+    buySell = await this.getEVEPraisal(params);
+    this.calcOres();
+    this.loadMEC();
 }
 
 function calcOres()
 {
-    this.loadReprocessing(this.document.getElementById("ReprocessingPercentage").value);
+    let temp = this.document.getElementById("ReprocessingPercentage").value * 1;
+    if(isNaN(temp)) temp = 50;
+    this.loadReprocessing(temp);
 }
 
 function loadReprocessing(value)
@@ -66,14 +69,14 @@ function loadReprocessing(value)
     {
         toBeAssigned += "<tr>";
         toBeAssigned += "<th>" + ore + "</th>";
-        var mineralValueSell = 0;
-        var mineralValueBuy = 0;
+        let mineralValueSell = 0;
+        let mineralValueBuy = 0;
 
         for(mins in this.minerals)
         {
-            var temp =  this.ores[ore][this.minerals[mins]];
+            let temp =  this.ores[ore][this.minerals[mins]];
             if(temp == undefined) temp = 0;
-            toBeAssigned += "<th>" + Math.floor(temp*value/100) + "</th>";
+            toBeAssigned += "<th>" + Math.floor(temp*value/100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</th>";
             mineralValueSell+=Math.floor(temp*value/100)*buySell[minerals[mins]]['sell'];
             mineralValueBuy+=Math.floor(temp*value/100)*buySell[minerals[mins]]['buy'];
         }
@@ -81,15 +84,68 @@ function loadReprocessing(value)
         // while(JSON.stringify(buySell) == "{}") {}
 
         // add ore buy
-        toBeAssigned += "<th>" + buySell[ore]['buy'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); + "</th>";
+        toBeAssigned += "<th>" + Math.ceil(buySell[ore]['buy']).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</th>";
         // add ore sell
-        toBeAssigned += "<th>" + buySell[ore]['sell'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); + "</th>";
+        toBeAssigned += "<th>" + Math.ceil(buySell[ore]['sell']).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</th>";
         // add mineral buy
-        toBeAssigned += "<th>" + mineralValueBuy.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); + "</th>";
+        toBeAssigned += "<th>" + Math.ceil(mineralValueBuy).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</th>";
         // add mineral sell
-        toBeAssigned += "<th>" + mineralValueSell.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); + "</th>";
+        toBeAssigned += "<th>" + Math.ceil(mineralValueSell).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</th>";
 
         toBeAssigned += "</tr>";
     }
     this.document.getElementById("OreTable").innerHTML = toBeAssigned;
+}
+
+function loadMEC()
+{
+    let textLoc = ""
+    for(mins in this.minerals)
+        textLoc +=
+            this.minerals[mins] +
+            ` needed: <input type="text" id="` +
+            this.minerals[mins] +
+            `MEC"><br/>`;
+    this.document.getElementById("MostEfficientCompressed").innerHTML = textLoc + this.document.getElementById("MostEfficientCompressed").innerHTML
+}
+
+function calcMinimum()
+{
+    let arrStore = { };
+    let currStore = { };
+    let numOut = { };
+    for(mins in this.minerals)
+    {
+        let temp = this.document.getElementById(this.minerals[mins] + "MEC").value * 1;
+        if(isNaN(temp)) temp = 0;
+        arrStore[this.minerals[mins]] = temp;
+        currStore[this.minerals[mins]] = 0;
+    }
+
+    // inoptimal jank solution
+    for(let i = this.minerals.length-1; i >= 0; i--)
+    {
+        let lowest = undefined;
+        let highestMin = undefined;
+        for(ore in this.ores)
+        {
+            if(lowest == undefined || highestMin == undefined || this.ores[ore][this.minerals[i]] > highestMin)
+            {
+                lowest = ore;
+                highestMin = this.ores[ore][this.minerals[i]];
+            }
+            if(numOut[ore] == undefined) numOut[ore] = 0;
+        }
+        let number = Math.ceil((arrStore[this.minerals[i]]-currStore[this.minerals[i]]) / this.ores[lowest][this.minerals[i]]);
+        if(number < 0) number = 0;
+        for(mins in this.ores[lowest]) currStore[mins] += this.ores[lowest][mins] * number;
+        numOut[lowest] += number;
+    }
+
+    let strOut = "";
+    for(outs in numOut)
+    {
+        if(numOut[outs] > 0) strOut += outs + " " + numOut[outs] + "<br/>";
+    }
+    this.document.getElementById("MECOut").innerHTML = strOut;
 }

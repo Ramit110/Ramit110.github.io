@@ -12,13 +12,18 @@
         <div id="Reprocessing" class="outlined">
             Reprocessing Percentage: <input type="text" id="ReprocessingPercentage" value="50">
             <br/>
-            <input type="submit" value="send" onclick="calcOres()">
-        </div>
-        <div id="ReprocessingTable">
-            <table id="OreTable" class="centered">
-            </table>
+            <input type="submit" value="recalculate" onclick="calcOres()">
+            <div id="ReprocessingTable">
+                <table id="OreTable" class="centered">
+                </table>
+            </div>
         </div>
         <div id="MostEfficientCompressed" class="outlined">
+            <br/>
+            Reprocessing Percentage: <input type="text" id="ReprocessingPercentage" value="50">
+            <br/>
+            <input type="submit" value="Get minimum compressed ore needed" onclick="calcMinimum()">
+            <div id="MECOut"></div>
         </div>
     </body>
 </html>
