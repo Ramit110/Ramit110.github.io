@@ -122,6 +122,9 @@ function calcMinimum()
         currStore[this.minerals[mins]] = 0;
     }
 
+    let repro = this.document.getElementById("ReprocessingPercentage").value/100;
+    if(isNaN(temp)) repro = 0.5;
+
     // inoptimal jank solution
     for(let i = this.minerals.length-1; i >= 0; i--)
     {
@@ -136,7 +139,7 @@ function calcMinimum()
             }
             if(numOut[ore] == undefined) numOut[ore] = 0;
         }
-        let number = Math.ceil((arrStore[this.minerals[i]]-currStore[this.minerals[i]]) / this.ores[lowest][this.minerals[i]]);
+        let number = Math.ceil((arrStore[this.minerals[i]]-currStore[this.minerals[i]]) / Math.floor(repro * this.ores[lowest][this.minerals[i]]));
         if(number < 0) number = 0;
         for(mins in this.ores[lowest]) currStore[mins] += this.ores[lowest][mins] * number;
         numOut[lowest] += number;
@@ -145,7 +148,7 @@ function calcMinimum()
     let strOut = "";
     for(outs in numOut)
     {
-        if(numOut[outs] > 0) strOut += outs + " " + numOut[outs] + "<br/>";
+        if(numOut[outs] > 0) strOut += outs + " " + Math.floor(repro*numOut[outs]) + "<br/>";
     }
     this.document.getElementById("MECOut").innerHTML = strOut;
 }
