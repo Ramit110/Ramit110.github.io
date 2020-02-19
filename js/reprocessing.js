@@ -1,6 +1,7 @@
 
 // aquired from my EVEStuff repo at https://github.com/Ramit110/EveStuff
 ores = {
+    "Compressed Plagioclase": { "Pyerite": 213, "Mexallon": 107, "Tritanium": 107 },
     "Compressed Arkonor":{ "Tritanium":22000, "Mexallon":2500, "Megacyte":320 },
     "Compressed Bistot":{ "Pyerite":12000, "Zydrine":450, "Megacyte":100 },
     "Compressed Crokite":{ "Tritanium":21000, "Nocxium":760, "Zydrine":135 },
