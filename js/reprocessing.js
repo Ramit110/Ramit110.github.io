@@ -155,11 +155,11 @@ function calcMinimum()
         else 
         {
             total += solution[ore]*buySell[ore]["buy"];
-            strOut += ore + ": " + out;
+            strOut += ore + ": " + addCommas(out);
         }
         strOut += "<br/>";
     }
-    strOut += "For a cost of " + total + " isk";
+    strOut += "For a cost of " + addCommas(Math.ceil(total)) + " isk";
     
     this.document.getElementById("MECOut").innerHTML = strOut;
 }
