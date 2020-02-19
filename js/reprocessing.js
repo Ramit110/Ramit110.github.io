@@ -147,13 +147,19 @@ function calcMinimum()
     }
 
     solution = solver.Solve(model);
+    total = 0;
     for(ore in this.ores)
     {
         out = solution[ore];
         if(out == undefined) strOut += ore + ": " + 0;
-        else strOut += ore + ": " + out;
+        else 
+        {
+            total += solution[ore]*buySell[ore]["buy"];
+            strOut += ore + ": " + out;
+        }
         strOut += "<br/>";
     }
+    strOut += "For a cost of " + total + " isk";
     
     this.document.getElementById("MECOut").innerHTML = strOut;
 }
