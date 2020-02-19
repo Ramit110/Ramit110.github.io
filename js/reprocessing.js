@@ -1,3 +1,4 @@
+
 // aquired from my EVEStuff repo at https://github.com/Ramit110/EveStuff
 ores = {
     "Compressed Arkonor":{ "Tritanium":22000, "Mexallon":2500, "Megacyte":320 },
@@ -14,10 +15,11 @@ ores = {
     "Compressed Pyroxeres":{ "Tritanium":351, "Pyerite":25, "Mexallon":50, "Nocxium":5 },
     "Compressed Scordite":{ "Tritanium":346, "Pyerite":173 },
     "Compressed Veldspar":{ "Tritanium":415 }
-}
+};
 minerals = [ "Tritanium", "Pyerite", "Mexallon", "Isogen", "Nocxium", "Megacyte", "Zydrine"];
 
 buySell = {};
+
 getEVEPraisal = async (params) => {
     try {
         const fetchResponse = await fetch(
@@ -29,8 +31,7 @@ getEVEPraisal = async (params) => {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 }
             });
-        let data = await fetchResponse.json();
-        data = data['appraisal']['items'];
+        let data = (await fetchResponse.json())['appraisal']['items'];
 
         let tbr = {};
         for(items in data) tbr[data[items]['name']] = {
@@ -54,9 +55,7 @@ window.onload = async function()
 
 function calcOres()
 {
-    let temp = this.document.getElementById("ReprocessingPercentage").value * 1;
-    if(isNaN(temp)) temp = 50;
-    this.loadReprocessing(temp);
+    this.loadReprocessing(getFromDocument("ReprocessingPercentage", 50));
 }
 
 function loadReprocessing(value)
@@ -76,7 +75,7 @@ function loadReprocessing(value)
         {
             let temp =  this.ores[ore][this.minerals[mins]];
             if(temp == undefined) temp = 0;
-            toBeAssigned += "<th>" + Math.floor(temp*value/100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</th>";
+            toBeAssigned += "<th>" + addCommas(Math.floor(temp*value/100)) + "</th>";
             mineralValueSell+=Math.floor(temp*value/100)*buySell[minerals[mins]]['sell'];
             mineralValueBuy+=Math.floor(temp*value/100)*buySell[minerals[mins]]['buy'];
         }
@@ -84,13 +83,13 @@ function loadReprocessing(value)
         // while(JSON.stringify(buySell) == "{}") {}
 
         // add ore buy
-        toBeAssigned += "<th>" + Math.ceil(buySell[ore]['buy']).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</th>";
+        toBeAssigned += "<th>" + addCommas(Math.ceil(buySell[ore]['buy'])) + "</th>";
         // add ore sell
-        toBeAssigned += "<th>" + Math.ceil(buySell[ore]['sell']).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</th>";
+        toBeAssigned += "<th>" + addCommas(Math.ceil(buySell[ore]['sell'])) + "</th>";
         // add mineral buy
-        toBeAssigned += "<th>" + Math.ceil(mineralValueBuy).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</th>";
+        toBeAssigned += "<th>" + addCommas(Math.ceil(mineralValueBuy)) + "</th>";
         // add mineral sell
-        toBeAssigned += "<th>" + Math.ceil(mineralValueSell).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</th>";
+        toBeAssigned += "<th>" + addCommas(Math.ceil(mineralValueSell)) + "</th>";
 
         toBeAssigned += "</tr>";
     }
@@ -111,44 +110,49 @@ function loadMEC()
 
 function calcMinimum()
 {
-    let arrStore = { };
-    let currStore = { };
-    let numOut = { };
-    for(mins in this.minerals)
-    {
-        let temp = this.document.getElementById(this.minerals[mins] + "MEC").value * 1;
-        if(isNaN(temp)) temp = 0;
-        arrStore[this.minerals[mins]] = temp;
-        currStore[this.minerals[mins]] = 0;
-    }
-
-    let repro = this.document.getElementById("ReprocessingPercentageTwo").value/100;
-    if(isNaN(repro)) repro = 0.5;
-
-    // inoptimal jank solution
-    for(let i = this.minerals.length-1; i >= 0; i--)
-    {
-        let lowest = undefined;
-        let highestMin = undefined;
-        for(ore in this.ores)
-        {
-            if(lowest == undefined || highestMin == undefined || this.ores[ore][this.minerals[i]] > highestMin)
-            {
-                lowest = ore;
-                highestMin = this.ores[ore][this.minerals[i]];
-            }
-            if(numOut[ore] == undefined) numOut[ore] = 0;
-        }
-        let number = Math.ceil((arrStore[this.minerals[i]]-currStore[this.minerals[i]]) / Math.floor(repro * this.ores[lowest][this.minerals[i]]));
-        if(number < 0) number = 0;
-        for(mins in this.ores[lowest]) currStore[mins] += Math.floor(repro*this.ores[lowest][mins]) * number;
-        numOut[lowest] += number;
-    }
+    let repro = getFromDocument("ReprocessingPercentageTwo", 50);
 
     let strOut = "";
-    for(outs in numOut)
-    {
-        if(numOut[outs] > 0) strOut += outs + " " + numOut[outs] + "<br/>";
+    
+    /*example = {
+        "constraints": {
+            "tritanium": {"min": 100},
+            "pyreite": {"min": 88}
+        },
+        "variables": {
+            "veld": { "isk": 100, "tritanium": 10 },
+            "score": { "isk": 100, "tritanium": 7, "pyreite": 10 }
+        }, "ints": { "veld": 1,  "score": 1}
+    };*/
+    // empty model
+    model = {
+        "optimize": "isk",
+        "opType": "min",
+        "constraints": { },
+        "variables": { },
+        "ints": { }
     }
+    for(ore in this.ores){
+        model["ints"][ore] = 1;
+        model["variables"][ore] = {};
+        for(reproOres in this.ores[ore])
+            model["variables"][ore][reproOres]
+                = Math.floor(this.ores[ore][reproOres]*repro/100);
+        model["variables"][ore]["isk"] = buySell[ore]["buy"];
+    }
+    for(mins in this.minerals)
+    {
+       model["constraints"][minerals[mins]] = {"min": getFromDocument(minerals[mins] + "MEC")}
+    }
+
+    solution = solver.Solve(model);
+    for(ore in this.ores)
+    {
+        out = solution[ore];
+        if(out == undefined) strOut += ore + ": " + 0;
+        else strOut += ore + ": " + out;
+        strOut += "<br/>";
+    }
+    
     this.document.getElementById("MECOut").innerHTML = strOut;
 }
