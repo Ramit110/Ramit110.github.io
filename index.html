@@ -9,11 +9,13 @@
     </head>
     <body>
         <div id="menu">
-            
+
         </div>
         <div id="Reprocessing" class="outlined">
-            Reprocessing Percentage: <input type="text" id="ReprocessingPercentage" value="50">
-            <br/>
+            <div>
+                Reprocessing Percentage: <input type="text" id="ReprocessingPercentage" value="50">
+                <br/>
+            </div>
             <input type="submit" value="recalculate" onclick="calcOres()">
             <div id="ReprocessingTable">
                 <table id="OreTable" class="centered">
@@ -21,6 +23,7 @@
             </div>
         </div>
         <div id="MostEfficientCompressed" class="outlined">
+            <div id="inpList"></div>
             <br/>
             Reprocessing Percentage: <input type="text" id="ReprocessingPercentageTwo" value="50">
             <br/>

@@ -106,7 +106,7 @@ function loadMEC()
             ` needed: <input type="text" id="` +
             this.minerals[mins] +
             `MEC"><br/>`;
-    this.document.getElementById("MostEfficientCompressed").innerHTML = textLoc + this.document.getElementById("MostEfficientCompressed").innerHTML
+    this.document.getElementById("inpList").innerHTML = textLoc;
 }
 
 function calcMinimum()
