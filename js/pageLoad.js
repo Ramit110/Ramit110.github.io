@@ -18,6 +18,13 @@ function loadMEC()
             `<input type="text" id="` + this.minerals[mins] +
             `MEC"> ` + this.minerals[mins] + `<br/>`;
     this.document.getElementById("inpList").innerHTML = textLoc + "</th>";
+}
 
-    this.document.getElementById("parseBox").style.height = this.document.getElementById("inpList").width + "px" ;
+function unloadDivs()
+{
+    for(things in divs)
+    {
+        this.document.getElementById(divs[things]).style.display = "none";
+    }
+    moveTo(current);
 }

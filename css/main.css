@@ -24,8 +24,13 @@ table {
     margin-right: auto;
 }
 
-th {
-    border: 1px solid #ffffff;
+tr th {
+    background-color: #808080;
+    text-align: left;
+}
+
+tr:nth-child(odd) th{
+    background-color: #404040;
 }
 
 input {
