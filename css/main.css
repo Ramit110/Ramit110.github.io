@@ -47,7 +47,6 @@ input {
 }
 
 .navbar input {
-    overflow: hidden;
     float: left;
     color: #808080;
     background-color: #00000f;
