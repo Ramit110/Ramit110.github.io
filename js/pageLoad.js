@@ -15,8 +15,8 @@ function loadMEC()
     let textLoc = "<th>";
     for(mins in this.minerals)
         textLoc +=
-            `<input type="text" id="` + this.minerals[mins] +
-            `MEC"> ` + this.minerals[mins] + `<br/>`;
+            `<div><input type="text" id="` + this.minerals[mins] +
+            `MEC"> ` + this.minerals[mins] + `</div><br/>`;
     this.document.getElementById("inpList").innerHTML = textLoc + "</th>";
 }
 

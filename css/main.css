@@ -35,6 +35,16 @@ tr:nth-child(odd) th{
 
 input {
     font-size: inherit;
+    border: none;
+    background-color: #4f4f4f;
+}
+
+input:hover {
+    background-color: #808080;
+}
+
+input:active {
+    background-color: #000088;
 }
 
 .outlined {
@@ -61,6 +71,10 @@ input {
 
 .navbar input:hover:enabled {
     color: #fbfbfb;
+}
+
+.noMargin div {
+    margin: 0.5% 0%;
 }
 
 #mainMenu {
