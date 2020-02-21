@@ -55,7 +55,7 @@ function loadReprocessing(value)
 function calcMinimum()
 {
     let repro = getFromDocument("ReprocessingPercentageTwo", 50);
-    let strOut = "";
+    let strOut = "<br/>";
     
     // empty model
     model = {
@@ -84,7 +84,7 @@ function calcMinimum()
     for(ore in this.ores)
     {
         out = solution[ore];
-        if(out == undefined) strOut += ore + ": " + 0;
+        if(out == undefined) strOut += ore + " " + 0;
         else 
         {
             total += out*buySell[ore]["buy"];

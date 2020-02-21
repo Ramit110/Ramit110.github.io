@@ -7,6 +7,7 @@ window.onload = async function()
     buySell = await this.getEVEPraisal(params);
     this.calcOres();
     this.loadMEC();
+    this.unloadDivs();
 }
 
 function loadMEC()

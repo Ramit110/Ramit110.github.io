@@ -3,24 +3,27 @@
     <head>
         <link rel="stylesheet" href="css/main.css">
         <script src="js/evePraisal.js"></script>
+        <script src="js/pageNavigation.js"></script>
         <script src="js/pageLoad.js"></script>
         <script src="js/reprocessing.js"></script>
         <script src="js/utilities.js"></script>
         <script src="node_modules/javascript-lp-solver/prod/solver.js"></script>
-        <title>Ore Value Calculator</title>
+        <title>Ramit110's Industry Site</title>
     </head>
     <body>
-        <div id="menu">
-
+        <div id="menu" class="navbar">
+            <input type="submit" value="R110's IS" disabled />
+            <input type="submit" value="Reprocessing" onclick="moveTo(0)" />
+            <input type="submit" value="Optimal Ore" onclick="moveTo(1)" />
         </div>
         <div id="Reprocessing" class="outlined">
             <div>
                 Reprocessing Percentage: <input type="text" id="ReprocessingPercentage" value="50">
                 <br/>
             </div>
-            <input type="submit" value="recalculate" onclick="calcOres()">
+            <input type="submit" value="recalculate" onclick="calcOres()" />
             <div id="ReprocessingTable">
-                <table id="OreTable" class="centered">
+                <table id="OreTable">
                 </table>
             </div>
         </div>
