@@ -12,12 +12,12 @@ window.onload = async function()
 
 function loadMEC()
 {
-    let textLoc = ""
+    let textLoc = "<th>";
     for(mins in this.minerals)
         textLoc +=
-            this.minerals[mins] +
-            ` needed: <input type="text" id="` +
-            this.minerals[mins] +
-            `MEC"><br/>`;
-    this.document.getElementById("inpList").innerHTML = textLoc;
+            `<input type="text" id="` + this.minerals[mins] +
+            `MEC"> ` + this.minerals[mins] + `<br/>`;
+    this.document.getElementById("inpList").innerHTML = textLoc + "</th>";
+
+    this.document.getElementById("parseBox").style.height = this.document.getElementById("inpList").width + "px" ;
 }
