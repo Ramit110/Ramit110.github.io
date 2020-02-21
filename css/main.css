@@ -17,6 +17,7 @@ body {
 
 div {
     margin: auto 0.5rem;
+    padding: 0.4rem 0.1rem;
 }
 
 table {
@@ -57,4 +58,8 @@ input {
 
 .navbar input:hover:enabled {
     color: #fbfbfb;
+}
+
+#mainMenu {
+    color: #ffffff;
 }
