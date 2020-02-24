@@ -6,7 +6,7 @@ body {
     padding-top: 40px;
     color: #ffffff;
     text-align: center;
-    font-size: 19px;
+    font-size: 16px;
     font-family: Arial, Helvetica, sans-serif;
     background-image: url("./background.png");
 }
@@ -27,9 +27,11 @@ table {
 tr th {
     background-color: #808080;
     text-align: left;
+
+    border-top: 1px solid #000000;
 }
 
-tr:nth-child(odd) th{
+tr:nth-child(odd) th {
     background-color: #404040;
 }
 
