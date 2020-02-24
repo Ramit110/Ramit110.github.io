@@ -17,7 +17,7 @@ ores = {
     "Compressed Scordite":{ "Tritanium":346, "Pyerite":173 },
     "Compressed Veldspar":{ "Tritanium":415 }
 };
-minerals = [ "Tritanium", "Pyerite", "Mexallon", "Isogen", "Nocxium", "Zydrine", "Megacyte"];
+minerals = [ "Tritanium", "Pyerite", "Mexallon", "Isogen", "Nocxium", "Megacyte", "Zydrine"];
 buySell = {};
 
 function getFromDocument(elementID, defaultValue)
