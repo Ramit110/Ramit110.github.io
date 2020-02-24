@@ -88,7 +88,7 @@ function calcMinimum()
         else 
         {
             total += out*buySell[ore]["buy"];
-            strOut += ore + addCommas(out);
+            strOut += ore + " " + addCommas(out);
         }
         strOut += "<br/>";
     }
