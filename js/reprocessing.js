@@ -62,12 +62,10 @@ function calcMinimum()
         "optimize": "isk",
         "opType": "min",
         "constraints": { },
-        "variables": { },
-        "ints": { }
+        "variables": { }
     }
 
     for(ore in this.ores){
-        model["ints"][ore] = 1;
         model["variables"][ore] = {};
         for(reproOres in this.ores[ore])
             model["variables"][ore][reproOres] = Math.floor(this.ores[ore][reproOres]*repro/100);
@@ -88,7 +86,7 @@ function calcMinimum()
         else 
         {
             total += out*buySell[ore]["buy"];
-            strOut += ore + " " + addCommas(out);
+            strOut += Math.ceil(ore) + " " + addCommas(out);
         }
         strOut += "<br/>";
     }
