@@ -81,12 +81,12 @@ function calcMinimum()
 
     for(ore in this.ores)
     {
-        out = solution[ore];
+        out = Math.ceil(solution[ore]);
         if(out == undefined) strOut += ore + " " + 0;
         else 
         {
             total += out*buySell[ore]["buy"];
-            strOut += Math.ceil(ore) + " " + addCommas(out);
+            strOut += ore + " " + addCommas(out);
         }
         strOut += "<br/>";
     }
