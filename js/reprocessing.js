@@ -82,7 +82,7 @@ function calcMinimum()
     for(ore in this.ores)
     {
         out = Math.ceil(solution[ore]);
-        if(inNaN(out)) out = 0;
+        if(isNaN(out)) out = 0;
         if(out == undefined) strOut += ore + " " + 0;
         else 
         {
