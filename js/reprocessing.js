@@ -67,28 +67,46 @@ function calcMinimum()
         model["variables"][ore] = {};
         for(reproOres in this.ores[ore])
             model["variables"][ore][reproOres] = Math.floor(this.ores[ore][reproOres]*repro/100);
-        model["variables"][ore]["isk"] = buySell[ore]["buy"];
+        model["variables"][ore]["isk"] = buySell[ore]["sell"];
     }
     for(mins in this.minerals)
     {
         model["constraints"][minerals[mins]] = 
-            { "min": getFromDocument(minerals[mins] + "MEC") }
+            { "min": getFromDocument(minerals[mins] + "MEC"), "tot": 0 }
     }
 
     solution = solver.Solve(model);
-    total = { "value": 0, "volume": 0 };
+    total = { "sell": 0, "buy": 0,  "volume": 0 };
 
+    strOut += "<div>Ores Calculated<table>";
     for(ore in this.ores)
     {
+        console.log(model["variables"][ore]);
         out = Math.ceil(solution[ore]);
-        out = isNaN(out) || (out == undefined) ? 0 : out;
-        total["value"] += out*buySell[ore]["sell"];
-        total["volume"] += out*buySell[ore]["volume"];
-        strOut += ore + " " + addCommas(out) + "<br/>";
-    }
+        if(out != 0 && !isNaN(out) && out != undefined )
+        {
+            total["sell"] += out*buySell[ore]["sell"];
+            total["buy"] += out*buySell[ore]["buy"];
+            total["volume"] += out*buySell[ore]["volume"];
+            for(mins in minerals) if(model["variables"][ore][minerals[mins]] != undefined)
+                model["constraints"][minerals[mins]]["tot"] += out*model["variables"][ore][minerals[mins]];
 
-    strOut += "<br />For a cost of " + addCommas(Math.ceil(total["value"])) + " isk";
-    strOut += "<br/>A volume of " + addCommas(total["volume"]) + " m^3";
+            strOut += "<tr><th>" + ore + "</th><th>" + addCommas(out) + "</th></th>";
+        }
+    }
+    strOut += "</table></div><div>Ore Information<table>";
+    strOut += "<tr><th>Sell Price:</th><th>" + addCommas(Math.ceil(total["sell"])) + " isk</th></tr>";
+    strOut += "<tr><th>Buy Price:</th><th>" + addCommas(Math.ceil(total["buy"])) + " isk</th></tr>";
+    strOut += "<tr><th>Total Volume:</th><th>" + addCommas(Math.ceil(total["volume"])) + " m^3</th></tr></table></div>";
+
+    strOut += "<div>Extra Nerdy Information<table>";
+    strOut += "<tr><th>Mineral</th><th>Needed</th><th>Refined</th><th>Excess</th>";
+    for(mins in minerals)
+        strOut += "<tr><th>" + minerals[mins] + "</th><th>" 
+            + model["constraints"][minerals[mins]]["min"] + "</th><th>"
+            + model["constraints"][minerals[mins]]["tot"] + "</th><th>"
+            + (model["constraints"][minerals[mins]]["tot"] - model["constraints"][minerals[mins]]["min"]) + "</th></tr>";
+    strOut += "</table></div>";
     
     this.document.getElementById("MECOut").innerHTML = strOut;
 }

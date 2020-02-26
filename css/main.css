@@ -24,10 +24,14 @@ table {
     margin-right: auto;
 }
 
+th {
+    padding: 0em 0.25em;
+}
+
 tr th {
     background-color: #808080;
     text-align: left;
-    border-top: 1px solid #000000;
+    border-top: 0.1px solid #000000;
 }
 
 tr:nth-child(odd) th {
