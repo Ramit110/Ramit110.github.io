@@ -26,8 +26,6 @@ function loadReprocessing(value)
             mineralValueBuy+=Math.floor(temp*value/100)*buySell[minerals[mins]]['buy'];
         }
 
-        // while(JSON.stringify(buySell) == "{}") {}
-
         // add ore buy
         toBeAssigned += "<th>" + addCommas(Math.ceil(buySell[ore]['buy'])) + "</th>";
         // add ore sell
@@ -73,25 +71,24 @@ function calcMinimum()
     }
     for(mins in this.minerals)
     {
-       model["constraints"][minerals[mins]] = {"min": getFromDocument(minerals[mins] + "MEC")}
+        model["constraints"][minerals[mins]] = 
+            { "min": getFromDocument(minerals[mins] + "MEC") }
     }
 
     solution = solver.Solve(model);
-    total = 0;
+    total = { "value": 0, "volume": 0 };
 
     for(ore in this.ores)
     {
         out = Math.ceil(solution[ore]);
-        if(isNaN(out)) out = 0;
-        if(out == undefined) strOut += ore + " " + 0;
-        else 
-        {
-            total += out*buySell[ore]["buy"];
-            strOut += ore + " " + addCommas(out);
-        }
-        strOut += "<br/>";
+        out = isNaN(out) || (out == undefined) ? 0 : out;
+        total["value"] += out*buySell[ore]["sell"];
+        total["volume"] += out*buySell[ore]["volume"];
+        strOut += ore + " " + addCommas(out) + "<br/>";
     }
-    strOut += "For a cost of " + addCommas(Math.ceil(total)) + " isk";
+
+    strOut += "<br />For a cost of " + addCommas(Math.ceil(total["value"])) + " isk";
+    strOut += "<br/>A volume of " + addCommas(total["volume"]) + " m^3";
     
     this.document.getElementById("MECOut").innerHTML = strOut;
 }

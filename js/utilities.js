@@ -22,9 +22,8 @@ buySell = {};
 
 function getFromDocument(elementID, defaultValue)
 {
-    let temp = this.document.getElementById(elementID).value * 1;
-    if(isNaN(temp)) return defaultValue;
-    return temp;
+    let temp = this.document.getElementById(elementID).value.replace(",", "") * 1;
+    return isNaN(temp) ? defaultValue : temp;
 }
 
 function addCommas(data)

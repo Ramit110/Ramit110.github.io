@@ -15,7 +15,8 @@ getEVEPraisal = async (params) => {
         let tbr = {};
         for(items in data) tbr[data[items]['name']] = {
             'buy': data[items]['prices']['buy']['max'],
-            'sell': data[items]['prices']['sell']['min']
+            'sell': data[items]['prices']['sell']['min'],
+            'volume': data[items]['typeVolume']
         };
         return tbr;
     } catch (e) { return e };

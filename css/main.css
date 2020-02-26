@@ -27,7 +27,6 @@ table {
 tr th {
     background-color: #808080;
     text-align: left;
-
     border-top: 1px solid #000000;
 }
 
@@ -38,7 +37,7 @@ tr:nth-child(odd) th {
 input {
     font-size: inherit;
     border: none;
-    background-color: #4f4f4f;
+    background-color: #8f8f8f;
 }
 
 input:hover {

@@ -4,10 +4,10 @@ window.onload = async function()
     for(mins in this.minerals) params += this.minerals[mins] + "%0A";
     for(ore in this.ores) params += ore + "%0A";
 
+    this.unloadDivs();
     buySell = await this.getEVEPraisal(params);
     this.calcOres();
     this.loadMEC();
-    this.unloadDivs();
 }
 
 function loadMEC()
