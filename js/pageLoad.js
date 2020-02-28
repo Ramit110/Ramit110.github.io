@@ -1,11 +1,11 @@
 window.onload = async function()
 {
     let params = "";
-    for(mins in this.minerals) params += this.minerals[mins] + "%0A";
-    for(ore in this.ores) params += ore + "%0A";
+    for(mins in utilities.minerals) params += utilities.minerals[mins] + "%0A";
+    for(ore in utilities.ores) params += ore + "%0A";
 
     this.unloadDivs();
-    buySell = await this.getEVEPraisal(params);
+    utilities.buySell = await this.getEVEPraisal(params);
     this.calcOres();
     this.loadMEC();
 }
@@ -13,11 +13,24 @@ window.onload = async function()
 function loadMEC()
 {
     let textLoc = "<th>";
-    for(mins in this.minerals)
+    for(mins in utilities.minerals){
         textLoc +=
-            `<div><input type="text" id="` + this.minerals[mins] +
-            `MEC"> ` + this.minerals[mins] + `</div><br/>`;
-    this.document.getElementById("inpList").innerHTML = textLoc + "</th>";
+            `<div><input type="text" id="` + utilities.minerals[mins] +
+            `MEC"/> ` + utilities.minerals[mins] + `</div><br/>`;
+    }
+    this.document.getElementById("MECinpList").innerHTML = textLoc + "</th>";
+
+    textLoc = "";
+    for(ore in utilities.ores)
+    {
+        textLoc+= `<tr><th><input type="checkbox" id="` + ore + `MECCheck" /></th><th>` + ore + `</th><tr>`;
+    }
+    this.document.getElementById("MECoreList").innerHTML = textLoc;
+
+    for(ore in utilities.ores)
+    {
+        this.document.getElementById(ore + "MECCheck").checked = true;
+    }
 }
 
 function unloadDivs()

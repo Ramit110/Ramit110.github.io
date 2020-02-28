@@ -7,6 +7,7 @@
         <script src="js/pageLoad.js"></script>
         <script src="js/reprocessing.js"></script>
         <script src="js/utilities.js"></script>
+        <script src="js/MEC.js"></script>
         <script src="node_modules/javascript-lp-solver/prod/solver.js"></script>
         <title>Ramit110's Industry Site</title>
     </head>
@@ -29,12 +30,13 @@
             </div>
         </div>
         <div id="MostEfficientCompressed" class="outlined">
-            <div id="inpList" class="noMargin"></div>
-            <br/>
+            <div>
+                <div id="MECinpList" class="noMargin righted"></div>
+                <table id="MECoreList" class="righted"></table>
+            </div>
             <div>
                 Reprocessing Percentage: <input type="text" id="ReprocessingPercentageTwo" value="50">
             </div>
-            <br/>
             <input type="submit" value="Get minimum compressed ore needed" onclick="calcMinimum()">
             <div id="MECOut"></div>
         </div>
