@@ -1,5 +1,5 @@
 
-divs = ["Reprocessing", "MostEfficientCompressed"];
+divs = ["Main", "Reprocessing", "MostEfficientCompressed"];
 current = 0;
 
 function moveTo(number)

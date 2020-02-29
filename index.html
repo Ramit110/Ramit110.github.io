@@ -13,9 +13,21 @@
     </head>
     <body>
         <div id="menu" class="navbar">
-            <input type="submit" value="R110's IS" id="mainMenu" disabled />
-            <input type="submit" value="Reprocessing" onclick="moveTo(0)" />
-            <input type="submit" value="Optimal Ore" onclick="moveTo(1)" />
+            <input type="submit" value="R110's IS" id="mainMenu" onclick="moveTo(0)" />
+            <input type="submit" value="Reprocessing" onclick="moveTo(1)" />
+            <input type="submit" value="Optimal Ore" onclick="moveTo(2)" />
+        </div>
+        <div id="Main" class="outlined lefted-text padded-text">
+            <p>Hello and welcome to Ramit110's Industry Site!</p>
+            <br />
+            This is a site dedicated to Industry tools for EVE Online industry created by <b class="blued">Ramit110 Mechanicus</b> with the goal of helping <i>the whole community</i>.
+            <br />
+            The services currently on this site:
+            <ul>
+                <li><b>Reprocessing</b> - A table that displays the base variant of each compressed ore and it's product based on any level of reprocessing.</li>
+                <li><b>Optimal Ore</b> - Calculates the optimal amount of ore needed to get a specified number of minerals based on any level of reprocessing. </li>
+            </ul>
+            <p>Thanks and enjoy using this place!</p>
         </div>
         <div id="Reprocessing" class="outlined">
             <div>
@@ -31,8 +43,8 @@
         </div>
         <div id="MostEfficientCompressed" class="outlined">
             <div>
-                <div id="MECinpList" class="noMargin righted"></div>
-                <table id="MECoreList" class="righted"></table>
+                <div id="MECinpList" class="noMargin middled"></div>
+                <table id="MECoreList" class="middled"></table>
             </div>
             <div>
                 Reprocessing Percentage: <input type="text" id="ReprocessingPercentageTwo" value="50">

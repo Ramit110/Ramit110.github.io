@@ -83,7 +83,19 @@ input:active {
     margin: 0.5% 0%;
 }
 
-.righted {
+.lefted-text {
+    text-align: left;
+}
+
+.padded-text {
+    padding: 1%;
+}
+
+.blued {
+    color: #0000ff;
+}
+
+.middled {
     display: inline-block;
     height: 100%;
     vertical-align: middle;
