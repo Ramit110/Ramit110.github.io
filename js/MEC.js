@@ -28,7 +28,10 @@ function calcMinimum()
         model["variables"][ore] = {};
         for(reproOres in utilities.ores[ore])
             model["variables"][ore][reproOres] = Math.floor(utilities.ores[ore][reproOres]*repro/100);
-        model["variables"][ore]["isk"] = utilities.buySell[ore]["sell"];
+        try {
+            model["variables"][ore]["isk"] = utilities.buySell[ore]["sell"];
+        }
+        catch { error() }
     }
     
     for(mins in utilities.minerals)
@@ -46,9 +49,12 @@ function calcMinimum()
         out = Math.ceil(solution[ore]);
         if(out != 0 && !isNaN(out) && out != undefined )
         {
-            total["sell"] += out*utilities.buySell[ore]["sell"];
-            total["buy"] += out*utilities.buySell[ore]["buy"];
-            total["volume"] += out*utilities.buySell[ore]["volume"];
+            try{
+                total["sell"] += out*utilities.buySell[ore]["sell"];
+                total["buy"] += out*utilities.buySell[ore]["buy"];
+                total["volume"] += out*utilities.buySell[ore]["volume"];
+            }
+            catch { error() }
             for(mins in utilities.minerals) if(model["variables"][ore][utilities.minerals[mins]] != undefined)
                 model["constraints"][utilities.minerals[mins]]["tot"] += out*model["variables"][ore][utilities.minerals[mins]];
 

@@ -41,3 +41,8 @@ function unloadDivs()
     }
     moveTo(current);
 }
+
+function error()
+{
+    console.log("Oh no");
+}

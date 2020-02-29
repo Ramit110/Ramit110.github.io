@@ -23,14 +23,20 @@ var reprocessing = {
                 let temp =  utilities.ores[ore][utilities.minerals[mins]];
                 if(temp == undefined) temp = 0;
                 toBeAssigned += "<th>" + utilities.addCommas(Math.floor(temp*value/100)) + "</th>";
-                mineralValueSell+=Math.floor(temp*value/100)*utilities.buySell[utilities.minerals[mins]]['sell'];
-                mineralValueBuy+=Math.floor(temp*value/100)*utilities.buySell[utilities.minerals[mins]]['buy'];
+                try {
+                    mineralValueSell+=Math.floor(temp*value/100)*utilities.buySell[utilities.minerals[mins]]['sell'];
+                    mineralValueBuy+=Math.floor(temp*value/100)*utilities.buySell[utilities.minerals[mins]]['buy'];
+                }
+                catch { error() }
             }
     
-            // add ore buy
-            toBeAssigned += "<th>" + utilities.addCommas(Math.ceil(utilities.buySell[ore]['buy'])) + "</th>";
-            // add ore sell
-            toBeAssigned += "<th>" + utilities.addCommas(Math.ceil(utilities.buySell[ore]['sell'])) + "</th>";
+            try{
+                // add ore buy
+                toBeAssigned += "<th>" + utilities.addCommas(Math.ceil(utilities.buySell[ore]['buy'])) + "</th>";
+                // add ore sell
+                toBeAssigned += "<th>" + utilities.addCommas(Math.ceil(utilities.buySell[ore]['sell'])) + "</th>";
+            }
+            catch { error() }
             // add mineral buy
             toBeAssigned += "<th>" + utilities.addCommas(Math.ceil(mineralValueBuy)) + "</th>";
             // add mineral sell
