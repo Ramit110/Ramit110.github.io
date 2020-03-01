@@ -1,5 +1,5 @@
 
-divs = ["Main", "Reprocessing", "MostEfficientCompressed", "T1Ship", "Capitals"];
+divs = ["Main", "Reprocessing", "MostEfficientCompressed", "T1Ship", "Capitals", "Support"];
 current = 0;
 
 function moveTo(number)

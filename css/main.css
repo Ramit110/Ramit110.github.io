@@ -105,6 +105,10 @@ input:active {
     color: #ffffff;
 }
 
+#special-float {
+    float: right;
+}
+
 #MECinpList {
     text-align: left;
 }
