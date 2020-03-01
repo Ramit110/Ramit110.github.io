@@ -2,12 +2,13 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/main.css">
+        <script src="js/buttonClicks.js"></script>
         <script src="js/evePraisal.js"></script>
-        <script src="js/pageNavigation.js"></script>
+        <script src="js/MEC.js"></script>
         <script src="js/pageLoad.js"></script>
+        <script src="js/pageNavigation.js"></script>
         <script src="js/reprocessing.js"></script>
         <script src="js/utilities.js"></script>
-        <script src="js/MEC.js"></script>
         <script src="node_modules/javascript-lp-solver/prod/solver.js"></script>
         <title>Ramit110's Industry Site</title>
     </head>
@@ -16,6 +17,7 @@
             <input type="submit" value="R110's IS" id="mainMenu" onclick="moveTo(0)" />
             <input type="submit" value="Reprocessing" onclick="moveTo(1)" />
             <input type="submit" value="Optimal Ore" onclick="moveTo(2)" />
+            <input type="submit" value="Sub Capital Manufacturing" onclick="moveTo(3)" />
         </div>
         <div id="Main" class="outlined lefted-text padded-text">
             <p>Hello and welcome to Ramit110's Industry Site!</p>
@@ -25,7 +27,8 @@
             The services currently on this site:
             <ul>
                 <li><b>Reprocessing</b> - A table that displays the base variant of each compressed ore and it's product based on any level of reprocessing.</li>
-                <li><b>Optimal Ore</b> - Calculates the optimal amount of ore needed to get a specified number of minerals based on any level of reprocessing. </li>
+                <li><b>Optimal Ore</b> - Calculates the optimal amount of ore needed to get a specified number of minerals based on any level of reprocessing.</li>
+                <li><b>Sub Capital Manufacturing</b> - Calculates the optimal amount of ore needed to get a specified number of T1 ships based on any level of reprocessing, material efficiency, structure and rigs.</li>
             </ul>
             If you find any bugs and issues feel free to <a href="https://github.com/Ramit110/Ramit110.github.io/issues">report them at any time</a>.
             <p>Thanks and enjoy using this place!</p>
@@ -47,11 +50,27 @@
                 <div id="MECinpList" class="noMargin middled"></div>
                 <table id="MECoreList" class="middled"></table>
             </div>
-            <div>
-                Reprocessing Percentage: <input type="text" id="ReprocessingPercentageTwo" value="50">
-            </div>
-            <input type="submit" value="Get minimum compressed ore needed" onclick="calcMinimum()">
+            <div>Reprocessing Percentage: <input type="text" id="ReprocessingPercentageTwo" value="50"></div>
+            <br />
+            <input type="submit" value="Get minimum compressed ore needed" onclick="calcMinimumOre()" />
             <div id="MECOut"></div>
+        </div>
+        <div id="T1Ship" class="outlined">
+            <div><select id="SelectShip"><option>Select Ship</option></select></div>
+            <div>
+                <table id="ShipCoreList" class="middled"></table>
+                <div class="noMargin middled lefted-text">
+                    <div><input type="text" id="ShipMaterialEfficiency" value="10"> Material Efficiency</div><br />
+                    <div><input type="text" id="StructureBonus" value="0"> Structure Bonus</div><br />
+                    <div><input type="text" id="RigBonus" value="0"> Rig Bonus</div><br />
+                    <div><input type="text" id="ShipReprocessingPercentage" value="50"> Reprocessing Percentage</div><br />
+                    <div><input type="text" id="ShipQuantity" value="1"> Quantity</div>
+                </div>
+            </div>
+            <br />
+            <input type="submit" value="Calculate" onclick="calcShip()" />
+            <br />
+            <div id="OreTableShips"></div>
         </div>
     </body>
 </html>

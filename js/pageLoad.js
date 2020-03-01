@@ -8,6 +8,16 @@ window.onload = async function()
     utilities.buySell = await this.getEVEPraisal(params);
     this.calcOres();
     this.loadMEC();
+    this.loadShips();
+}
+
+function unloadDivs()
+{
+    for(things in divs)
+    {
+        this.document.getElementById(divs[things]).style.display = "none";
+    }
+    moveTo(current);
 }
 
 function loadMEC()
@@ -23,7 +33,9 @@ function loadMEC()
     textLoc = "";
     for(ore in utilities.ores)
     {
-        textLoc+= `<tr><th><input type="checkbox" id="` + ore + `MECCheck" /></th><th>` + ore + `</th><tr>`;
+        textLoc += utilities.addRow(
+            [`<input type="checkbox" id="` + ore + `MECCheck" />`, ore]
+        );
     }
     this.document.getElementById("MECoreList").innerHTML = textLoc;
 
@@ -33,13 +45,29 @@ function loadMEC()
     }
 }
 
-function unloadDivs()
+function loadShips()
 {
-    for(things in divs)
+    for(ships in utilities.T1Ships)
     {
-        this.document.getElementById(divs[things]).style.display = "none";
+        temp = document.createElement("option");
+        temp.textContent = ships;
+        temp.value = ships;
+        document.getElementById("SelectShip").appendChild(temp);
     }
-    moveTo(current);
+
+    textLoc = "";
+    for(ore in utilities.ores)
+    {
+        textLoc += utilities.addRow(
+            [`<input type="checkbox" id="` + ore + `ShipCheck" />`, ore]
+        );
+    }
+    this.document.getElementById("ShipCoreList").innerHTML = textLoc;
+
+    for(ore in utilities.ores)
+    {
+        this.document.getElementById(ore + "ShipCheck").checked = true;
+    }
 }
 
 function error()

@@ -1,11 +1,6 @@
 
-function calcOres()
-{
-    reprocessing.loadReprocessing(utilities.getFromDocument("ReprocessingPercentage", 50));
-}
-
 var reprocessing = {
-    loadReprocessing : function (value)
+    loadReprocessing : function (value, location)
     {
         let toBeAssigned = "<tr><th>Name</th>";
         for(mins in utilities.minerals) toBeAssigned+= "<th>" + utilities.minerals[mins] + "</th>";
@@ -44,6 +39,6 @@ var reprocessing = {
     
             toBeAssigned += "</tr>";
         }
-        document.getElementById("OreTable").innerHTML = toBeAssigned;
+        document.getElementById(location).innerHTML = toBeAssigned;
     }
 }
