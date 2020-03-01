@@ -25,3 +25,20 @@ function calcShip()
         )
     )
 }
+
+function calcShipCap()
+{
+    calcMinimum(
+        "OreTableCapShips",
+        calcMin.generateCapMinerals(
+            utilities.getFromDocument("CapitalShipMaterialEfficiency", 10),
+            utilities.getFromDocument("CapitalStructureBonus", 0),
+            utilities.getFromDocument("CapitalRigBonus", 0),
+            utilities.getFromDocument("CapitalCompShipMaterialEfficiency", 10),
+            utilities.getFromDocument("CapitalCompStructureBonus", 0),
+            utilities.getFromDocument("CapitalCompRigBonus", 0),
+            utilities.getFromDocument("CapitalShipReprocessingPercentage", 50),
+            utilities.getFromDocument("CapitalShipQuantity", 1)
+        )
+    )
+}

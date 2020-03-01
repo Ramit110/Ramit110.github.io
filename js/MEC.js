@@ -124,5 +124,57 @@ var calcMin = {
                 { "min": isNaN(amount) ? 0 : amount, "tot": 0 }
         }
         return model;
+    },
+
+    generateCapMinerals : function(capme, capstructure, caprig, me, structure, rig, repro, quantity)
+    {
+        // empty model
+        model = {
+            "optimize": "isk",
+            "opType": "min",
+            "constraints": { },
+            "variables": { }
+        }
+
+        for(ore in utilities.ores)
+            if(document.getElementById(ore + "ShipCheck").checked)
+        {
+            model["variables"][ore] = {};
+            for(reproOres in utilities.ores[ore])
+                model["variables"][ore][reproOres] = Math.floor(utilities.ores[ore][reproOres]*repro/100);
+            try {
+                model["variables"][ore]["isk"] = utilities.buySell[ore]["sell"];
+            }
+            catch { error() }
+        }
+        
+        e = document.getElementById("SelectShipCap");
+        neededminerals = { }
+        for(minerals in utilities.minerals) neededminerals[utilities.minerals[minerals]] = 0;
+
+        console.log(utilities.capitals[e.options[e.selectedIndex].value]);
+        if(utilities.capitals[e.options[e.selectedIndex].value] != undefined) 
+            for(comps in utilities.capitals[e.options[e.selectedIndex].value])
+            {
+                for(mins in utilities.capitalComponents[comps])
+                    neededminerals[mins] +=
+                        Math.ceil(
+                            utilities.capitals[e.options[e.selectedIndex].value][comps]
+                            *(1-(capme/100))
+                            *(1-(capstructure/100))
+                            *(1-(caprig/100))
+                        )*
+                        Math.ceil(
+                            utilities.capitalComponents[comps][mins]
+                            *(1-(me/100))
+                            *(1-(structure/100))
+                            *(1-(rig/100))
+                        );
+            }
+        for(minName in neededminerals)
+            model["constraints"][minName] = 
+                { "min": neededminerals[minName], "tot": 0 }
+
+        return model;
     }
 }

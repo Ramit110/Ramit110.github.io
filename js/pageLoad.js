@@ -9,6 +9,7 @@ window.onload = async function()
     this.calcOres();
     this.loadMEC();
     this.loadShips();
+    this.loadCapitalsShips();
 }
 
 function unloadDivs()
@@ -67,6 +68,31 @@ function loadShips()
     for(ore in utilities.ores)
     {
         this.document.getElementById(ore + "ShipCheck").checked = true;
+    }
+}
+
+function loadCapitalsShips()
+{
+    for(ships in utilities.capitals)
+    {
+        temp = document.createElement("option");
+        temp.textContent = ships;
+        temp.value = ships;
+        document.getElementById("SelectShipCap").appendChild(temp);
+    }
+
+    textLoc = "";
+    for(ore in utilities.ores)
+    {
+        textLoc += utilities.addRow(
+            [`<input type="checkbox" id="` + ore + `CapShipCheck" />`, ore]
+        );
+    }
+    this.document.getElementById("CapCoreList").innerHTML = textLoc;
+
+    for(ore in utilities.ores)
+    {
+        this.document.getElementById(ore + "CapShipCheck").checked = true;
     }
 }
 
