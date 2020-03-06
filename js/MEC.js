@@ -152,7 +152,7 @@ var calcMin = {
         }
 
         for(ore in utilities.ores)
-            if(document.getElementById(ore + "ShipCheck").checked)
+            if(document.getElementById(ore + "CapShipCheck").checked)
         {
             model["variables"][ore] = {};
             for(reproOres in utilities.ores[ore])
