@@ -43,13 +43,6 @@ input {
     background-color: #8f8f8f;
 }
 
-input[type=checkbox]
-{
-    font-size: v;
-    border: default;
-    background-color: default;
-}
-
 input:hover {
     background-color: #808080;
 }
