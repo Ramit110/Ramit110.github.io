@@ -108,3 +108,8 @@ input:active {
 #special-float {
     float: right;
 }
+
+input[type=checkbox]
+{
+  -webkit-appearance:checkbox;
+}
