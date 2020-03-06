@@ -64,27 +64,38 @@ var calcMin = {
             "constraints": { },
             "variables": { }
         }
-
-        for(ore in utilities.ores)
-            if(document.getElementById(ore + "MECCheck").checked)
-        {
-            model["variables"][ore] = {};
-            for(reproOres in utilities.ores[ore])
-                model["variables"][ore][reproOres] = Math.floor(utilities.ores[ore][reproOres]*repro/100);
-            try {
-                model["variables"][ore]["isk"] = utilities.buySell[ore]["sell"];
-            }
-            catch { error() }
-        }
         
         for(mins in utilities.minerals)
         {
             model["constraints"][utilities.minerals[mins]] = 
-                { "min": utilities.getFromDocument(utilities.minerals[mins] + "MEC"), "tot": 0 }
-            if(document.getElementById("MECHaveMinerals").checked) 
+                { "min": utilities.getFromDocument(utilities.minerals[mins] + "MEC", 0), "tot": 0 }
+            if(document.getElementById("MECHaveMinerals").checked)
                 model["constraints"][utilities.minerals[mins]]["min"] -= 
-                    utilities.getFromDocument(utilities.minerals[mins] + "Minerals")
+                    utilities.getFromDocument(utilities.minerals[mins] + "Minerals", 0)
         }
+
+        for(ore in utilities.ores)
+        {
+            if(document.getElementById(ore + "MECCheck").checked){
+                model["variables"][ore] = {};
+                for(reproOres in utilities.ores[ore])
+                    model["variables"][ore][reproOres] = Math.floor(utilities.ores[ore][reproOres]*repro/100);
+                try {
+                    model["variables"][ore]["isk"] = utilities.buySell[ore]["sell"];
+                }
+                catch { error() }
+            }
+
+            if(document.getElementById("MECHaveOres").checked)
+            {
+                for(mins in utilities.ores[ore]) if(utilities.ores[ore][mins] != undefined)
+                {
+                    model["constraints"][mins]["min"] -= 
+                        utilities.getFromDocument(ore + "Ores", 0) * utilities.ores[ore][mins]
+                }
+            }
+        }
+
         return model;
     },
     
