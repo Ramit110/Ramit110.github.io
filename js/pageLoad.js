@@ -23,13 +23,36 @@ function unloadDivs()
 
 function loadMEC()
 {
-    let textLoc = "<th>";
-    for(mins in utilities.minerals){
+    let textLoc = "";
+    for(mins in utilities.minerals)
+    {
         textLoc +=
             `<div><input type="text" id="` + utilities.minerals[mins] +
             `MEC"/> ` + utilities.minerals[mins] + `</div><br/>`;
     }
-    this.document.getElementById("MECinpList").innerHTML = textLoc + "</th>";
+    this.document.getElementById("MECinpList").innerHTML = textLoc + "";
+
+    textLoc = "";
+    for(mins in utilities.minerals)
+    {
+        textLoc +=
+            `<div><input type="text" id="` + utilities.minerals[mins] +
+            `Minerals"/> ` + utilities.minerals[mins] + `</div><br/>`;
+    }
+    this.document.getElementById("MECMinList").innerHTML = textLoc;
+    this.document.getElementById("MECHaveMinerals").checked = false;
+    hideThings(this.document.getElementById("MECHaveMinerals"), 'MECMinListDiv');
+
+    textLoc = "";
+    for(ore in utilities.ores)
+    {
+        textLoc +=
+            `<div><input type="text" id="` + ore +
+            `Ores"/> ` + ore + `</div><br/>`;
+    }
+    this.document.getElementById("MECOreList").innerHTML = textLoc;
+    this.document.getElementById("MECHaveOres").checked = false;
+    hideThings(this.document.getElementById("MECHaveOres"), 'MECOreListDiv');
 
     textLoc = "";
     for(ore in utilities.ores)
@@ -38,7 +61,9 @@ function loadMEC()
             [`<input type="checkbox" id="` + ore + `MECCheck" />`, ore]
         );
     }
-    this.document.getElementById("MECoreList").innerHTML = textLoc;
+    this.document.getElementById("MECOreFilterList").innerHTML = textLoc;
+    this.document.getElementById("MECFilterOres").checked = false;
+    hideThings(this.document.getElementById("MECFilterOres"), 'MECOreFilterList');
 
     for(ore in utilities.ores)
     {

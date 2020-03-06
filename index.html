@@ -2,7 +2,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/main.css">
-        <script src="js/buttonClicks.js"></script>
+        <script src="js/Interactions.js"></script>
         <script src="js/evePraisal.js"></script>
         <script src="js/MEC.js"></script>
         <script src="js/pageLoad.js"></script>
@@ -49,10 +49,29 @@
         </div>
         <div id="MostEfficientCompressed" class="outlined">
             <div>
-                <table id="MECoreList" class="middled"></table>
-                <div id="MECinpList" class="noMargin middled"></div>
+                <div id="" class = "middled">
+                    Target Minerals
+                    <div id="MECinpList" class="noMargin lefted-text"></div>
+                </div>
+                <div id="MECMinListDiv" class = "middled">
+                    Minerals
+                    <div id="MECMinList" class="noMargin lefted-text"></div>
+                </div>
+                <div id="MECOreListDiv" class = "middled">
+                    Ores
+                    <div id="MECOreList" class="noMargin lefted-text"></div>
+                </div>
+                <table id="MECOreFilterList" class="middled"></table>
             </div>
-            <div>Reprocessing Percentage: <input type="text" id="ReprocessingPercentageTwo" value="50"></div>
+            <div>
+                Reprocessing Percentage: <input type="text" id="ReprocessingPercentageTwo" value="50">
+                <br />
+                <input type="checkbox" id="MECHaveMinerals" value="1" onchange="hideThings(this, 'MECMinListDiv')"> Mineral Stockpile
+                <br />
+                <input type="checkbox" id="MECHaveOres" value="1"onchange="hideThings(this, 'MECOreListDiv')"> Ore Stockpile
+                <br />
+                <input type="checkbox" id="MECFilterOres" value="1"onchange="hideThings(this, 'MECOreFilterList')"> Ore Filter
+            </div>
             <br />
             <input type="submit" value="Get minimum compressed ore needed" onclick="calcMinimumOre()" />
             <div id="MECOut"></div>

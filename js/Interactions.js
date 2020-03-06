@@ -42,3 +42,9 @@ function calcShipCap()
         )
     )
 }
+
+function hideThings(box, thing)
+{
+    if(box.checked) this.document.getElementById(thing).style.display = "inline-block";
+    else this.document.getElementById(thing).style.display = "none";
+}

@@ -1,7 +1,7 @@
 
 var utilities = {
     // aquired from my EVEStuff repo at https://github.com/Ramit110/EveStuff
-    ores : {
+    ores : Object.freeze({
         "Compressed Arkonor": {
             "Megacyte": 320,
             "Mexallon": 2500,
@@ -78,8 +78,8 @@ var utilities = {
         "Compressed Veldspar": {
             "Tritanium": 415
         }
-    },
-    T1Ships : {
+    }),
+    T1Ships : Object.freeze({
         "Abaddon": {
             "Isogen": 216500,
             "Megacyte": 7466,
@@ -1064,8 +1064,8 @@ var utilities = {
             "Tritanium": 82222,
             "Zydrine": 88
         }
-    },
-    capitalComponents : {
+    }),
+    capitalComponents : Object.freeze({
         "Capital Armor Plates": {
             "Isogen": 7109,
             "Megacyte": 304,
@@ -1237,8 +1237,8 @@ var utilities = {
             "Tritanium": 546912,
             "Zydrine": 876
         }
-    },
-    capitals : {
+    }),
+    capitals : Object.freeze({
         "Apostle": {
             "Capital Armor Plates": 25,
             "Capital Capacitor Battery": 17,
@@ -1483,9 +1483,9 @@ var utilities = {
             "Capital Shield Emitter": 8,
             "Capital Ship Maintenance Bay": 16
         }
-    },
-    minerals : [ "Tritanium", "Pyerite", "Mexallon", "Isogen", "Nocxium", "Zydrine", "Megacyte"],
-    buySell : { },
+    }),
+    minerals : Object.freeze([ "Tritanium", "Pyerite", "Mexallon", "Isogen", "Nocxium", "Zydrine", "Megacyte"]),
+    buySell : Object.freeze({ }),
 
     getFromDocument : function(elementID, defaultValue)
     {

@@ -18,6 +18,6 @@ getEVEPraisal = async (params) => {
             'sell': data[items]['prices']['sell']['min'],
             'volume': data[items]['typeVolume']
         };
-        return tbr;
-    } catch (e) { return e };
+        return Object.freeze(tbr);
+    } catch (e) { return Object.freeze({ }) };
 }
