@@ -44,6 +44,14 @@ input {
     height: 100%;
 }
 
+input[type=checkbox]
+{
+    font-size: v;
+    border: default;
+    background-color: default;
+    height: default;
+}
+
 input:hover {
     background-color: #808080;
 }
@@ -107,9 +115,4 @@ input:active {
 
 #special-float {
     float: right;
-}
-
-input[type=checkbox]
-{
-  -webkit-appearance: none;
 }
