@@ -137,6 +137,7 @@ var calcMin = {
                 this.addOreToModel(repro);
         
         e = document.getElementById("SelectShipCap");
+        
         neededminerals = { }
         for(minerals in utilities.minerals) neededminerals[utilities.minerals[minerals]] = 0;
 
@@ -157,8 +158,9 @@ var calcMin = {
                             *(1-(structure/100))
                             *(1-(rig/100))
                         )*
-                        Math.ceil(quantiy);
+                        Math.ceil(quantity);
             }
+        
         for(minName in neededminerals)
             calcMin.model["constraints"][minName] = 
                 { "min": neededminerals[minName], "tot": 0 }
