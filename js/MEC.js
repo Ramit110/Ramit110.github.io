@@ -1,5 +1,6 @@
 
-/*example = {
+/*
+example = {
     "constraints": {
         "tritanium": {"min": 100},
         "pyreite": {"min": 88}
@@ -8,7 +9,8 @@
         "veld": { "isk": 100, "tritanium": 10 },
         "score": { "isk": 100, "tritanium": 7, "pyreite": 10 }
     }, "ints": { "veld": 1,  "score": 1}
-};*/
+};
+*/
 function calcMinimum(location, model)
 {
     let strOut = "";
@@ -55,72 +57,59 @@ function calcMinimum(location, model)
 }
 
 var calcMin = {
+    // empty model
+    model : {
+        "optimize": "isk",
+        "opType": "min",
+        "constraints": { },
+        "variables": { }
+    },
+
+    addOreToModel : function(repro)
+    {
+        calcMin.model["variables"][ore] = {};
+        for(reproOres in utilities.ores[ore])
+            this.model["variables"][ore][reproOres] = Math.floor(utilities.ores[ore][reproOres]*repro/100);
+        try {
+            this.model["variables"][ore]["isk"] = utilities.buySell[ore]["sell"];
+        }
+        catch { error() }
+    },
+    
     generateFromOptimalOre : function(repro)
     {
-        // empty model
-        model = {
-            "optimize": "isk",
-            "opType": "min",
-            "constraints": { },
-            "variables": { }
-        }
-        
         for(mins in utilities.minerals)
         {
-            model["constraints"][utilities.minerals[mins]] = 
+            calcMin.model["constraints"][utilities.minerals[mins]] = 
                 { "min": utilities.getFromDocument(utilities.minerals[mins] + "MEC", 0), "tot": 0 }
             if(document.getElementById("MECHaveMinerals").checked)
-                model["constraints"][utilities.minerals[mins]]["min"] -= 
+                calcMin.model["constraints"][utilities.minerals[mins]]["min"] -= 
                     utilities.getFromDocument(utilities.minerals[mins] + "Minerals", 0)
         }
 
         for(ore in utilities.ores)
         {
-            if(document.getElementById(ore + "MECCheck").checked){
-                model["variables"][ore] = {};
-                for(reproOres in utilities.ores[ore])
-                    model["variables"][ore][reproOres] = Math.floor(utilities.ores[ore][reproOres]*repro/100);
-                try {
-                    model["variables"][ore]["isk"] = utilities.buySell[ore]["sell"];
-                }
-                catch { error() }
-            }
+            if(document.getElementById(ore + "MECCheck").checked)
+                this.addOreToModel(repro);
 
             if(document.getElementById("MECHaveOres").checked)
             {
                 for(mins in utilities.ores[ore]) if(utilities.ores[ore][mins] != undefined)
                 {
-                    model["constraints"][mins]["min"] -= 
+                    calcMin.model["constraints"][mins]["min"] -= 
                         utilities.getFromDocument(ore + "Ores", 0) * utilities.ores[ore][mins]
                 }
             }
         }
 
-        return model;
+        return calcMin.model;
     },
     
     generateFromBlueprints : function(me, structure, rig, repro, quantity)
     {
-        // empty model
-        model = {
-            "optimize": "isk",
-            "opType": "min",
-            "constraints": { },
-            "variables": { }
-        }
-
         for(ore in utilities.ores)
             if(document.getElementById(ore + "ShipCheck").checked)
-        {
-            model["variables"][ore] = {};
-            for(reproOres in utilities.ores[ore])
-                model["variables"][ore][reproOres] = Math.floor(utilities.ores[ore][reproOres]*repro/100);
-                
-            try {
-                model["variables"][ore]["isk"] = utilities.buySell[ore]["sell"];
-            }
-            catch { error() }
-        }
+                this.addOreToModel(repro);
         
         e = document.getElementById("SelectShip");
         for(mins in utilities.minerals)
@@ -135,39 +124,22 @@ var calcMin = {
                         (1-(rig/100))
                     );
             else amount = 0;
-            model["constraints"][utilities.minerals[mins]] = 
+            calcMin.model["constraints"][utilities.minerals[mins]] = 
                 { "min": isNaN(amount) ? 0 : amount, "tot": 0 }
         }
-        return model;
+        return calcMin.model;
     },
 
     generateCapMinerals : function(capme, capstructure, caprig, me, structure, rig, repro, quantity)
     {
-        // empty model
-        model = {
-            "optimize": "isk",
-            "opType": "min",
-            "constraints": { },
-            "variables": { }
-        }
-
         for(ore in utilities.ores)
             if(document.getElementById(ore + "CapShipCheck").checked)
-        {
-            model["variables"][ore] = {};
-            for(reproOres in utilities.ores[ore])
-                model["variables"][ore][reproOres] = Math.floor(utilities.ores[ore][reproOres]*repro/100);
-            try {
-                model["variables"][ore]["isk"] = utilities.buySell[ore]["sell"];
-            }
-            catch { error() }
-        }
+                this.addOreToModel(repro);
         
         e = document.getElementById("SelectShipCap");
         neededminerals = { }
         for(minerals in utilities.minerals) neededminerals[utilities.minerals[minerals]] = 0;
 
-        console.log(utilities.capitals[e.options[e.selectedIndex].value]);
         if(utilities.capitals[e.options[e.selectedIndex].value] != undefined) 
             for(comps in utilities.capitals[e.options[e.selectedIndex].value])
             {
@@ -184,12 +156,13 @@ var calcMin = {
                             *(1-(me/100))
                             *(1-(structure/100))
                             *(1-(rig/100))
-                        );
+                        )*
+                        Math.ceil(quantiy);
             }
         for(minName in neededminerals)
-            model["constraints"][minName] = 
+            calcMin.model["constraints"][minName] = 
                 { "min": neededminerals[minName], "tot": 0 }
 
-        return model;
+        return calcMin.model;
     }
 }
