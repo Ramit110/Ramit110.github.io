@@ -65,7 +65,7 @@ var calcMin = {
         "variables": { }
     },
 
-    addOreToModel : function(repro)
+    addOreToModel : function(ore, repro)
     {
         calcMin.model["variables"][ore] = {};
         for(reproOres in utilities.ores[ore])
@@ -90,7 +90,7 @@ var calcMin = {
         for(ore in utilities.ores)
         {
             if(document.getElementById(ore + "MECCheck").checked)
-                this.addOreToModel(repro);
+                this.addOreToModel(ore, repro);
 
             if(document.getElementById("MECHaveOres").checked)
             {
@@ -109,7 +109,7 @@ var calcMin = {
     {
         for(ore in utilities.ores)
             if(document.getElementById(ore + "ShipCheck").checked)
-                this.addOreToModel(repro);
+                this.addOreToModel(ore, repro);
         
         e = document.getElementById("SelectShip");
         for(mins in utilities.minerals)
@@ -134,7 +134,7 @@ var calcMin = {
     {
         for(ore in utilities.ores)
             if(document.getElementById(ore + "CapShipCheck").checked)
-                this.addOreToModel(repro);
+                this.addOreToModel(ore, repro);
         
         e = document.getElementById("SelectShipCap");
         
