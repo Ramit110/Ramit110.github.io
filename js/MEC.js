@@ -96,7 +96,7 @@ let calcMin = {
                 for(mins in utilities.ores[ore]) if(utilities.ores[ore][mins] != undefined)
                 {
                     calcMin.model["constraints"][mins]["min"] -= 
-                        utilities.getFromDocument(ore + "Ores", 0) * utilities.ores[ore][mins]
+                        utilities.getFromDocument(ore + "Ores", 0) * utilities.ores[ore][mins] * repro
                 }
             }
         }
