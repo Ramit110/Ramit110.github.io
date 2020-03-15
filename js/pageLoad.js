@@ -11,7 +11,7 @@ window.onload = async function()
     this.loadShips();
     this.loadCapitalsShips();
 
-    this.checkCheckboxes(["MECCheck", "ShipCheck", "CapShipCheck"]);
+    this.checkCheckboxes(utilities.categories);
 }
 
 function unloadDivs()

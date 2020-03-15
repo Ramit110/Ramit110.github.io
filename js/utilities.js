@@ -1486,6 +1486,7 @@ let utilities = {
     }),
     minerals : Object.freeze([ "Tritanium", "Pyerite", "Mexallon", "Isogen", "Nocxium", "Zydrine", "Megacyte"]),
     buySell : Object.freeze({ }),
+    categories: Object.freeze(["MECCheck", "ShipCheck", "CapShipCheck"]),
 
     getFromDocument : function(elementID, defaultValue)
     {
