@@ -6,17 +6,18 @@ window.onload = async function()
 
     this.unloadDivs();
     utilities.buySell = await this.getEVEPraisal(params);
-    this.calcOres();
-    this.loadMEC();
-    
-    let reduceByOres = loadElementsIntoSheet.reduceUsing(Object.keys(utilities.ores));
-    document.getElementById("CapCoreList").innerHTML = 
-        reduceByOres("CapShipCheck");
-    document.getElementById("ShipCoreList").innerHTML = 
-        reduceByOres("ShipCheck");
 
-    loadElementsIntoSheet.loadDropdown(utilities.T1Ships, "SelectShip");
-    loadElementsIntoSheet.loadDropdown(utilities.capitals, "SelectShipCap");
+    loadOreThings();
+    loadMineralThings();
+
+    hideThings(this.document.getElementById("MECHaveMinerals"), 'MECMinListDiv');
+    hideThings(this.document.getElementById("MECHaveOres"), 'MECOreListDiv');
+    hideThings(this.document.getElementById("MECFilterOres"), 'MECOreFilterList');
+
+    loadElementsIntoSheet.loadDropdown(utilities.T1Ships)("SelectShip");
+    loadElementsIntoSheet.loadDropdown(utilities.capitals)("SelectShipCap");
+
+    this.calcOres();
 }
 
 function unloadDivs()
@@ -28,40 +29,26 @@ function unloadDivs()
     moveTo(current);
 }
 
-function loadMEC()
+function loadOreThings()
 {
-    let textLoc = "";
-    let textLocB = "";
-    utilities.minerals.forEach(element => {
-        textLoc +=
-            `<div><input type="text" id="` + element +
-            `MEC"/> ` + element + `</div><br/>`;
-        textLocB +=
-            `<div><input type="text" id="` + element +
-            `Minerals"/> ` + element + `</div><br/>`;
-    });
-    this.document.getElementById("MECinpList").innerHTML = textLoc;
-    this.document.getElementById("MECMinList").innerHTML = textLocB;
-    this.document.getElementById("MECHaveMinerals").checked = false;
-    hideThings(this.document.getElementById("MECHaveMinerals"), 'MECMinListDiv');
+    let reduceFromOres = loadElementsIntoSheet.reduceFrom(Object.keys(utilities.ores));
 
-    textLoc = "";
-    textLocB = "";
-    Object.keys(utilities.ores).forEach(element => {
-        textLoc +=
-            `<div><input type="text" id="` + element +
-            `Ores"/> ` + element + `</div><br/>`;
-        textLocB += utilities.addRow(
-            [`<input type="checkbox" id="` + element + `MECCheck" checked/>`, element]
-        );
-    });
-    this.document.getElementById("MECOreList").innerHTML = textLoc;
-    this.document.getElementById("MECHaveOres").checked = false;
-    hideThings(this.document.getElementById("MECHaveOres"), 'MECOreListDiv');
+    let checkboxReduction = reduceFromOres(loadElementsIntoSheet.getCheckboxes);
+    document.getElementById("CapCoreList").innerHTML = checkboxReduction("CapShipCheck");
+    document.getElementById("ShipCoreList").innerHTML = checkboxReduction("ShipCheck");
+    document.getElementById("MECOreFilterList").innerHTML = checkboxReduction("MECCheck");
 
-    this.document.getElementById("MECOreFilterList").innerHTML = textLocB;
-    this.document.getElementById("MECFilterOres").checked = false;
-    hideThings(this.document.getElementById("MECFilterOres"), 'MECOreFilterList');
+    let inputOreReduction = reduceFromOres(loadElementsIntoSheet.getInputs);
+    document.getElementById("MECOreList").innerHTML = inputOreReduction("Ores");
+}
+
+function loadMineralThings()
+{
+    let reduceFromMinerals = loadElementsIntoSheet.reduceFrom(utilities.minerals);
+
+    let inputMineralReduction = reduceFromMinerals(loadElementsIntoSheet.getInputs);
+    this.document.getElementById("MECMinList").innerHTML = inputMineralReduction("Minerals");
+    this.document.getElementById("MECinpList").innerHTML = inputMineralReduction("MEC");
 }
 
 function error()
@@ -70,24 +57,37 @@ function error()
 }
 
 var loadElementsIntoSheet = {
-    loadDropdown : function(list, documentElementID)
+    loadDropdown : function(list)
     {
-        Object.keys(list).forEach(element => {
-            temp = document.createElement("option");
-            temp.textContent = element;
-            temp.value = element;
-            document.getElementById(documentElementID).appendChild(temp);
-        });
-    },
-    reduceUsing : function(inplist)
-    {
-        return function addCheckboxes(post)
-        {
-            return inplist.reduce((accumulation, current) =>
-                accumulation += utilities.addRow(
-                    [`<input type="checkbox" id="` + current + post + `" checked />`, current]
-                ), ""
-            );
+        return function(documentElementID) {
+            Object.keys(list).forEach(element => {
+                temp = document.createElement("option");
+                temp.textContent = element;
+                temp.value = element;
+                document.getElementById(documentElementID).appendChild(temp);
+            });
         }
+    },
+    reduceFrom : function(inplist)
+    {
+        return function(func)
+        {
+            return function(post)
+            {
+                return inplist.reduce((accumulation, current) =>
+                    accumulation += func(current, post), ""
+                );
+            }
+        }
+    },
+    getCheckboxes : function(current, post)
+    {
+        return utilities.addRow(
+            [`<input type="checkbox" id="` + current + post + `" checked />`, current]
+        )
+    },
+    getInputs : function(current, post)
+    {
+        return `<div><input type="text" id="` + current + post + `"/> ` + current + `</div><br/>`;
     }
 }
