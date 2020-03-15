@@ -33,6 +33,7 @@ function calcMinimum(location, model)
 
             for(mins in utilities.minerals) if(model["variables"][ore][utilities.minerals[mins]] != undefined)
                 model["constraints"][utilities.minerals[mins]]["tot"] += out*model["variables"][ore][utilities.minerals[mins]];
+
             strOut += utilities.addRow([ore, utilities.addCommas(out)]);
         }
     }
@@ -44,19 +45,19 @@ function calcMinimum(location, model)
         + "</table></div><div>Extra Nerdy Information<table>"
         + utilities.addRow(["Mineral", "Needed", "Refined", "Excess"]);
     
-    for(mins in utilities.minerals)
+    for(mins of utilities.minerals.values())
         strOut += utilities.addRow([
-            utilities.minerals[mins],
-            utilities.addCommas(model["constraints"][utilities.minerals[mins]]["min"]),
-            utilities.addCommas(model["constraints"][utilities.minerals[mins]]["tot"]),
-            utilities.addCommas((model["constraints"][utilities.minerals[mins]]["tot"] - model["constraints"][utilities.minerals[mins]]["min"]))
+            mins,
+            utilities.addCommas(model["constraints"][mins]["min"]),
+            utilities.addCommas(model["constraints"][mins]["tot"]),
+            utilities.addCommas((model["constraints"][mins]["tot"] - model["constraints"][mins]["min"]))
         ]);
     strOut += "</table></div>";
     
     this.document.getElementById(location).innerHTML = strOut;
 }
 
-var calcMin = {
+let calcMin = {
     // empty model
     model : {
         "optimize": "isk",

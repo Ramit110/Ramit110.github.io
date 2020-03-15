@@ -10,6 +10,8 @@ window.onload = async function()
     this.loadMEC();
     this.loadShips();
     this.loadCapitalsShips();
+
+    this.checkCheckboxes(["MECCheck", "ShipCheck", "CapShipCheck"]);
 }
 
 function unloadDivs()
@@ -24,101 +26,82 @@ function unloadDivs()
 function loadMEC()
 {
     let textLoc = "";
-    for(mins in utilities.minerals)
-    {
+    let textLocB = "";
+    utilities.minerals.forEach(element => {
         textLoc +=
-            `<div><input type="text" id="` + utilities.minerals[mins] +
-            `MEC"/> ` + utilities.minerals[mins] + `</div><br/>`;
-    }
-    this.document.getElementById("MECinpList").innerHTML = textLoc + "";
-
-    textLoc = "";
-    for(mins in utilities.minerals)
-    {
-        textLoc +=
-            `<div><input type="text" id="` + utilities.minerals[mins] +
-            `Minerals"/> ` + utilities.minerals[mins] + `</div><br/>`;
-    }
-    this.document.getElementById("MECMinList").innerHTML = textLoc;
+            `<div><input type="text" id="` + element +
+            `MEC"/> ` + element + `</div><br/>`;
+        textLocB +=
+            `<div><input type="text" id="` + element +
+            `Minerals"/> ` + element + `</div><br/>`;
+    });
+    this.document.getElementById("MECinpList").innerHTML = textLoc;
+    this.document.getElementById("MECMinList").innerHTML = textLocB;
     this.document.getElementById("MECHaveMinerals").checked = false;
     hideThings(this.document.getElementById("MECHaveMinerals"), 'MECMinListDiv');
 
     textLoc = "";
-    for(ore in utilities.ores)
-    {
+    textLocB = "";
+    Object.keys(utilities.ores).forEach(element => {
         textLoc +=
-            `<div><input type="text" id="` + ore +
-            `Ores"/> ` + ore + `</div><br/>`;
-    }
+            `<div><input type="text" id="` + element +
+            `Ores"/> ` + element + `</div><br/>`;
+        textLocB += utilities.addRow(
+            [`<input type="checkbox" id="` + element + `MECCheck" />`, element]
+        );
+    });
     this.document.getElementById("MECOreList").innerHTML = textLoc;
     this.document.getElementById("MECHaveOres").checked = false;
     hideThings(this.document.getElementById("MECHaveOres"), 'MECOreListDiv');
 
-    textLoc = "";
-    for(ore in utilities.ores)
-    {
-        textLoc += utilities.addRow(
-            [`<input type="checkbox" id="` + ore + `MECCheck" />`, ore]
-        );
-    }
-    this.document.getElementById("MECOreFilterList").innerHTML = textLoc;
+    this.document.getElementById("MECOreFilterList").innerHTML = textLocB;
     this.document.getElementById("MECFilterOres").checked = false;
     hideThings(this.document.getElementById("MECFilterOres"), 'MECOreFilterList');
-
-    for(ore in utilities.ores)
-    {
-        this.document.getElementById(ore + "MECCheck").checked = true;
-    }
 }
 
 function loadShips()
 {
-    for(ships in utilities.T1Ships)
-    {
-        temp = document.createElement("option");
-        temp.textContent = ships;
-        temp.value = ships;
+    Object.keys(utilities.T1Ships).forEach(element => {
+        let temp = document.createElement("option");
+        temp.textContent = element;
+        temp.value = element;
         document.getElementById("SelectShip").appendChild(temp);
-    }
+    });
 
     textLoc = "";
-    for(ore in utilities.ores)
-    {
+    Object.keys(utilities.ores).forEach(element => {
         textLoc += utilities.addRow(
-            [`<input type="checkbox" id="` + ore + `ShipCheck" />`, ore]
+            [`<input type="checkbox" id="` + element + `ShipCheck" />`, element]
         );
-    }
+    });
     this.document.getElementById("ShipCoreList").innerHTML = textLoc;
-
-    for(ore in utilities.ores)
-    {
-        this.document.getElementById(ore + "ShipCheck").checked = true;
-    }
 }
 
 function loadCapitalsShips()
 {
-    for(ships in utilities.capitals)
-    {
+    Object.keys(utilities.capitals).forEach(element => {
         temp = document.createElement("option");
-        temp.textContent = ships;
-        temp.value = ships;
+        temp.textContent = element;
+        temp.value = element;
         document.getElementById("SelectShipCap").appendChild(temp);
-    }
+    });
 
     textLoc = "";
-    for(ore in utilities.ores)
-    {
+    Object.keys(utilities.ores).forEach(element => {
         textLoc += utilities.addRow(
-            [`<input type="checkbox" id="` + ore + `CapShipCheck" />`, ore]
+            [`<input type="checkbox" id="` + element + `CapShipCheck" />`, element]
         );
-    }
+    });
     this.document.getElementById("CapCoreList").innerHTML = textLoc;
+}
 
-    for(ore in utilities.ores)
-    {
-        this.document.getElementById(ore + "CapShipCheck").checked = true;
-    }
+function checkCheckboxes(postfixes)
+{
+    Object.keys(utilities.ores).forEach(element => {
+        postfixes.forEach(elements => {
+            this.document.getElementById(element + elements).checked = true;
+        });
+    });
 }
 
 function error()

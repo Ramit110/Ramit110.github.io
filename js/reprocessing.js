@@ -1,5 +1,5 @@
 
-var reprocessing = {
+let reprocessing = {
     loadReprocessing : function (value, location)
     {
         let toBeAssigned = "<tr><th>Name</th>";

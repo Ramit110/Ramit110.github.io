@@ -1,5 +1,5 @@
 
-var utilities = {
+let utilities = {
     // aquired from my EVEStuff repo at https://github.com/Ramit110/EveStuff
     ores : Object.freeze({
         "Compressed Arkonor": {
