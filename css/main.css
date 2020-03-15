@@ -93,6 +93,10 @@ input:active {
     color: #0000ff;
 }
 
+.greened {
+    color: #088000;
+}
+
 .middled {
     display: inline-block;
     height: 100%;

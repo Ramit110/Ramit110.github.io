@@ -4,7 +4,7 @@ window.onload = async function()
     for(mins in utilities.minerals) params += utilities.minerals[mins] + "%0A";
     for(ore in utilities.ores) params += ore + "%0A";
 
-    this.unloadDivs();
+    unloadDivs();
     utilities.buySell = await this.getEVEPraisal(params);
 
     loadOreThings();
@@ -22,10 +22,9 @@ window.onload = async function()
 
 function unloadDivs()
 {
-    for(things in divs)
-    {
-        this.document.getElementById(divs[things]).style.display = "none";
-    }
+    divs.forEach(element => {
+        this.document.getElementById(element).style.display = "none";
+    });
     moveTo(current);
 }
 
