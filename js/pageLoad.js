@@ -10,9 +10,9 @@ window.onload = async function()
     loadOreThings();
     loadMineralThings();
 
-    hideThings(this.document.getElementById("MECHaveMinerals"), 'MECMinListDiv');
-    hideThings(this.document.getElementById("MECHaveOres"), 'MECOreListDiv');
-    hideThings(this.document.getElementById("MECFilterOres"), 'MECOreFilterList');
+    hideThings(this.document.getElementById("HaveMineralsMEC"), 'HaveMineralsMECDiv');
+    hideThings(this.document.getElementById("HaveOresMEC"), 'HaveOresMECDiv');
+    hideThings(this.document.getElementById("FilterOresMEC"), 'FilterOresMECDiv');
 
     loadElementsIntoSheet.loadDropdown(utilities.T1Ships)("SelectShip");
     loadElementsIntoSheet.loadDropdown(utilities.capitals)("SelectShipCap");
@@ -35,7 +35,7 @@ function loadOreThings()
     let checkboxReduction = reduceFromOres(loadElementsIntoSheet.getCheckboxes);
     document.getElementById("CapCoreList").innerHTML = checkboxReduction("CapShipCheck");
     document.getElementById("ShipCoreList").innerHTML = checkboxReduction("ShipCheck");
-    document.getElementById("MECOreFilterList").innerHTML = checkboxReduction("MECCheck");
+    document.getElementById("FilterOresMECTable").innerHTML = checkboxReduction("MECCheck");
 
     let inputOreReduction = reduceFromOres(loadElementsIntoSheet.getInputs);
     document.getElementById("MECOreList").innerHTML = inputOreReduction("Ores");
@@ -47,7 +47,7 @@ function loadMineralThings()
 
     let inputMineralReduction = reduceFromMinerals(loadElementsIntoSheet.getInputs);
     this.document.getElementById("MECMinList").innerHTML = inputMineralReduction("Minerals");
-    this.document.getElementById("MECinpList").innerHTML = inputMineralReduction("MEC");
+    this.document.getElementById("MECInpList").innerHTML = inputMineralReduction("MEC");
 }
 
 function error()
