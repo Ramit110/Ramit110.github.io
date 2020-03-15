@@ -8,10 +8,15 @@ window.onload = async function()
     utilities.buySell = await this.getEVEPraisal(params);
     this.calcOres();
     this.loadMEC();
-    this.loadShips();
-    this.loadCapitalsShips();
+    
+    let reduceByOres = loadElementsIntoSheet.reduceUsing(Object.keys(utilities.ores));
+    document.getElementById("CapCoreList").innerHTML = 
+        reduceByOres("CapShipCheck");
+    document.getElementById("ShipCoreList").innerHTML = 
+        reduceByOres("ShipCheck");
 
-    this.checkCheckboxes(utilities.categories);
+    loadElementsIntoSheet.loadDropdown(utilities.T1Ships, "SelectShip");
+    loadElementsIntoSheet.loadDropdown(utilities.capitals, "SelectShipCap");
 }
 
 function unloadDivs()
@@ -47,7 +52,7 @@ function loadMEC()
             `<div><input type="text" id="` + element +
             `Ores"/> ` + element + `</div><br/>`;
         textLocB += utilities.addRow(
-            [`<input type="checkbox" id="` + element + `MECCheck" />`, element]
+            [`<input type="checkbox" id="` + element + `MECCheck" checked/>`, element]
         );
     });
     this.document.getElementById("MECOreList").innerHTML = textLoc;
@@ -59,52 +64,30 @@ function loadMEC()
     hideThings(this.document.getElementById("MECFilterOres"), 'MECOreFilterList');
 }
 
-function loadShips()
-{
-    Object.keys(utilities.T1Ships).forEach(element => {
-        let temp = document.createElement("option");
-        temp.textContent = element;
-        temp.value = element;
-        document.getElementById("SelectShip").appendChild(temp);
-    });
-
-    textLoc = "";
-    Object.keys(utilities.ores).forEach(element => {
-        textLoc += utilities.addRow(
-            [`<input type="checkbox" id="` + element + `ShipCheck" />`, element]
-        );
-    });
-    this.document.getElementById("ShipCoreList").innerHTML = textLoc;
-}
-
-function loadCapitalsShips()
-{
-    Object.keys(utilities.capitals).forEach(element => {
-        temp = document.createElement("option");
-        temp.textContent = element;
-        temp.value = element;
-        document.getElementById("SelectShipCap").appendChild(temp);
-    });
-
-    textLoc = "";
-    Object.keys(utilities.ores).forEach(element => {
-        textLoc += utilities.addRow(
-            [`<input type="checkbox" id="` + element + `CapShipCheck" />`, element]
-        );
-    });
-    this.document.getElementById("CapCoreList").innerHTML = textLoc;
-}
-
-function checkCheckboxes(postfixes)
-{
-    Object.keys(utilities.ores).forEach(element => {
-        postfixes.forEach(elements => {
-            this.document.getElementById(element + elements).checked = true;
-        });
-    });
-}
-
 function error()
 {
     console.log("Oh no");
+}
+
+var loadElementsIntoSheet = {
+    loadDropdown : function(list, documentElementID)
+    {
+        Object.keys(list).forEach(element => {
+            temp = document.createElement("option");
+            temp.textContent = element;
+            temp.value = element;
+            document.getElementById(documentElementID).appendChild(temp);
+        });
+    },
+    reduceUsing : function(inplist)
+    {
+        return function addCheckboxes(post)
+        {
+            return inplist.reduce((accumulation, current) =>
+                accumulation += utilities.addRow(
+                    [`<input type="checkbox" id="` + current + post + `" checked />`, current]
+                ), ""
+            );
+        }
+    }
 }

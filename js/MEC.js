@@ -90,9 +90,7 @@ let calcMin = {
 
         for(ore in utilities.ores)
         {
-            if(document.getElementById(ore + "MECCheck").checked)
-                this.addOreToModel(ore, repro);
-
+            this.addOreToModel(ore, document.getElementById(ore + "MECCheck").checked ? repro : 0);
             if(document.getElementById("MECHaveOres").checked)
             {
                 for(mins in utilities.ores[ore]) if(utilities.ores[ore][mins] != undefined)
@@ -109,9 +107,8 @@ let calcMin = {
     generateFromBlueprints : function(me, structure, rig, repro, quantity)
     {
         for(ore in utilities.ores)
-            if(document.getElementById(ore + "ShipCheck").checked)
-                this.addOreToModel(ore, repro);
-        
+            this.addOreToModel(ore, document.getElementById(ore + "ShipCheck").checked ? repro : 0);
+
         e = document.getElementById("SelectShip");
         for(mins in utilities.minerals)
         {
@@ -134,12 +131,11 @@ let calcMin = {
     generateCapMinerals : function(capme, capstructure, caprig, me, structure, rig, repro, quantity)
     {
         for(ore in utilities.ores)
-            if(document.getElementById(ore + "CapShipCheck").checked)
-                this.addOreToModel(ore, repro);
+            this.addOreToModel(ore, document.getElementById(ore + "CapShipCheck").checked ? repro : 0)
         
         e = document.getElementById("SelectShipCap");
-        
         neededminerals = { }
+        
         for(minerals in utilities.minerals) neededminerals[utilities.minerals[minerals]] = 0;
 
         if(utilities.capitals[e.options[e.selectedIndex].value] != undefined) 
