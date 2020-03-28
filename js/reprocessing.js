@@ -3,7 +3,7 @@ let reprocessing = {
     loadReprocessing : function (value, location)
     {
         let toBeAssigned = "<tr><th>Name</th>";
-        for(mins in utilities.minerals) toBeAssigned+= "<th>" + utilities.minerals[mins] + "</th>";
+        utilities.minerals.forEach(Element => { toBeAssigned+= "<th>" + Element + "</th>"; });
         toBeAssigned+="<th>Ore Buy</th><th>Ore Sell</th><th>Mineral Buy</th><th>Mineral Sell</th></tr>";
         
         for(ore in utilities.ores)
@@ -13,17 +13,16 @@ let reprocessing = {
             let mineralValueSell = 0;
             let mineralValueBuy = 0;
     
-            for(mins in utilities.minerals)
-            {
-                let temp =  utilities.ores[ore][utilities.minerals[mins]];
-                if(temp == undefined) temp = 0;
+            utilities.minerals.forEach(Element => {
+                let temp =  utilities.ores[ore][Element];
+                temp = temp == undefined ? 0 : temp;
                 toBeAssigned += "<th>" + utilities.addCommas(Math.floor(temp*value/100)) + "</th>";
                 try {
-                    mineralValueSell+=Math.floor(temp*value/100)*utilities.buySell[utilities.minerals[mins]]['sell'];
-                    mineralValueBuy+=Math.floor(temp*value/100)*utilities.buySell[utilities.minerals[mins]]['buy'];
+                    mineralValueSell+=Math.floor(temp*value/100)*utilities.buySell[Element]['sell'];
+                    mineralValueBuy+=Math.floor(temp*value/100)*utilities.buySell[Element]['buy'];
                 }
                 catch { error() }
-            }
+            });
     
             try{
                 // add ore buy

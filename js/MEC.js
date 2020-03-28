@@ -54,7 +54,7 @@ function calcMinimum(location, model)
         ]);
     strOut += "</table></div>";
     
-    this.document.getElementById(location).innerHTML = strOut;
+    document.getElementById(location).innerHTML = strOut;
 }
 
 let calcMin = {

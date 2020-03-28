@@ -1489,9 +1489,7 @@ let utilities = {
 
     getFromDocument : function(elementID, defaultValue)
     {
-        let temp = document.getElementById(elementID).value;
-        while (temp.includes(",")) temp = temp.replace(",", "");
-        temp *= 1;
+        let temp = document.getElementById(elementID).value.replace(/,/g, "") * 1;
         return isNaN(temp) ? defaultValue : temp;
     },
     addCommas : function(data)
@@ -1500,8 +1498,8 @@ let utilities = {
     },
     addRow : function (colList)
     {
-        newRow = "<tr>"
-        for(items in colList) newRow += "<th>" + colList[items] + "</th>";
-        return newRow + "</tr>";
+        newRow = "";
+        colList.forEach(element => newRow += "<th>" + element + "</th>");
+        return "<tr>" + newRow + "</tr>";
     }
 }

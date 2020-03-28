@@ -10,9 +10,9 @@ window.onload = async function()
     loadOreThings();
     loadMineralThings();
 
-    hideThings(this.document.getElementById("HaveMineralsMEC"), 'HaveMineralsMECDiv');
-    hideThings(this.document.getElementById("HaveOresMEC"), 'HaveOresMECDiv');
-    hideThings(this.document.getElementById("FilterOresMEC"), 'FilterOresMECDiv');
+    hideThings(document.getElementById("HaveMineralsMEC"), 'HaveMineralsMECDiv');
+    hideThings(document.getElementById("HaveOresMEC"), 'HaveOresMECDiv');
+    hideThings(document.getElementById("FilterOresMEC"), 'FilterOresMECDiv');
 
     loadElementsIntoSheet.loadDropdown(utilities.T1Ships)("SelectShip");
     loadElementsIntoSheet.loadDropdown(utilities.capitals)("SelectShipCap");
@@ -23,7 +23,7 @@ window.onload = async function()
 function unloadDivs()
 {
     divs.forEach(element => {
-        this.document.getElementById(element).style.display = "none";
+        document.getElementById(element).style.display = "none";
     });
     moveTo(current);
 }
@@ -46,8 +46,8 @@ function loadMineralThings()
     let reduceFromMinerals = loadElementsIntoSheet.reduceFrom(utilities.minerals);
 
     let inputMineralReduction = reduceFromMinerals(loadElementsIntoSheet.getInputs);
-    this.document.getElementById("MECMinList").innerHTML = inputMineralReduction("Minerals");
-    this.document.getElementById("MECInpList").innerHTML = inputMineralReduction("MEC");
+    document.getElementById("MECMinList").innerHTML = inputMineralReduction("Minerals");
+    document.getElementById("MECInpList").innerHTML = inputMineralReduction("MEC");
 }
 
 function error()
