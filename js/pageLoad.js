@@ -14,6 +14,10 @@ window.onload = async function()
     hideThings(document.getElementById("HaveOresMEC"), 'HaveOresMECDiv');
     hideThings(document.getElementById("FilterOresMEC"), 'FilterOresMECDiv');
 
+    //hideThings(document.getElementById("ShipHaveMinerals"), 'ShipHaveMineralsDiv');
+    //hideThings(document.getElementById("ShipHaveOres"), 'ShipHaveOresDiv');
+    hideThings(document.getElementById("ShipFilterOres"), 'ShipFilterOresDiv');
+
     loadElementsIntoSheet.loadDropdown(utilities.T1Ships)("SelectShip");
     loadElementsIntoSheet.loadDropdown(utilities.capitals)("SelectShipCap");
 

@@ -114,7 +114,13 @@ let calcMin = {
     generateFromBlueprints : function(me, structure, rig, repro, quantity)
     {
         for(ore in utilities.ores)
-            this.addOreToModel(ore, document.getElementById(ore + "ShipCheck").checked ? repro : 0);
+            this.addOreToModel(ore, 
+                (
+                    !document.getElementById("ShipFilterOres").checked
+                    ||
+                    document.getElementById(ore + "ShipCheck").checked)
+                     ? repro : 0
+            );
 
         e = document.getElementById("SelectShip");
         for(mins in utilities.minerals)

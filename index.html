@@ -50,7 +50,7 @@
         </div>
         <div id="MostEfficientCompressed" class="outlined">
             <div>
-                <div id="" class = "middled">
+                <div class="middled">
                     Target Minerals
                     <div id="MECInpList" class="noMargin lefted-text"></div>
                 </div>
@@ -84,7 +84,6 @@
         <div id="T1Ship" class="outlined">
             <div><select id="SelectShip"><option>Select Ship</option></select></div>
             <div>
-                <table id="ShipCoreList" class="middled"></table>
                 <div class="noMargin middled lefted-text">
                     <div><input type="text" id="ShipMaterialEfficiency" value="10"> Material Efficiency</div><br />
                     <div><input type="text" id="StructureBonus" value="0"> Structure Bonus</div><br />
@@ -92,6 +91,28 @@
                     <div><input type="text" id="ShipReprocessingPercentage" value="50"> Reprocessing Percentage</div><br />
                     <div><input type="text" id="ShipQuantity" value="1"> Quantity</div>
                 </div>
+                <!--<div id="ShipHaveMineralsDiv">
+                    Minerals
+                    <br />
+                    <table id="ShipMinList" class="middled"></table>
+                </div>
+                <div id="ShipHaveOresDiv">
+                    Ores
+                    <br />
+                    <table id="ShipOreList" class="middled"></table>
+                </div>-->
+                <div id="ShipFilterOresDiv">
+                    Filter Ores
+                    <br />
+                    <table id="ShipCoreList" class="middled"></table>
+                </div>
+            </div>
+            <div>
+                <!--<input type="checkbox" id="ShipHaveMinerals" value="1" onchange="hideThings(this, 'ShipHaveMineralsDiv')"> Mineral Stockpile
+                <br />
+                <input type="checkbox" id="ShipHaveOres" value="1"onchange="hideThings(this, 'ShipHaveOresDiv')"> Ore Stockpile
+                <br />-->
+                <input type="checkbox" id="ShipFilterOres" value="1" onchange="hideThings(this, 'ShipFilterOresDiv')"> Ore Filter
             </div>
             <br />
             <input type="submit" value="Calculate" onclick="calcShip()" />

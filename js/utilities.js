@@ -1482,6 +1482,46 @@ let utilities = {
             "Capital Sensor Cluster": 16,
             "Capital Shield Emitter": 8,
             "Capital Ship Maintenance Bay": 16
+        },
+        "Providence": {
+            "Capital Armor Plates": 17,
+            "Capital Cargo Bay": 83,
+            "Capital Construction Parts": 53,
+            "Capital Propulsion Engine": 22
+        },
+        "Charon": {
+            "Capital Armor Plates": 14,
+            "Capital Cargo Bay": 106,
+            "Capital Construction Parts": 51,
+            "Capital Propulsion Engine": 11
+        },
+        "Obelisk": {
+            "Capital Armor Plates": 16,
+            "Capital Cargo Bay": 89,
+            "Capital Construction Parts": 56,
+            "Capital Propulsion Engine": 17
+        },
+        "Fenrir": {
+            "Capital Armor Plates": 13,
+            "Capital Cargo Bay": 83,
+            "Capital Construction Parts": 49,
+            "Capital Propulsion Engine": 28
+        },
+        "Rorqual": {
+            "Capital Armor Plates": 7,
+            "Capital Capacitor Battery": 11,
+            "Capital Cargo Bay": 22,
+            "Capital Clone Vat Bay": 33,
+            "Capital Computer System": 33,
+            "Capital Construction Parts": 44,
+            "Capital Corporate Hangar Bay": 17,
+            "Capital Drone Bay": 6,
+            "Capital Jump Drive": 11,
+            "Capital Power Generator": 11,
+            "Capital Propulsion Engine": 9,
+            "Capital Sensor Cluster": 9,
+            "Capital Shield Emitter": 9,
+            "Capital Ship Maintenance Bay": 33
         }
     }),
     minerals : Object.freeze([ "Tritanium", "Pyerite", "Mexallon", "Isogen", "Nocxium", "Zydrine", "Megacyte"]),
