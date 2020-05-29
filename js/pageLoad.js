@@ -14,9 +14,13 @@ window.onload = async function()
     hideThings(document.getElementById("HaveOresMEC"), 'HaveOresMECDiv');
     hideThings(document.getElementById("FilterOresMEC"), 'FilterOresMECDiv');
 
-    //hideThings(document.getElementById("ShipHaveMinerals"), 'ShipHaveMineralsDiv');
-    //hideThings(document.getElementById("ShipHaveOres"), 'ShipHaveOresDiv');
+    hideThings(document.getElementById("ShipHaveMinerals"), 'ShipHaveMineralsDiv');
+    hideThings(document.getElementById("ShipHaveOres"), 'ShipHaveOresDiv');
     hideThings(document.getElementById("ShipFilterOres"), 'ShipFilterOresDiv');
+
+    hideThings(document.getElementById("CapHaveMinerals"), 'CapHaveMineralsDiv');
+    hideThings(document.getElementById("CapHaveOres"), 'CapHaveOresDiv');
+    hideThings(document.getElementById("CapFilterOres"), 'CapFilterOresDiv');
 
     loadElementsIntoSheet.loadDropdown(utilities.T1Ships)("SelectShip");
     loadElementsIntoSheet.loadDropdown(utilities.capitals)("SelectShipCap");
@@ -43,6 +47,8 @@ function loadOreThings()
 
     let inputOreReduction = reduceFromOres(loadElementsIntoSheet.getInputs);
     document.getElementById("MECOreList").innerHTML = inputOreReduction("Ores");
+    document.getElementById("ShipOreList").innerHTML = inputOreReduction("OresShip");
+    document.getElementById("CapOreList").innerHTML = inputOreReduction("OresCap");
 }
 
 function loadMineralThings()
@@ -52,6 +58,9 @@ function loadMineralThings()
     let inputMineralReduction = reduceFromMinerals(loadElementsIntoSheet.getInputs);
     document.getElementById("MECMinList").innerHTML = inputMineralReduction("Minerals");
     document.getElementById("MECInpList").innerHTML = inputMineralReduction("MEC");
+
+    document.getElementById("ShipMinList").innerHTML = inputMineralReduction("MineralsShip");
+    document.getElementById("CapMinList").innerHTML = inputMineralReduction("MineralsCap");
 }
 
 function error()

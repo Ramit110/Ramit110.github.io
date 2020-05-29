@@ -1524,7 +1524,15 @@ let utilities = {
             "Capital Ship Maintenance Bay": 33
         }
     }),
-    minerals : Object.freeze([ "Tritanium", "Pyerite", "Mexallon", "Isogen", "Nocxium", "Zydrine", "Megacyte"]),
+    minerals : Object.freeze([
+        "Tritanium",
+        "Pyerite",
+        "Mexallon",
+        "Isogen",
+        "Nocxium",
+        "Zydrine",
+        "Megacyte"
+    ]),
     buySell : Object.freeze({ }),
 
     getFromDocument : function(elementID, defaultValue)

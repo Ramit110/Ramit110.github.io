@@ -1,4 +1,7 @@
 
+divs = ["Main", "Reprocessing", "MostEfficientCompressed", "T1Ship", "Capitals", "Support"];
+current = 0;
+
 function calcOres()
 {
     reprocessing.loadReprocessing(utilities.getFromDocument("ReprocessingPercentage", 50), "OreTable");
@@ -47,4 +50,11 @@ function hideThings(box, thing)
 {
     if(box.checked) document.getElementById(thing).style.display = "inline-block";
     else document.getElementById(thing).style.display = "none";
+}
+
+function moveTo(number)
+{
+    document.getElementById(divs[current]).style.display = "none";
+    document.getElementById(divs[number]).style.display = "block";
+    current = number;
 }

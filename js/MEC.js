@@ -135,8 +135,24 @@ let calcMin = {
                         (1-(rig/100))
                     );
             else amount = 0;
+            
+            amount = 
+                isNaN(amount) ? 
+                    (document.getElementById("ShipHaveMinerals").checked ? utilities.getFromDocument(utilities.minerals[mins] + "MineralsShip", 0) : 0)
+                    :
+                    amount - (document.getElementById("ShipHaveMinerals").checked ? utilities.getFromDocument(utilities.minerals[mins] + "MineralsShip", 0) : 0);
+            
+            if(document.getElementById("ShipHaveOres").checked) for(ore in utilities.ores)
+                {
+                    if(utilities.ores[ore][utilities.minerals[mins]] != undefined)
+                    {
+                        amount -= 
+                            utilities.getFromDocument(ore + "OresShip", 0) * utilities.ores[ore][utilities.minerals[mins]] * (isNaN(repro/100) ? 0 : repro/100)
+                    }
+                };
+        
             calcMin.model["constraints"][utilities.minerals[mins]] = 
-                { "min": isNaN(amount) ? 0 : amount, "tot": 0 }
+                { "min": amount, "tot": 0 };
         }
         return calcMin.model;
     },
@@ -144,7 +160,13 @@ let calcMin = {
     generateCapMinerals : function(capme, capstructure, caprig, me, structure, rig, repro, quantity)
     {
         for(ore in utilities.ores)
-            this.addOreToModel(ore, document.getElementById(ore + "CapShipCheck").checked ? repro : 0)
+            this.addOreToModel(ore, 
+                (
+                    !document.getElementById("CapFilterOres").checked
+                    ||
+                    document.getElementById(ore + "CapShipCheck").checked)
+                     ? repro : 0
+            );
         
         e = document.getElementById("SelectShipCap");
         neededminerals = { }
@@ -171,9 +193,23 @@ let calcMin = {
                         Math.ceil(quantity);
             }
         
+        for(ore in utilities.ores)
+        {
+            for(mins in utilities.minerals)
+            {
+                if(utilities.ores[ore][utilities.minerals[mins]] != undefined)
+                {
+                    neededminerals[utilities.minerals[mins]] -= utilities.getFromDocument(ore + "OresCap", 0) * utilities.ores[ore][utilities.minerals[mins]] * (isNaN(repro/100) ? 0 : repro/100);
+            
+                }
+            }
+        }
+
         for(minName in neededminerals)
-            calcMin.model["constraints"][minName] = 
-                { "min": neededminerals[minName], "tot": 0 }
+        {
+            neededminerals[minName] -= (document.getElementById("CapHaveMinerals").checked ? utilities.getFromDocument(minName + "MineralsCap", 0) : 0);
+            calcMin.model["constraints"][minName] = { "min": neededminerals[minName], "tot": 0 };
+        }
 
         return calcMin.model;
     }

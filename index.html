@@ -6,7 +6,6 @@
         <script src="js/evePraisal.js"></script>
         <script src="js/MEC.js"></script>
         <script src="js/pageLoad.js"></script>
-        <script src="js/pageNavigation.js"></script>
         <script src="js/reprocessing.js"></script>
         <script src="js/utilities.js"></script>
         <script src="node_modules/javascript-lp-solver/prod/solver.js"></script>
@@ -91,27 +90,25 @@
                     <div><input type="text" id="ShipReprocessingPercentage" value="50"> Reprocessing Percentage</div><br />
                     <div><input type="text" id="ShipQuantity" value="1"> Quantity</div>
                 </div>
-                <!--<div id="ShipHaveMineralsDiv">
+                <div id="ShipHaveMineralsDiv" class="middled">
                     Minerals
-                    <br />
-                    <table id="ShipMinList" class="middled"></table>
+                    <div id="ShipMinList" class="noMargin lefted-text"></div>
                 </div>
-                <div id="ShipHaveOresDiv">
+                <div id="ShipHaveOresDiv" class="middled">
                     Ores
-                    <br />
-                    <table id="ShipOreList" class="middled"></table>
-                </div>-->
-                <div id="ShipFilterOresDiv">
+                    <div id="ShipOreList" class="noMargin lefted-text"></div>
+                </div>
+                <div id="ShipFilterOresDiv" class="middled">
                     Filter Ores
                     <br />
                     <table id="ShipCoreList" class="middled"></table>
                 </div>
             </div>
             <div>
-                <!--<input type="checkbox" id="ShipHaveMinerals" value="1" onchange="hideThings(this, 'ShipHaveMineralsDiv')"> Mineral Stockpile
+                <input type="checkbox" id="ShipHaveMinerals" value="1" onchange="hideThings(this, 'ShipHaveMineralsDiv')"> Mineral Stockpile
                 <br />
-                <input type="checkbox" id="ShipHaveOres" value="1"onchange="hideThings(this, 'ShipHaveOresDiv')"> Ore Stockpile
-                <br />-->
+                <input type="checkbox" id="ShipHaveOres" value="1" onchange="hideThings(this, 'ShipHaveOresDiv')"> Ore Stockpile
+                <br />
                 <input type="checkbox" id="ShipFilterOres" value="1" onchange="hideThings(this, 'ShipFilterOresDiv')"> Ore Filter
             </div>
             <br />
@@ -122,7 +119,6 @@
         <div id="Capitals" class="outlined">
             <div><select id="SelectShipCap"><option>Select Ship</option></select></div>
             <div>
-                <table id="CapCoreList" class="middled"></table>
                 <div class="noMargin middled lefted-text">
                     <div><input type="text" id="CapitalShipMaterialEfficiency" value="10"> Ship Material Efficiency</div><br />
                     <div><input type="text" id="CapitalStructureBonus" value="0"> Ship Structure Bonus</div><br />
@@ -133,6 +129,26 @@
                     <div><input type="text" id="CapitalShipReprocessingPercentage" value="50"> Reprocessing Percentage</div><br />
                     <div><input type="text" id="CapitalShipQuantity" value="1"> Quantity</div>
                 </div>
+                <div id="CapHaveMineralsDiv" class="middled">
+                    Minerals
+                    <div id="CapMinList" class="noMargin lefted-text"></div>
+                </div>
+                <div id="CapHaveOresDiv" class="middled">
+                    Ores
+                    <div id="CapOreList" class="noMargin lefted-text"></div>
+                </div>
+                <div id="CapFilterOresDiv" class="middled">
+                    Filter Ores
+                    <br />
+                    <table id="CapCoreList" class="middled"></table>
+                </div>
+            </div>
+            <div>
+                <input type="checkbox" id="CapHaveMinerals" value="1" onchange="hideThings(this, 'CapHaveMineralsDiv')"> Mineral Stockpile
+                <br />
+                <input type="checkbox" id="CapHaveOres" value="1" onchange="hideThings(this, 'CapHaveOresDiv')"> Ore Stockpile
+                <br />
+                <input type="checkbox" id="CapFilterOres" value="1" onchange="hideThings(this, 'CapFilterOresDiv')"> Ore Filter
             </div>
             <br />
             <input type="submit" value="Calculate" onclick="calcShipCap()" />
