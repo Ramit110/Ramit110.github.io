@@ -1,3 +1,3 @@
 # Ramit110.github.io
 
-A special hell
+A place for me to throw my side projects at.
