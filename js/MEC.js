@@ -83,7 +83,7 @@ let calcMin = {
         {
             calcMin.model["constraints"][utilities.minerals[mins]] = 
                 { "min": utilities.getFromDocument(utilities.minerals[mins] + "MEC", 0), "tot": 0 }
-            if(document.getElementById("HaveMineralsMEC").checked)
+            if(document.getElementById("MECHaveMinerals").checked)
                 calcMin.model["constraints"][utilities.minerals[mins]]["min"] -= 
                     utilities.getFromDocument(utilities.minerals[mins] + "Minerals", 0)
         }
@@ -92,13 +92,13 @@ let calcMin = {
         {
             this.addOreToModel(ore,
                 (
-                    !document.getElementById("FilterOresMEC").checked
+                    !document.getElementById("MECFilterOres").checked
                     ||
                     document.getElementById(ore + "MECCheck").checked
                 ) ? 
                 repro : 0
             );
-            if(document.getElementById("HaveOresMEC").checked)
+            if(document.getElementById("MECHaveOres").checked)
             {
                 for(mins in utilities.ores[ore]) if(utilities.ores[ore][mins] != undefined)
                 {

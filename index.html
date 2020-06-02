@@ -53,28 +53,28 @@
                     Target Minerals
                     <div id="MECInpList" class="noMargin lefted-text"></div>
                 </div>
-                <div id="HaveMineralsMECDiv" class = "middled">
+                <div id="MECHaveMineralsDiv" class = "middled">
                     Minerals
                     <div id="MECMinList" class="noMargin lefted-text"></div>
                 </div>
-                <div id="HaveOresMECDiv" class = "middled">
+                <div id="MECHaveOresDiv" class = "middled">
                     Ores
                     <div id="MECOreList" class="noMargin lefted-text"></div>
                 </div>
-                <div id="FilterOresMECDiv">
+                <div id="MECFilterOresDiv">
                     Filter Ores
                     <br />
-                    <table id="FilterOresMECTable" class="middled"></table>
+                    <table id="MECFilterOresTable" class="middled"></table>
                 </div>
             </div>
             <div>
                 Reprocessing Percentage: <input type="text" id="ReprocessingPercentageTwo" value="50">
                 <br />
-                <input type="checkbox" id="HaveMineralsMEC" value="1" onchange="hideThings(this, 'HaveMineralsMECDiv')"> Mineral Stockpile
+                <input type="checkbox" id="MECHaveMinerals" value="1" onchange="hideThings(this, 'MECHaveMineralsDiv')"> Mineral Stockpile
                 <br />
-                <input type="checkbox" id="HaveOresMEC" value="1"onchange="hideThings(this, 'HaveOresMECDiv')"> Ore Stockpile
+                <input type="checkbox" id="MECHaveOres" value="1"onchange="hideThings(this, 'MECHaveOresDiv')"> Ore Stockpile
                 <br />
-                <input type="checkbox" id="FilterOresMEC" value="1"onchange="hideThings(this, 'FilterOresMECDiv')"> Ore Filter
+                <input type="checkbox" id="MECFilterOres" value="1"onchange="hideThings(this, 'MECFilterOresDiv')"> Ore Filter
             </div>
             <br />
             <input type="submit" value="Get minimum compressed ore needed" onclick="calcMinimumOre()" />

@@ -1285,6 +1285,12 @@ let utilities = {
             "Capital Ship Maintenance Bay": 556,
             "Capital Turret Hardpoint": 556
         },
+        "Charon": {
+            "Capital Armor Plates": 14,
+            "Capital Cargo Bay": 106,
+            "Capital Construction Parts": 51,
+            "Capital Propulsion Engine": 11
+        },
         "Chimera": {
             "Capital Armor Plates": 5,
             "Capital Capacitor Battery": 5,
@@ -1315,6 +1321,12 @@ let utilities = {
             "Capital Shield Emitter": 333,
             "Capital Ship Maintenance Bay": 556,
             "Capital Turret Hardpoint": 444
+        },
+        "Fenrir": {
+            "Capital Armor Plates": 13,
+            "Capital Cargo Bay": 83,
+            "Capital Construction Parts": 49,
+            "Capital Propulsion Engine": 28
         },
         "Leviathan": {
             "Capital Armor Plates": 222,
@@ -1422,6 +1434,21 @@ let utilities = {
             "Capital Ship Maintenance Bay": 16,
             "Capital Siege Array": 25
         },
+        "Obelisk": {
+            "Capital Armor Plates": 16,
+            "Capital Cargo Bay": 89,
+            "Capital Construction Parts": 56,
+            "Capital Propulsion Engine": 17
+        },
+        "Orca": {
+            "Capital Capacitor Battery": 9,
+            "Capital Cargo Bay": 38,
+            "Capital Computer System": 7,
+            "Capital Construction Parts": 16,
+            "Capital Corporate Hangar Bay": 4,
+            "Capital Sensor Cluster": 4,
+            "Capital Ship Maintenance Bay": 7
+        },
         "Phoenix": {
             "Capital Armor Plates": 7,
             "Capital Capacitor Battery": 7,
@@ -1436,6 +1463,12 @@ let utilities = {
             "Capital Shield Emitter": 28,
             "Capital Ship Maintenance Bay": 16,
             "Capital Siege Array": 28
+        },
+        "Providence": {
+            "Capital Armor Plates": 17,
+            "Capital Cargo Bay": 83,
+            "Capital Construction Parts": 53,
+            "Capital Propulsion Engine": 22
         },
         "Ragnarok": {
             "Capital Armor Plates": 333,
@@ -1469,44 +1502,6 @@ let utilities = {
             "Capital Siege Array": 28,
             "Capital Turret Hardpoint": 37
         },
-        "Thanatos": {
-            "Capital Armor Plates": 15,
-            "Capital Capacitor Battery": 5,
-            "Capital Computer System": 7,
-            "Capital Construction Parts": 5,
-            "Capital Corporate Hangar Bay": 8,
-            "Capital Drone Bay": 59,
-            "Capital Jump Drive": 8,
-            "Capital Power Generator": 10,
-            "Capital Propulsion Engine": 7,
-            "Capital Sensor Cluster": 16,
-            "Capital Shield Emitter": 8,
-            "Capital Ship Maintenance Bay": 16
-        },
-        "Providence": {
-            "Capital Armor Plates": 17,
-            "Capital Cargo Bay": 83,
-            "Capital Construction Parts": 53,
-            "Capital Propulsion Engine": 22
-        },
-        "Charon": {
-            "Capital Armor Plates": 14,
-            "Capital Cargo Bay": 106,
-            "Capital Construction Parts": 51,
-            "Capital Propulsion Engine": 11
-        },
-        "Obelisk": {
-            "Capital Armor Plates": 16,
-            "Capital Cargo Bay": 89,
-            "Capital Construction Parts": 56,
-            "Capital Propulsion Engine": 17
-        },
-        "Fenrir": {
-            "Capital Armor Plates": 13,
-            "Capital Cargo Bay": 83,
-            "Capital Construction Parts": 49,
-            "Capital Propulsion Engine": 28
-        },
         "Rorqual": {
             "Capital Armor Plates": 7,
             "Capital Capacitor Battery": 11,
@@ -1522,6 +1517,20 @@ let utilities = {
             "Capital Sensor Cluster": 9,
             "Capital Shield Emitter": 9,
             "Capital Ship Maintenance Bay": 33
+        },
+        "Thanatos": {
+            "Capital Armor Plates": 15,
+            "Capital Capacitor Battery": 5,
+            "Capital Computer System": 7,
+            "Capital Construction Parts": 5,
+            "Capital Corporate Hangar Bay": 8,
+            "Capital Drone Bay": 59,
+            "Capital Jump Drive": 8,
+            "Capital Power Generator": 10,
+            "Capital Propulsion Engine": 7,
+            "Capital Sensor Cluster": 16,
+            "Capital Shield Emitter": 8,
+            "Capital Ship Maintenance Bay": 16
         }
     }),
     minerals : Object.freeze([

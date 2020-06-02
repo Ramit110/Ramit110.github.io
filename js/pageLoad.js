@@ -10,17 +10,12 @@ window.onload = async function()
     loadOreThings();
     loadMineralThings();
 
-    hideThings(document.getElementById("HaveMineralsMEC"), 'HaveMineralsMECDiv');
-    hideThings(document.getElementById("HaveOresMEC"), 'HaveOresMECDiv');
-    hideThings(document.getElementById("FilterOresMEC"), 'FilterOresMECDiv');
+    prefix = ["MEC", "Ship", "Cap"]
+    postfix = ["HaveMinerals", "HaveOres", "FilterOres"]
 
-    hideThings(document.getElementById("ShipHaveMinerals"), 'ShipHaveMineralsDiv');
-    hideThings(document.getElementById("ShipHaveOres"), 'ShipHaveOresDiv');
-    hideThings(document.getElementById("ShipFilterOres"), 'ShipFilterOresDiv');
-
-    hideThings(document.getElementById("CapHaveMinerals"), 'CapHaveMineralsDiv');
-    hideThings(document.getElementById("CapHaveOres"), 'CapHaveOresDiv');
-    hideThings(document.getElementById("CapFilterOres"), 'CapFilterOresDiv');
+    prefix.forEach(
+        prevs => postfix.forEach(
+            posts => hideThings(document.getElementById(prevs + posts), prevs + posts + "Div")));
 
     loadElementsIntoSheet.loadDropdown(utilities.T1Ships)("SelectShip");
     loadElementsIntoSheet.loadDropdown(utilities.capitals)("SelectShipCap");
@@ -43,7 +38,7 @@ function loadOreThings()
     let checkboxReduction = reduceFromOres(loadElementsIntoSheet.getCheckboxes);
     document.getElementById("CapCoreList").innerHTML = checkboxReduction("CapShipCheck");
     document.getElementById("ShipCoreList").innerHTML = checkboxReduction("ShipCheck");
-    document.getElementById("FilterOresMECTable").innerHTML = checkboxReduction("MECCheck");
+    document.getElementById("MECFilterOresTable").innerHTML = checkboxReduction("MECCheck");
 
     let inputOreReduction = reduceFromOres(loadElementsIntoSheet.getInputs);
     document.getElementById("MECOreList").innerHTML = inputOreReduction("Ores");
