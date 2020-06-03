@@ -5,7 +5,7 @@ window.onload = async function()
     for(ore in utilities.ores) params += ore + "%0A";
 
     unloadDivs();
-    utilities.buySell = await this.getEVEPraisal(params);
+    utilities.buySellJita = await this.getEVEPraisal(params);
 
     loadOreThings();
     loadMineralThings();

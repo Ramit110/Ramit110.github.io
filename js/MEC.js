@@ -25,9 +25,9 @@ function calcMinimum(location, model)
         if(out != 0 && !isNaN(out) && out != undefined)
         {
             try{
-                total["sell"] += out*utilities.buySell[ore]["sell"];
-                total["buy"] += out*utilities.buySell[ore]["buy"];
-                total["volume"] += out*utilities.buySell[ore]["volume"];
+                total["sell"] += out*utilities.buySellJita[ore]["sell"];
+                total["buy"] += out*utilities.buySellJita[ore]["buy"];
+                total["volume"] += out*utilities.buySellJita[ore]["volume"];
             }
             catch { error() }
 
@@ -72,7 +72,7 @@ let calcMin = {
         for(reproOres in utilities.ores[ore])
             this.model["variables"][ore][reproOres] = Math.floor(utilities.ores[ore][reproOres]*repro/100);
         try {
-            this.model["variables"][ore]["isk"] = utilities.buySell[ore]["sell"];
+            this.model["variables"][ore]["isk"] = utilities.buySellJita[ore]["sell"];
         }
         catch { error() }
     },

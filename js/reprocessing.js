@@ -18,17 +18,17 @@ let reprocessing = {
                 temp = temp == undefined ? 0 : temp;
                 toBeAssigned += "<th>" + utilities.addCommas(Math.floor(temp*value/100)) + "</th>";
                 try {
-                    mineralValueSell+=Math.floor(temp*value/100)*utilities.buySell[Element]['sell'];
-                    mineralValueBuy+=Math.floor(temp*value/100)*utilities.buySell[Element]['buy'];
+                    mineralValueSell+=Math.floor(temp*value/100)*utilities.buySellJita[Element]['sell'];
+                    mineralValueBuy+=Math.floor(temp*value/100)*utilities.buySellJita[Element]['buy'];
                 }
                 catch { error() }
             });
     
             try{
                 // add ore buy
-                toBeAssigned += "<th>" + utilities.addCommas(Math.ceil(utilities.buySell[ore]['buy'])) + "</th>";
+                toBeAssigned += "<th>" + utilities.addCommas(Math.ceil(utilities.buySellJita[ore]['buy'])) + "</th>";
                 // add ore sell
-                toBeAssigned += "<th>" + utilities.addCommas(Math.ceil(utilities.buySell[ore]['sell'])) + "</th>";
+                toBeAssigned += "<th>" + utilities.addCommas(Math.ceil(utilities.buySellJita[ore]['sell'])) + "</th>";
             }
             catch { error() }
             // add mineral buy
