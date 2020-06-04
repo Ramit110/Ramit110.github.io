@@ -1,8 +1,8 @@
 
-getEVEPraisal = async (params) => {
+getEVEPraisal = async (params, location) => {
     try {
         const fetchResponse = await fetch(
-            "https://cors-anywhere.herokuapp.com/https://evepraisal.com/appraisal.json?market=jita&raw_textarea=" + params,
+            "https://cors-anywhere.herokuapp.com/https://evepraisal.com/appraisal.json?market=" + location + "&raw_textarea=" + params,
             {
                 method: 'POST',
                 headers: {

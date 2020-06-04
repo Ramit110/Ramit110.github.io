@@ -5,7 +5,13 @@ window.onload = async function()
     for(ore in utilities.ores) params += ore + "%0A";
 
     unloadDivs();
-    utilities.buySellJita = await this.getEVEPraisal(params);
+
+    utilities.buySellJita = await this.getEVEPraisal(params, "jita");
+    utilities.buySellAmarr = await this.getEVEPraisal(params, "amarr");
+    utilities.buySellDodixie = await this.getEVEPraisal(params, "dodixie");
+    utilities.buySellRens = await this.getEVEPraisal(params, "rens");
+
+    loadElementsIntoSheet.loadDropdownMainList(["jita", "amarr", "dodixie", "rens"])("SelectMarket");
 
     loadOreThings();
     loadMineralThings();
@@ -17,8 +23,8 @@ window.onload = async function()
         prevs => postfix.forEach(
             posts => hideThings(document.getElementById(prevs + posts), prevs + posts + "Div")));
 
-    loadElementsIntoSheet.loadDropdown(utilities.T1Ships)("SelectShip");
-    loadElementsIntoSheet.loadDropdown(utilities.capitals)("SelectShipCap");
+    loadElementsIntoSheet.loadDropdownArr(utilities.T1Ships)("SelectShip");
+    loadElementsIntoSheet.loadDropdownArr(utilities.capitals)("SelectShipCap");
 
     this.calcOres();
 }
@@ -64,13 +70,24 @@ function error()
 }
 
 var loadElementsIntoSheet = {
-    loadDropdown : function(list)
+    loadDropdownArr : function(arr)
+    {
+        return function(documentElementID) {
+            Object.keys(arr).forEach(element => {
+                temp = document.createElement("option");
+                temp.textContent = element;
+                temp.value = element;
+                document.getElementById(documentElementID).appendChild(temp);
+            });
+        }
+    },
+    loadDropdownMainList : function(list)
     {
         return function(documentElementID) {
             Object.keys(list).forEach(element => {
                 temp = document.createElement("option");
-                temp.textContent = element;
-                temp.value = element;
+                temp.textContent = list[element];
+                temp.value = list[element];
                 document.getElementById(documentElementID).appendChild(temp);
             });
         }

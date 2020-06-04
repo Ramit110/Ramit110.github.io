@@ -1702,6 +1702,9 @@ let utilities = {
         "Megacyte"
     ]),
     buySellJita : Object.freeze({ }),
+    buySellAmarr : Object.freeze({ }),
+    buySellDodixie : Object.freeze({ }),
+    buySellRens : Object.freeze({ }),
 
     getFromDocument : function(elementID, defaultValue)
     {

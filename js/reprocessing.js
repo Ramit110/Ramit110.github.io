@@ -12,23 +12,31 @@ let reprocessing = {
             toBeAssigned += "<th>" + ore + "</th>";
             let mineralValueSell = 0;
             let mineralValueBuy = 0;
-    
+            let localList = { };
+
+            let e = document.getElementById("SelectMarket");
+            if(e.options[e.selectedIndex].value == "jita") localList = utilities.buySellJita;
+            else if(e.options[e.selectedIndex].value == "amarr") localList = utilities.buySellAmarr;
+            else if(e.options[e.selectedIndex].value == "dodixie") localList = utilities.buySellDodixie;
+            else if(e.options[e.selectedIndex].value == "rens") localList = utilities.buySellRens;
+
+            
             utilities.minerals.forEach(Element => {
                 let temp =  utilities.ores[ore][Element];
                 temp = temp == undefined ? 0 : temp;
                 toBeAssigned += "<th>" + utilities.addCommas(Math.floor(temp*value/100)) + "</th>";
                 try {
-                    mineralValueSell+=Math.floor(temp*value/100)*utilities.buySellJita[Element]['sell'];
-                    mineralValueBuy+=Math.floor(temp*value/100)*utilities.buySellJita[Element]['buy'];
+                    mineralValueSell+=Math.floor(temp*value/100)*localList[Element]['sell'];
+                    mineralValueBuy+=Math.floor(temp*value/100)*localList[Element]['buy'];
                 }
                 catch { error() }
             });
     
             try{
                 // add ore buy
-                toBeAssigned += "<th>" + utilities.addCommas(Math.ceil(utilities.buySellJita[ore]['buy'])) + "</th>";
+                toBeAssigned += "<th>" + utilities.addCommas(Math.ceil(localList[ore]['buy'])) + "</th>";
                 // add ore sell
-                toBeAssigned += "<th>" + utilities.addCommas(Math.ceil(utilities.buySellJita[ore]['sell'])) + "</th>";
+                toBeAssigned += "<th>" + utilities.addCommas(Math.ceil(localList[ore]['sell'])) + "</th>";
             }
             catch { error() }
             // add mineral buy

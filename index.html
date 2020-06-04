@@ -39,6 +39,7 @@
         <div id="Reprocessing" class="outlined">
             <div>
                 Reprocessing Percentage: <input type="text" id="ReprocessingPercentage" value="50">
+                <select id="SelectMarket" onchange="calcOres()"></select>
             </div>
             <br/>
             <input type="submit" value="recalculate" onclick="calcOres()" />
@@ -49,7 +50,7 @@
             </div>
         </div>
         <div id="MostEfficientCompressed" class="outlined">
-            <div>
+            <div id="MECMain">
                 <div class="middled">
                     Target Minerals
                     <div id="MECInpList" class="noMargin lefted-text"></div>
