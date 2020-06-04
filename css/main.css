@@ -11,7 +11,7 @@ body {
 }
 
 div {
-    background-color: #000000;
+    background-color: #202020;
     margin: 1%;
     display: inline-block;
     min-width: 80%;
@@ -52,7 +52,7 @@ input:active {
 }
 
 .outlined {
-    border: 1px solid #ffffff;
+    border: 1px solid #aaaaaa;
 }
 
 .navbar {
@@ -68,7 +68,7 @@ input:active {
 .navbar input {
     float: left;
     color: #808080;
-    background-color: #00000f;
+    background-color: #202020;
     border: none;
     height: 100%;
 }
