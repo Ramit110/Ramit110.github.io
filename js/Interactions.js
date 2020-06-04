@@ -1,5 +1,5 @@
 
-divs = ["Main", "Reprocessing", "MostEfficientCompressed", "T1Ship", "Capitals", "Support"];
+divs = ["Main", "Reprocessing", "MostEfficientCompressed", "T1Ship", "Capitals"];
 current = 0;
 
 function calcOres()
