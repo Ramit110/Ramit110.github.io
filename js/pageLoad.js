@@ -13,15 +13,29 @@ window.onload = async function()
 
     loadElementsIntoSheet.loadDropdownMainList(["jita", "amarr", "dodixie", "rens"])("SelectMarket");
 
-    loadOreThings();
-    loadMineralThings();
-
     prefix = ["MEC", "Ship", "Cap"]
-    postfix = ["HaveMinerals", "HaveOres", "FilterOres"]
+    postfixDivs = ["HaveMinerals", "HaveOres", "FilterOres"]
+        
+    let reduceFromOres = loadElementsIntoSheet.reduceFrom(Object.keys(utilities.ores));
+
+    let inputMineralReduction = loadElementsIntoSheet.reduceFrom(utilities.minerals)(loadElementsIntoSheet.getInputs);
+    document.getElementById("MECInpList").innerHTML = inputMineralReduction("MEC");
 
     prefix.forEach(
-        prevs => postfix.forEach(
-            posts => hideThings(document.getElementById(prevs + posts), prevs + posts + "Div")));
+        prevs => {
+            postfixDivs.forEach(
+                posts => hideThings(document.getElementById(prevs + posts), prevs + posts + "Div")
+            )
+            
+            document.getElementById(prevs + "CoreList").innerHTML = 
+                reduceFromOres(loadElementsIntoSheet.getCheckboxes)(prevs + "CoreListCheck");
+
+            document.getElementById(prevs + "OreList").innerHTML = 
+                reduceFromOres(loadElementsIntoSheet.getInputs)(prevs + "OreListCheck");
+                
+            document.getElementById(prevs + "MinList").innerHTML = inputMineralReduction(prevs + "MinListCheck");
+        }
+    );
 
     loadElementsIntoSheet.loadDropdownArr(utilities.T1Ships)("SelectShip");
     loadElementsIntoSheet.loadDropdownArr(utilities.capitals)("SelectShipCap");
@@ -35,33 +49,6 @@ function unloadDivs()
         document.getElementById(element).style.display = "none";
     });
     moveTo(current);
-}
-
-function loadOreThings()
-{
-    let reduceFromOres = loadElementsIntoSheet.reduceFrom(Object.keys(utilities.ores));
-
-    let checkboxReduction = reduceFromOres(loadElementsIntoSheet.getCheckboxes);
-    document.getElementById("CapCoreList").innerHTML = checkboxReduction("CapShipCheck");
-    document.getElementById("ShipCoreList").innerHTML = checkboxReduction("ShipCheck");
-    document.getElementById("MECFilterOresTable").innerHTML = checkboxReduction("MECCheck");
-
-    let inputOreReduction = reduceFromOres(loadElementsIntoSheet.getInputs);
-    document.getElementById("MECOreList").innerHTML = inputOreReduction("Ores");
-    document.getElementById("ShipOreList").innerHTML = inputOreReduction("OresShip");
-    document.getElementById("CapOreList").innerHTML = inputOreReduction("OresCap");
-}
-
-function loadMineralThings()
-{
-    let reduceFromMinerals = loadElementsIntoSheet.reduceFrom(utilities.minerals);
-
-    let inputMineralReduction = reduceFromMinerals(loadElementsIntoSheet.getInputs);
-    document.getElementById("MECMinList").innerHTML = inputMineralReduction("Minerals");
-    document.getElementById("MECInpList").innerHTML = inputMineralReduction("MEC");
-
-    document.getElementById("ShipMinList").innerHTML = inputMineralReduction("MineralsShip");
-    document.getElementById("CapMinList").innerHTML = inputMineralReduction("MineralsCap");
 }
 
 function error()
