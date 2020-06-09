@@ -2,7 +2,7 @@
 getEVEPraisal = async (params, location) => {
     try {
         const fetchResponse = await fetch(
-            "https://cors-anywhere.herokuapp.com/https://evepraisal.com/appraisal.json?market=" + location + "&raw_textarea=" + params,
+            "https://cors-anywhere.herokuapp.com/https://evepraisal.com/appraisal.json?market=" + location.toLowerCase() + "&raw_textarea=" + params,
             {
                 method: 'POST',
                 headers: {
@@ -19,5 +19,8 @@ getEVEPraisal = async (params, location) => {
             'volume': data[items]['typeVolume']
         };
         return Object.freeze(tbr);
-    } catch (e) { return Object.freeze({ }) };
+    } catch (e) {
+        console.log("Error getting Evepraisal");
+        return Object.freeze({ })
+    };
 }
