@@ -15,10 +15,10 @@ let reprocessing = {
             let localList = { };
 
             let e = document.getElementById("SelectMarket");
-            if(e.options[e.selectedIndex].value == "jita") localList = utilities.buySellJita;
-            else if(e.options[e.selectedIndex].value == "amarr") localList = utilities.buySellAmarr;
-            else if(e.options[e.selectedIndex].value == "dodixie") localList = utilities.buySellDodixie;
-            else if(e.options[e.selectedIndex].value == "rens") localList = utilities.buySellRens;
+            if(e.options[e.selectedIndex].value == "Jita") localList = utilities.buySellJita;
+            else if(e.options[e.selectedIndex].value == "Amarr") localList = utilities.buySellAmarr;
+            else if(e.options[e.selectedIndex].value == "Dodixie") localList = utilities.buySellDodixie;
+            else if(e.options[e.selectedIndex].value == "Rens") localList = utilities.buySellRens;
 
             
             utilities.minerals.forEach(Element => {

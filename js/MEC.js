@@ -16,18 +16,26 @@ function calcMinimum(location, model)
     let strOut = "";
 
     solution = solver.Solve(model);
+
+    let e = document.getElementById("MECMarket");
+    if(e.options[e.selectedIndex].value == "Jita") market = utilities.buySellJita;
+    else if (e.options[e.selectedIndex].value = "Amarr") market = utilities.buySellAmarr;
+    else if (e.options[e.selectedIndex].value = "Dodixie") market = utilities.buySellDodixie;
+    else if (e.options[e.selectedIndex].value = "Rens") market = utilities.buySellRens;
+
     total = { "sell": 0, "buy": 0,  "volume": 0 };
 
     strOut += "<div>Ores Calculated<table>";
+
     for(ore in utilities.ores)
     {
         out = Math.ceil(solution[ore]);
         if(out != 0 && !isNaN(out) && out != undefined)
         {
             try{
-                total["sell"] += out*utilities.buySellJita[ore]["sell"];
-                total["buy"] += out*utilities.buySellJita[ore]["buy"];
-                total["volume"] += out*utilities.buySellJita[ore]["volume"];
+                total["sell"] += out*market[ore]["sell"];
+                total["buy"] += out*market[ore]["buy"];
+                total["volume"] += out*market[ore]["volume"];
             }
             catch { error() }
 
@@ -72,7 +80,11 @@ let calcMin = {
         for(reproOres in utilities.ores[ore])
             this.model["variables"][ore][reproOres] = Math.floor(utilities.ores[ore][reproOres]*repro/100);
         try {
-            this.model["variables"][ore]["isk"] = utilities.buySellJita[ore]["sell"];
+            let e = document.getElementById("MECMarket");
+            if(e.options[e.selectedIndex].value == "Jita") this.model["variables"][ore]["isk"] = utilities.buySellJita[ore]["sell"];
+            else if (e.options[e.selectedIndex].value = "Amarr") this.model["variables"][ore]["isk"] = utilities.buySellAmarr[ore]["sell"];
+            else if (e.options[e.selectedIndex].value = "Dodixie") this.model["variables"][ore]["isk"] = utilities.buySellDodixie[ore]["sell"];
+            else if (e.options[e.selectedIndex].value = "Rens") this.model["variables"][ore]["isk"] = utilities.buySellRens[ore]["sell"];
         }
         catch { error() }
     },

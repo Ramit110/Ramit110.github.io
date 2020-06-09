@@ -6,24 +6,23 @@ window.onload = async function()
 
     unloadDivs();
 
-    utilities.buySellJita = await this.getEVEPraisal(params, "jita");
-    utilities.buySellAmarr = await this.getEVEPraisal(params, "amarr");
-    utilities.buySellDodixie = await this.getEVEPraisal(params, "dodixie");
-    utilities.buySellRens = await this.getEVEPraisal(params, "rens");
+    utilities.buySellJita = await this.getEVEPraisal(params, "Jita");
+    utilities.buySellAmarr = await this.getEVEPraisal(params, "Amarr");
+    utilities.buySellDodixie = await this.getEVEPraisal(params, "Dodixie");
+    utilities.buySellRens = await this.getEVEPraisal(params, "Rens");
 
-    loadElementsIntoSheet.loadDropdownMainList(["jita", "amarr", "dodixie", "rens"])("SelectMarket");
-
-    prefix = ["MEC", "Ship", "Cap"]
-    postfixDivs = ["HaveMinerals", "HaveOres", "FilterOres"]
+    let loadDrops = loadElementsIntoSheet.loadDropdownMainList(["Jita", "Amarr", "Dodixie", "Rens"])
+    loadDrops("SelectMarket");
+    loadDrops("MECMarket");
         
     let reduceFromOres = loadElementsIntoSheet.reduceFrom(Object.keys(utilities.ores));
 
     let inputMineralReduction = loadElementsIntoSheet.reduceFrom(utilities.minerals)(loadElementsIntoSheet.getInputs);
     document.getElementById("MECInpList").innerHTML = inputMineralReduction("MEC");
 
-    prefix.forEach(
+    ["MEC", "Ship", "Cap"].forEach(
         prevs => {
-            postfixDivs.forEach(
+            ["HaveMinerals", "HaveOres", "FilterOres"].forEach(
                 posts => hideThings(document.getElementById(prevs + posts), prevs + posts + "Div")
             )
             
@@ -32,7 +31,7 @@ window.onload = async function()
 
             document.getElementById(prevs + "OreList").innerHTML = 
                 reduceFromOres(loadElementsIntoSheet.getInputs)(prevs + "OreListCheck");
-                
+
             document.getElementById(prevs + "MinList").innerHTML = inputMineralReduction(prevs + "MinListCheck");
         }
     );
