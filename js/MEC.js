@@ -17,11 +17,7 @@ function calcMinimum(location, model)
 
     solution = solver.Solve(model);
 
-    let e = document.getElementById("MECMarket");
-    if(e.options[e.selectedIndex].value == "Jita") market = utilities.buySellJita;
-    else if (e.options[e.selectedIndex].value = "Amarr") market = utilities.buySellAmarr;
-    else if (e.options[e.selectedIndex].value = "Dodixie") market = utilities.buySellDodixie;
-    else if (e.options[e.selectedIndex].value = "Rens") market = utilities.buySellRens;
+    market = utilities.getMarketDataFromDropdown("MECMarket");
 
     total = { "sell": 0, "buy": 0,  "volume": 0 };
 
@@ -73,20 +69,25 @@ let calcMin = {
         "constraints": { },
         "variables": { }
     },
-
-    addOreToModel : function(ore, repro)
+    addOreToModel : function(name, repro)
     {
-        calcMin.model["variables"][ore] = {};
-        for(reproOres in utilities.ores[ore])
-            this.model["variables"][ore][reproOres] = Math.floor(utilities.ores[ore][reproOres]*repro/100);
-        try {
-            let e = document.getElementById("MECMarket");
-            if(e.options[e.selectedIndex].value == "Jita") this.model["variables"][ore]["isk"] = utilities.buySellJita[ore]["sell"];
-            else if (e.options[e.selectedIndex].value = "Amarr") this.model["variables"][ore]["isk"] = utilities.buySellAmarr[ore]["sell"];
-            else if (e.options[e.selectedIndex].value = "Dodixie") this.model["variables"][ore]["isk"] = utilities.buySellDodixie[ore]["sell"];
-            else if (e.options[e.selectedIndex].value = "Rens") this.model["variables"][ore]["isk"] = utilities.buySellRens[ore]["sell"];
+        for(ore in utilities.ores)
+        {
+            calcMin.model["variables"][ore] = {};
+            if(
+                !document.getElementById(name + "FilterOres").checked
+                ||
+                document.getElementById(ore + name + "CoreListCheck").checked
+            )
+            {
+                for(reproOres in utilities.ores[ore])
+                    this.model["variables"][ore][reproOres] = Math.floor(utilities.ores[ore][reproOres]*repro/100);
+                try {
+                    this.model["variables"][ore]["isk"] = utilities.getMarketDataFromDropdown("MECMarket")[ore]["sell"];        
+                }
+                catch { error() }
+            }
         }
-        catch { error() }
     },
     
     generateFromOptimalOre : function(repro)
@@ -99,17 +100,10 @@ let calcMin = {
                 calcMin.model["constraints"][utilities.minerals[mins]]["min"] -= 
                     utilities.getFromDocument(utilities.minerals[mins] + "MECMinListCheck", 0)
         }
-
+        
+        this.addOreToModel(ore, "MEC", repro);
         for(ore in utilities.ores)
         {
-            this.addOreToModel(ore,
-                (
-                    !document.getElementById("MECFilterOres").checked
-                    ||
-                    document.getElementById(ore + "MECCoreListCheck").checked
-                ) ? 
-                repro : 0
-            );
             if(document.getElementById("MECHaveOres").checked)
             {
                 for(mins in utilities.ores[ore]) if(utilities.ores[ore][mins] != undefined)
@@ -125,14 +119,7 @@ let calcMin = {
     
     generateFromBlueprints : function(me, structure, rig, repro, quantity)
     {
-        for(ore in utilities.ores)
-            this.addOreToModel(ore, 
-                (
-                    !document.getElementById("ShipFilterOres").checked
-                    ||
-                    document.getElementById(ore + "ShipCoreListCheck").checked)
-                     ? repro : 0
-            );
+        this.addOreToModel("Ship", repro);
 
         e = document.getElementById("SelectShip");
         for(mins in utilities.minerals)
@@ -171,14 +158,7 @@ let calcMin = {
 
     generateCapMinerals : function(capme, capstructure, caprig, me, structure, rig, repro, quantity)
     {
-        for(ore in utilities.ores)
-            this.addOreToModel(ore, 
-                (
-                    !document.getElementById("CapFilterOres").checked
-                    ||
-                    document.getElementById(ore + "CapCoreListCheck").checked)
-                     ? repro : 0
-            );
+        this.addOreToModel("Cap", repro);
         
         e = document.getElementById("SelectShipCap");
         neededminerals = { }
@@ -205,7 +185,7 @@ let calcMin = {
                         Math.ceil(quantity);
             }
         
-        for(ore in utilities.ores)
+        if(document.getElementById("CapHaveOres").checked) for(ore in utilities.ores)
         {
             for(mins in utilities.minerals)
             {

@@ -6,10 +6,17 @@ window.onload = async function()
 
     unloadDivs();
 
-    utilities.buySellJita = await this.getEVEPraisal(params, "Jita");
-    utilities.buySellAmarr = await this.getEVEPraisal(params, "Amarr");
-    utilities.buySellDodixie = await this.getEVEPraisal(params, "Dodixie");
-    utilities.buySellRens = await this.getEVEPraisal(params, "Rens");
+    tempJita = await this.getEVEPraisal(params, "Jita");
+    tempAmarr = await this.getEVEPraisal(params, "Amarr");
+    tempDodixie = await this.getEVEPraisal(params, "Dodixie");
+    tempRens = await this.getEVEPraisal(params, "Rens");
+
+    utilities.buySellAll = Object.freeze({
+        "Jita" : tempJita,
+        "Amarr" : tempAmarr,
+        "Dodixie" : tempDodixie,
+        "Rens" : tempRens
+    });
 
     let loadDrops = loadElementsIntoSheet.loadDropdownMainList(["Jita", "Amarr", "Dodixie", "Rens"])
     loadDrops("SelectMarket");

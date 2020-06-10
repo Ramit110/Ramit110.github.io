@@ -14,13 +14,8 @@ let reprocessing = {
             let mineralValueBuy = 0;
             let localList = { };
 
-            let e = document.getElementById("SelectMarket");
-            if(e.options[e.selectedIndex].value == "Jita") localList = utilities.buySellJita;
-            else if(e.options[e.selectedIndex].value == "Amarr") localList = utilities.buySellAmarr;
-            else if(e.options[e.selectedIndex].value == "Dodixie") localList = utilities.buySellDodixie;
-            else if(e.options[e.selectedIndex].value == "Rens") localList = utilities.buySellRens;
-
-            
+            localList = utilities.getMarketDataFromDropdown("SelectMarket");
+        
             utilities.minerals.forEach(Element => {
                 let temp =  utilities.ores[ore][Element];
                 temp = temp == undefined ? 0 : temp;

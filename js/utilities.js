@@ -1701,15 +1701,17 @@ let utilities = {
         "Zydrine",
         "Megacyte"
     ]),
-    buySellJita : Object.freeze({ }),
-    buySellAmarr : Object.freeze({ }),
-    buySellDodixie : Object.freeze({ }),
-    buySellRens : Object.freeze({ }),
+    buySellAll : Object.freeze({ }),
 
-    getFromDocument : function(elementID, defaultValue)
+    getFromDocument : function (elementID, defaultValue)
     {
         let temp = document.getElementById(elementID).value.replace(/,/g, "") * 1;
         return isNaN(temp) ? defaultValue : temp;
+    },
+    getMarketDataFromDropdown : function (elementID)
+    {
+        let e = document.getElementById("MECMarket");
+        return utilities.buySellAll[e.options[e.selectedIndex].value];
     },
     addCommas : function(data)
     {
