@@ -1710,7 +1710,7 @@ let utilities = {
     },
     getMarketDataFromDropdown : function (elementID)
     {
-        let e = document.getElementById("MECMarket");
+        let e = document.getElementById(elementID);
         return utilities.buySellAll[e.options[e.selectedIndex].value];
     },
     addCommas : function(data)

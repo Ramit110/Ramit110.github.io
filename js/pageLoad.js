@@ -17,14 +17,17 @@ window.onload = async function()
         "Dodixie" : tempDodixie,
         "Rens" : tempRens
     });
-
-    let loadDrops = loadElementsIntoSheet.loadDropdownMainList(["Jita", "Amarr", "Dodixie", "Rens"])
+        
+    let loadDrops = loadElementsIntoSheet.loadDropdown(["Jita", "Amarr", "Dodixie", "Rens"])
     loadDrops("SelectMarket");
     loadDrops("MECMarket");
-        
+
+    loadElementsIntoSheet.loadDropdown(Object.keys(utilities.T1Ships))("SelectShip");
+    loadElementsIntoSheet.loadDropdown(Object.keys(utilities.T1Ships))("SelectShipCap");
+
     let reduceFromOres = loadElementsIntoSheet.reduceFrom(Object.keys(utilities.ores));
 
-    let inputMineralReduction = loadElementsIntoSheet.reduceFrom(utilities.minerals)(loadElementsIntoSheet.getInputs);
+    let inputMineralReduction = loadElementsIntoSheet.reduceFrom(utilities.minerals)(loadElementsIntoSheet.makeInputs);
     document.getElementById("MECInpList").innerHTML = inputMineralReduction("MEC");
 
     ["MEC", "Ship", "Cap"].forEach(
@@ -34,17 +37,14 @@ window.onload = async function()
             )
             
             document.getElementById(prevs + "CoreList").innerHTML = 
-                reduceFromOres(loadElementsIntoSheet.getCheckboxes)(prevs + "CoreListCheck");
+                reduceFromOres(loadElementsIntoSheet.makeCheckboxes)(prevs + "CoreListCheck");
 
             document.getElementById(prevs + "OreList").innerHTML = 
-                reduceFromOres(loadElementsIntoSheet.getInputs)(prevs + "OreListCheck");
+                reduceFromOres(loadElementsIntoSheet.makeInputs)(prevs + "OreListCheck");
 
             document.getElementById(prevs + "MinList").innerHTML = inputMineralReduction(prevs + "MinListCheck");
         }
     );
-
-    loadElementsIntoSheet.loadDropdownArr(utilities.T1Ships)("SelectShip");
-    loadElementsIntoSheet.loadDropdownArr(utilities.capitals)("SelectShipCap");
 
     this.calcOres();
 }
@@ -57,34 +57,7 @@ function unloadDivs()
     moveTo(current);
 }
 
-function error()
-{
-    console.log("Oh no");
-}
-
 var loadElementsIntoSheet = {
-    loadDropdownArr : function(arr)
-    {
-        return function(documentElementID) {
-            Object.keys(arr).forEach(element => {
-                temp = document.createElement("option");
-                temp.textContent = element;
-                temp.value = element;
-                document.getElementById(documentElementID).appendChild(temp);
-            });
-        }
-    },
-    loadDropdownMainList : function(list)
-    {
-        return function(documentElementID) {
-            Object.keys(list).forEach(element => {
-                temp = document.createElement("option");
-                temp.textContent = list[element];
-                temp.value = list[element];
-                document.getElementById(documentElementID).appendChild(temp);
-            });
-        }
-    },
     reduceFrom : function(inplist)
     {
         return function(func)
@@ -97,13 +70,24 @@ var loadElementsIntoSheet = {
             }
         }
     },
-    getCheckboxes : function(current, post)
+    loadDropdown : function(list)
+    {
+        return function(documentElementID) {
+            Object.keys(list).forEach(element => {
+                temp = document.createElement("option");
+                temp.textContent = list[element];
+                temp.value = list[element];
+                document.getElementById(documentElementID).appendChild(temp);
+            });
+        }
+    },
+    makeCheckboxes : function(current, post)
     {
         return utilities.addRow(
             [`<input type="checkbox" id="` + current + post + `" checked />`, current]
         )
     },
-    getInputs : function(current, post)
+    makeInputs : function(current, post)
     {
         return `<div><input type="text" id="` + current + post + `"/> ` + current + `</div><br/>`;
     }

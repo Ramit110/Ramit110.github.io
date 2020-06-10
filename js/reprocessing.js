@@ -12,9 +12,7 @@ let reprocessing = {
             toBeAssigned += "<th>" + ore + "</th>";
             let mineralValueSell = 0;
             let mineralValueBuy = 0;
-            let localList = { };
-
-            localList = utilities.getMarketDataFromDropdown("SelectMarket");
+            let localList = utilities.getMarketDataFromDropdown("SelectMarket");
         
             utilities.minerals.forEach(Element => {
                 let temp =  utilities.ores[ore][Element];
@@ -24,7 +22,7 @@ let reprocessing = {
                     mineralValueSell+=Math.floor(temp*value/100)*localList[Element]['sell'];
                     mineralValueBuy+=Math.floor(temp*value/100)*localList[Element]['buy'];
                 }
-                catch { error() }
+                catch (e) { console.log(e) }
             });
     
             try{
@@ -33,7 +31,8 @@ let reprocessing = {
                 // add ore sell
                 toBeAssigned += "<th>" + utilities.addCommas(Math.ceil(localList[ore]['sell'])) + "</th>";
             }
-            catch { error() }
+            catch (e) { console.log(e) }
+
             // add mineral buy
             toBeAssigned += "<th>" + utilities.addCommas(Math.ceil(mineralValueBuy)) + "</th>";
             // add mineral sell

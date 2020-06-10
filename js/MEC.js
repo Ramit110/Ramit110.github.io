@@ -33,7 +33,7 @@ function calcMinimum(location, model)
                 total["buy"] += out*market[ore]["buy"];
                 total["volume"] += out*market[ore]["volume"];
             }
-            catch { error() }
+            catch (e) { console.log(e) }
 
             for(mins in utilities.minerals) if(model["variables"][ore][utilities.minerals[mins]] != undefined)
                 model["constraints"][utilities.minerals[mins]]["tot"] += out*model["variables"][ore][utilities.minerals[mins]];
@@ -85,7 +85,7 @@ let calcMin = {
                 try {
                     this.model["variables"][ore]["isk"] = utilities.getMarketDataFromDropdown("MECMarket")[ore]["sell"];        
                 }
-                catch { error() }
+                catch (e) { console.log(e) }
             }
         }
     },
