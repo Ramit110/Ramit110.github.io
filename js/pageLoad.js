@@ -23,7 +23,7 @@ window.onload = async function()
     loadDrops("MECMarket");
 
     loadElementsIntoSheet.loadDropdown(Object.keys(utilities.T1Ships))("SelectShip");
-    loadElementsIntoSheet.loadDropdown(Object.keys(utilities.T1Ships))("SelectShipCap");
+    loadElementsIntoSheet.loadDropdown(Object.keys(utilities.capitals))("SelectShipCap");
 
     let reduceFromOres = loadElementsIntoSheet.reduceFrom(Object.keys(utilities.ores));
 

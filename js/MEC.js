@@ -101,7 +101,7 @@ let calcMin = {
                     utilities.getFromDocument(utilities.minerals[mins] + "MECMinListCheck", 0)
         }
         
-        this.addOreToModel(ore, "MEC", repro);
+        this.addOreToModel("MEC", repro);
         for(ore in utilities.ores)
         {
             if(document.getElementById("MECHaveOres").checked)
