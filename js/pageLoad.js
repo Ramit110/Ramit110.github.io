@@ -89,6 +89,6 @@ var loadElementsIntoSheet = {
     },
     makeInputs : function(current, post)
     {
-        return `<div><input type="text" id="` + current + post + `"/> ` + current + `</div><br/>`;
+        return `<div><input type="text" id="` + current + post + `"/> ` + current + `</div>`;
     }
 }

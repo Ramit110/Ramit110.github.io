@@ -2,6 +2,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
         <script src="js/Interactions.js"></script>
         <script src="js/evePraisal.js"></script>
         <script src="js/MEC.js"></script>
@@ -12,31 +13,33 @@
         <title>Ramit110's Industry Site</title>
     </head>
     <body>
-        <div id="menu" class="navbar">
-            <input type="submit" value="R110's IS" id="mainMenu" onclick="moveTo(0)" />
-            <input type="submit" value="Reprocessing" onclick="moveTo(1)" />
-            <input type="submit" value="Optimal Ore" onclick="moveTo(2)" />
-            <input type="submit" value="Sub Capital Manufacturing" onclick="moveTo(3)" />
-            <input type="submit" value="Capital Manufacturing" onclick="moveTo(4)" />
-        </div>
-        <div id="Main" class="outlined lefted-text padded-text">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" id="nav0" onclick="moveTo(0)">R110's IS</a>
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" id="nav1" onclick="moveTo(1)">Reprocessing</a>
+                <a class="nav-item nav-link" id="nav2" onclick="moveTo(2)">Optimal Ore</a>
+                <a class="nav-item nav-link" id="nav3"  onclick="moveTo(3)">Sub Capital Manufacturing</a>
+                <a class="nav-item nav-link" id="nav4" onclick="moveTo(4)">Capital Manufacturing</a>
+            </div>
+        </nav>
+        <div id="Main" class="dived outlined">
             <p>Hello and welcome to Ramit110's Industry Site!</p>
             <br />
             This is a site dedicated to Industry tools for EVE Online industry created by <b class="blued">Ramit110 Mechanicus</b> with the goal of helping <i>the whole community</i>.
             <br />
-            If you like the tool you can send me ISK in game to <b class="blued">"Ramit110 Mechanicus"</b> or support me on <a class="blued" href="https://www.patreon.com/Ramit110">Patreon!</a>
+            If you like the tool you can send me ISK in game to <b class="blued">"Ramit110 Mechanicus"</b> or support me on <a href="https://www.patreon.com/Ramit110">Patreon!</a>
             <br />
             The services currently on this site:
             <ul>
-                <li><b class="greened">Reprocessing</b> - A table that displays the base variant of each compressed ore and it's product based on any level of reprocessing.</li>
-                <li><b class="greened">Optimal Ore</b> - Calculates the optimal amount of ore needed to get a specified number of minerals based on any level of reprocessing.</li>
-                <li><b class="greened">Sub Capital Manufacturing</b> - Calculates the optimal amount of ore needed to get a specified number of T1 ships based on any level of reprocessing, material efficiency, structure and rigs.</li>
-                <li><b class="greened">Capital Manufacturing</b> - Calculates the optimal amount of ore needed to get a specified number of T1  capital ships based on any level of reprocessing, material efficiency, structure and rigs for both the ship and the components.</li>
+                <li><b class="blued">Reprocessing</b> - A table that displays the base variant of each compressed ore and it's product based on any level of reprocessing.</li>
+                <li><b class="blued">Optimal Ore</b> - Calculates the optimal amount of ore needed to get a specified number of minerals based on any level of reprocessing.</li>
+                <li><b class="blued">Sub Capital Manufacturing</b> - Calculates the optimal amount of ore needed to get a specified number of T1 ships based on any level of reprocessing, material efficiency, structure and rigs.</li>
+                <li><b class="blued">Capital Manufacturing</b> - Calculates the optimal amount of ore needed to get a specified number of T1  capital ships based on any level of reprocessing, material efficiency, structure and rigs for both the ship and the components.</li>
             </ul>
-            If you find any bugs and issues feel free to <a class="blued" href="https://github.com/Ramit110/Ramit110.github.io/issues">report them at any time</a>.
+            If you find any bugs and issues feel free to <a href="https://github.com/Ramit110/Ramit110.github.io/issues">report them at any time.</a>
             <p>Thanks and enjoy using this place!</p>
         </div>
-        <div id="Reprocessing" class="outlined">
+        <div id="Reprocessing" class="centered dived outlined padded-text">
             <div>
                 Reprocessing Percentage: <input type="text" id="ReprocessingPercentage" value="50">
                 <select id="SelectMarket" onchange="calcOres()"></select>
@@ -44,29 +47,28 @@
             <br/>
             <input type="submit" value="recalculate" onclick="calcOres()" />
             <br/>
+            <br/>
             <div id="ReprocessingTable">
-                <table id="OreTable">
-                </table>
+                <table id="OreTable" class="table"></table>
             </div>
         </div>
-        <div id="MostEfficientCompressed" class="outlined">
+        <div id="MostEfficientCompressed" class="centered dived outlined padded-text">
             <div id="MECMain">
-                <div class="middled">
+                <div class="centered">
                     Target Minerals
-                    <div id="MECInpList" class="noMargin lefted-text"></div>
+                    <div id="MECInpList" class="lefted-text"></div>
                 </div>
-                <div id="MECHaveMineralsDiv" class = "middled">
+                <div id="MECHaveMineralsDiv" class="centered">
                     Minerals
-                    <div id="MECMinList" class="noMargin lefted-text"></div>
+                    <div id="MECMinList" class="lefted-text"></div>
                 </div>
-                <div id="MECHaveOresDiv" class = "middled">
+                <div id="MECHaveOresDiv" class="centered">
                     Ores
-                    <div id="MECOreList" class="noMargin lefted-text"></div>
+                    <div id="MECOreList" class="lefted-text"></div>
                 </div>
-                <div id="MECFilterOresDiv">
+                <div id="MECFilterOresDiv" class="centered">
                     Filter Ores
-                    <br />
-                    <table id="MECCoreList" class="middled"></table>
+                    <table id="MECCoreList" class="table table-hover"></table>
                 </div>
             </div>
             <div>
@@ -84,28 +86,28 @@
             <input type="submit" value="Get minimum compressed ore needed" onclick="calcMinimumOre()" />
             <div id="MECOut"></div>
         </div>
-        <div id="T1Ship" class="outlined">
+        <div id="T1Ship" class="centered dived outlined padded-text">
             <div><select id="SelectShip"><option>Select Ship</option></select></div>
             <div>
-                <div class="noMargin middled lefted-text">
-                    <div><input type="text" id="ShipMaterialEfficiency" value="10"> Material Efficiency</div><br />
-                    <div><input type="text" id="StructureBonus" value="0"> Structure Bonus</div><br />
-                    <div><input type="text" id="RigBonus" value="0"> Rig Bonus</div><br />
-                    <div><input type="text" id="ShipReprocessingPercentage" value="50"> Reprocessing Percentage</div><br />
+                <div class="centered lefted-text">
+                    <div><input type="text" id="ShipMaterialEfficiency" value="10"> Material Efficiency</div>
+                    <div><input type="text" id="StructureBonus" value="0"> Structure Bonus</div>
+                    <div><input type="text" id="RigBonus" value="0"> Rig Bonus</div>
+                    <div><input type="text" id="ShipReprocessingPercentage" value="50"> Reprocessing Percentage</div>
                     <div><input type="text" id="ShipQuantity" value="1"> Quantity</div>
                 </div>
-                <div id="ShipHaveMineralsDiv" class="middled">
+                <div id="ShipHaveMineralsDiv" class="centered">
                     Minerals
-                    <div id="ShipMinList" class="noMargin lefted-text"></div>
+                    <div id="ShipMinList" class="lefted-text"></div>
                 </div>
-                <div id="ShipHaveOresDiv" class="middled">
+                <div id="ShipHaveOresDiv" class="centered">
                     Ores
-                    <div id="ShipOreList" class="noMargin lefted-text"></div>
+                    <div id="ShipOreList" class="lefted-text"></div>
                 </div>
-                <div id="ShipFilterOresDiv" class="middled">
+                <div id="ShipFilterOresDiv" class="centered">
                     Filter Ores
                     <br />
-                    <table id="ShipCoreList" class="middled"></table>
+                    <table id="ShipCoreList" class="table table-hover"></table>
                 </div>
             </div>
             <div>
@@ -120,31 +122,31 @@
             <br />
             <div id="OreTableShips"></div>
         </div>
-        <div id="Capitals" class="outlined">
+        <div id="Capitals" class="centered dived outlined padded-text">
             <div><select id="SelectShipCap"><option>Select Ship</option></select></div>
             <div>
-                <div class="noMargin middled lefted-text">
-                    <div><input type="text" id="CapitalShipMaterialEfficiency" value="10"> Ship Material Efficiency</div><br />
-                    <div><input type="text" id="CapitalStructureBonus" value="0"> Ship Structure Bonus</div><br />
-                    <div><input type="text" id="CapitalRigBonus" value="0"> Ship Rig Bonus</div><br />
-                    <div><input type="text" id="CapitalCompShipMaterialEfficiency" value="10"> Component Material Efficiency</div><br />
-                    <div><input type="text" id="CapitalCompStructureBonus" value="0"> Component Structure Bonus</div><br />
-                    <div><input type="text" id="CapitalCompRigBonus" value="0"> Component Rig Bonus</div><br />
-                    <div><input type="text" id="CapitalShipReprocessingPercentage" value="50"> Reprocessing Percentage</div><br />
+                <div class="centered lefted-text">
+                    <div><input type="text" id="CapitalShipMaterialEfficiency" value="10"> Ship Material Efficiency</div>
+                    <div><input type="text" id="CapitalStructureBonus" value="0"> Ship Structure Bonus</div>
+                    <div><input type="text" id="CapitalRigBonus" value="0"> Ship Rig Bonus</div>
+                    <div><input type="text" id="CapitalCompShipMaterialEfficiency" value="10"> Component Material Efficiency</div>
+                    <div><input type="text" id="CapitalCompStructureBonus" value="0"> Component Structure Bonus</div>
+                    <div><input type="text" id="CapitalCompRigBonus" value="0"> Component Rig Bonus</div>
+                    <div><input type="text" id="CapitalShipReprocessingPercentage" value="50"> Reprocessing Percentage</div>
                     <div><input type="text" id="CapitalShipQuantity" value="1"> Quantity</div>
                 </div>
-                <div id="CapHaveMineralsDiv" class="middled">
+                <div id="CapHaveMineralsDiv" class="centered">
                     Minerals
-                    <div id="CapMinList" class="noMargin lefted-text"></div>
+                    <div id="CapMinList" class="lefted-text"></div>
                 </div>
-                <div id="CapHaveOresDiv" class="middled">
+                <div id="CapHaveOresDiv" class="centered">
                     Ores
-                    <div id="CapOreList" class="noMargin lefted-text"></div>
+                    <div id="CapOreList" class="lefted-text"></div>
                 </div>
-                <div id="CapFilterOresDiv" class="middled">
+                <div id="CapFilterOresDiv" class="centered">
                     Filter Ores
                     <br />
-                    <table id="CapCoreList" class="middled"></table>
+                    <table id="CapCoreList" class="table table-hover"></table>
                 </div>
             </div>
             <div>

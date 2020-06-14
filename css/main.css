@@ -1,109 +1,31 @@
-/*!
- * Many segments taken from (https://getbootstrap.com)
-*/
 
 body {
-    padding-top: 40px;
-    color: #ffffff;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
     background-image: url("./background.png");
 }
 
-div {
+.dived {
     background-color: #202020;
     margin: 1%;
+    padding: 1%;
     display: inline-block;
     min-width: 80%;
-}
-
-table {
-    border-collapse: collapse;
-    margin-left: auto; 
-    margin-right: auto;
-}
-
-th {
-    padding: 0em 0.25em;
-}
-
-tr th {
-    background-color: #808080;
-    text-align: left;
-    border-top: 0.1px solid #000000;
-}
-
-tr:nth-child(odd) th {
-    background-color: #404040;
-}
-
-input {
-    font-size: inherit;
-    border: none;
-    background-color: #8f8f8f;
-}
-
-input:hover {
-    background-color: #808080;
-}
-
-input:active {
-    background-color: #000088;
 }
 
 .outlined {
     border: 1px solid #aaaaaa;
 }
 
-.navbar {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    margin: 0rem 0rem 0rem 0rem;
-    border-bottom: 4px solid #4f4f4f;
-    height: 39px;
-}
-
-.navbar input {
-    float: left;
-    color: #808080;
-    background-color: #202020;
-    border: none;
-    height: 100%;
-}
-
-.navbar input:hover:enabled {
-    color: #fbfbfb;
-}
-
-.noMargin div {
-    margin: 0.5% 0%;
-}
-
-.lefted-text {
-    text-align: left;
-}
-
-.padded-text {
-    padding: 1%;
-}
-
 .blued {
     color: #666fff;
 }
 
-.greened {
-    color: #088000;
-}
-
-.middled {
+.centered {
+    text-align: center;
     display: inline-block;
     height: 100%;
     vertical-align: middle;
-    min-width: 0%;
 }
 
-#mainMenu {
-    color: #ffffff;
+.lefted-text {
+    text-align: left;
 }

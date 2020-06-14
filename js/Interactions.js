@@ -54,6 +54,8 @@ function hideThings(box, thing)
 
 function moveTo(number)
 {
+    document.getElementById("nav" + current).classList.remove("active");
+    document.getElementById("nav" + number).classList.add("active");
     document.getElementById(divs[current]).style.display = "none";
     document.getElementById(divs[number]).style.display = "block";
     current = number;

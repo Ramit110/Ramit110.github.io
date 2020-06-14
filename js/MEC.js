@@ -21,7 +21,7 @@ function calcMinimum(location, model)
 
     total = { "sell": 0, "buy": 0,  "volume": 0 };
 
-    strOut += "<div>Ores Calculated<table>";
+    strOut += "<div>Ores Calculated<br /><table class=\"table table-hover\">";
 
     for(ore in utilities.ores)
     {
@@ -42,11 +42,11 @@ function calcMinimum(location, model)
         }
     }
 
-    strOut += "</table></div><div>Ore Information<table>"
+    strOut += "</table></div><div>Ore Information<table class=\"table table-hover\">"
         + utilities.addRow(["Sell Price:", utilities.addCommas(Math.ceil(total["sell"])) + " isk"])
         + utilities.addRow(["Buy Price:", utilities.addCommas(Math.ceil(total["buy"])) + " isk"])
         + utilities.addRow(["Total Volume:", utilities.addCommas(Math.ceil(total["volume"])) + " m^3"])
-        + "</table></div><div>Extra Nerdy Information<table>"
+        + "</table></div><div>Extra Nerdy Information<table class=\"table table-hover\">"
         + utilities.addRow(["Mineral", "Needed", "Refined", "Excess"]);
     
     for(mins of utilities.minerals.values())
