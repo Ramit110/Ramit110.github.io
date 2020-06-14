@@ -43,8 +43,8 @@ function calcMinimum(location, model)
     }
 
     strOut += "</table></div><div>Ore Information<table class=\"table table-hover\">"
-        + utilities.addRow(["Sell Price:", utilities.addCommas(Math.ceil(total["sell"])) + " isk"])
-        + utilities.addRow(["Buy Price:", utilities.addCommas(Math.ceil(total["buy"])) + " isk"])
+        + utilities.addRow(["Sell Price:", utilities.addCommas(Math.ceil(total["sell"])) + " ISK"])
+        + utilities.addRow(["Buy Price:", utilities.addCommas(Math.ceil(total["buy"])) + " ISK"])
         + utilities.addRow(["Total Volume:", utilities.addCommas(Math.ceil(total["volume"])) + " m^3"])
         + "</table></div><div>Extra Nerdy Information<table class=\"table table-hover\">"
         + utilities.addRow(["Mineral", "Needed", "Refined", "Excess"]);

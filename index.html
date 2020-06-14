@@ -40,17 +40,18 @@
             <p>Thanks and enjoy using this place!</p>
         </div>
         <div id="Reprocessing" class="centered dived outlined padded-text">
-            <div>
-                Reprocessing Percentage: <input type="text" id="ReprocessingPercentage" value="50">
-                <select id="SelectMarket" onchange="calcOres()"></select>
+            <div class="mb-3 centered">
+                <div class="input-group">
+                    <div class="input-group-prepend input-group-text">Reprocessing Percentage</div>
+                    <input type="text" class="form-control" id="ReprocessingPercentage" value="50">
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend input-group-text">Market</div>
+                    <select class="custom-select" id="SelectMarket"></select>
+                </div>
             </div>
-            <br/>
-            <input type="submit" value="recalculate" onclick="calcOres()" />
-            <br/>
-            <br/>
-            <div id="ReprocessingTable">
-                <table id="OreTable" class="table"></table>
-            </div>
+            <button type="button" class="btn btn-secondary mb-3" onclick="calcOres()">Recalculate</button>
+            <table id="OreTable" class="table"></table>
         </div>
         <div id="MostEfficientCompressed" class="centered dived outlined padded-text">
             <div id="MECMain">
@@ -68,33 +69,66 @@
                 </div>
                 <div id="MECFilterOresDiv" class="centered">
                     Filter Ores
-                    <table id="MECCoreList" class="table table-hover"></table>
+                    <table id="MECCoreList" class="table"></table>
                 </div>
             </div>
-            <div>
-                Reprocessing Percentage: <input type="text" id="ReprocessingPercentageTwo" value="50">
-                <br />
-                <input type="checkbox" id="MECHaveMinerals" value="1" onchange="hideThings(this, 'MECHaveMineralsDiv')"> Mineral Stockpile
-                <br />
-                <input type="checkbox" id="MECHaveOres" value="1"onchange="hideThings(this, 'MECHaveOresDiv')"> Ore Stockpile
-                <br />
-                <input type="checkbox" id="MECFilterOres" value="1"onchange="hideThings(this, 'MECFilterOresDiv')"> Ore Filter
+            <div class="centered mb-3">
+                <div class="input-group">
+                    <div class="input-group-prepend input-group-text">Reprocessing Percentage</div>
+                    <input type="text" class="form-control" id="ReprocessingPercentageTwo" value="50">
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend input-group-text">Market</div>
+                    <select class="custom-select" id="MECMarket"></select>
+                </div>
+                <div class="centered">
+                    <div class="input-group-prepend input-group-text centered">
+                        <input type="checkbox" id="MECHaveMinerals" value="1" onchange="hideThings(this, 'MECHaveMineralsDiv')">
+                        Mineral Stockpile
+                    </div>
+                    <div class="input-group-prepend input-group-text centered">
+                        <input type="checkbox" id="MECHaveOres" value="1" onchange="hideThings(this, 'MECHaveOresDiv')">
+                        Ore Stockpile
+                    </div>
+                    <div class="input-group-prepend input-group-text centered">
+                        <input type="checkbox" id="MECFilterOres" value="1" onchange="hideThings(this, 'MECFilterOresDiv')">
+                        Ore Filter
+                    </div>
+                </div>
             </div>
             <br />
-            <select id="MECMarket"></select>
-            <br />
-            <input type="submit" value="Get minimum compressed ore needed" onclick="calcMinimumOre()" />
+            <button type="button" class="btn btn-secondary mb-3" onclick="calcMinimumOre()">Get minimum compressed ore needed</button>
             <div id="MECOut"></div>
         </div>
         <div id="T1Ship" class="centered dived outlined padded-text">
-            <div><select id="SelectShip"><option>Select Ship</option></select></div>
+            <div class="mb-3 centered">
+                <div class="input-group">
+                    <div class="input-group-prepend input-group-text">Select Ship</div>
+                    <select class="custom-select" id="SelectShip"></select>
+                </div>
+            </div>
             <div>
                 <div class="centered lefted-text">
-                    <div><input type="text" id="ShipMaterialEfficiency" value="10"> Material Efficiency</div>
-                    <div><input type="text" id="StructureBonus" value="0"> Structure Bonus</div>
-                    <div><input type="text" id="RigBonus" value="0"> Rig Bonus</div>
-                    <div><input type="text" id="ShipReprocessingPercentage" value="50"> Reprocessing Percentage</div>
-                    <div><input type="text" id="ShipQuantity" value="1"> Quantity</div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="ShipMaterialEfficiency" value="10">
+                        <span class="input-group-text">Material Efficiency</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="StructureBonus" value="0">
+                        <span class="input-group-text">Structure Bonus</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="RigBonus" value="0">
+                        <span class="input-group-text">Rig Bonus</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="ShipReprocessingPercentage" value="50">
+                        <span class="input-group-text">Reprocessing Percentage</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="ShipQuantity" value="1">
+                        <span class="input-group-text">Quantity</span>
+                    </div>
                 </div>
                 <div id="ShipHaveMineralsDiv" class="centered">
                     Minerals
@@ -107,15 +141,22 @@
                 <div id="ShipFilterOresDiv" class="centered">
                     Filter Ores
                     <br />
-                    <table id="ShipCoreList" class="table table-hover"></table>
+                    <table id="ShipCoreList" class="table"></table>
                 </div>
             </div>
-            <div>
-                <input type="checkbox" id="ShipHaveMinerals" value="1" onchange="hideThings(this, 'ShipHaveMineralsDiv')"> Mineral Stockpile
-                <br />
-                <input type="checkbox" id="ShipHaveOres" value="1" onchange="hideThings(this, 'ShipHaveOresDiv')"> Ore Stockpile
-                <br />
-                <input type="checkbox" id="ShipFilterOres" value="1" onchange="hideThings(this, 'ShipFilterOresDiv')"> Ore Filter
+            <div class="centered mb-3">
+                <div class="input-group-prepend input-group-text centered">
+                    <input type="checkbox" id="ShipHaveMinerals" value="1" onchange="hideThings(this, 'ShipHaveMineralsDiv')">
+                    Mineral Stockpile
+                </div>
+                <div class="input-group-prepend input-group-text centered">
+                    <input type="checkbox" id="ShipHaveOres" value="1" onchange="hideThings(this, 'ShipHaveOresDiv')">
+                    Ore Stockpile
+                </div>
+                <div class="input-group-prepend input-group-text centered">
+                    <input type="checkbox" id="ShipFilterOres" value="1" onchange="hideThings(this, 'ShipFilterOresDiv')">
+                    Ore Filter
+                </div>
             </div>
             <br />
             <input type="submit" value="Calculate" onclick="calcShip()" />
@@ -123,38 +164,92 @@
             <div id="OreTableShips"></div>
         </div>
         <div id="Capitals" class="centered dived outlined padded-text">
-            <div><select id="SelectShipCap"><option>Select Ship</option></select></div>
-            <div>
-                <div class="centered lefted-text">
-                    <div><input type="text" id="CapitalShipMaterialEfficiency" value="10"> Ship Material Efficiency</div>
-                    <div><input type="text" id="CapitalStructureBonus" value="0"> Ship Structure Bonus</div>
-                    <div><input type="text" id="CapitalRigBonus" value="0"> Ship Rig Bonus</div>
-                    <div><input type="text" id="CapitalCompShipMaterialEfficiency" value="10"> Component Material Efficiency</div>
-                    <div><input type="text" id="CapitalCompStructureBonus" value="0"> Component Structure Bonus</div>
-                    <div><input type="text" id="CapitalCompRigBonus" value="0"> Component Rig Bonus</div>
-                    <div><input type="text" id="CapitalShipReprocessingPercentage" value="50"> Reprocessing Percentage</div>
-                    <div><input type="text" id="CapitalShipQuantity" value="1"> Quantity</div>
-                </div>
-                <div id="CapHaveMineralsDiv" class="centered">
-                    Minerals
-                    <div id="CapMinList" class="lefted-text"></div>
-                </div>
-                <div id="CapHaveOresDiv" class="centered">
-                    Ores
-                    <div id="CapOreList" class="lefted-text"></div>
-                </div>
-                <div id="CapFilterOresDiv" class="centered">
-                    Filter Ores
-                    <br />
-                    <table id="CapCoreList" class="table table-hover"></table>
+            <div class="mb-3 centered">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend input-group-text">Select Ship</div>
+                    <select class="custom-select" id="SelectShipCap"></select>
                 </div>
             </div>
             <div>
-                <input type="checkbox" id="CapHaveMinerals" value="1" onchange="hideThings(this, 'CapHaveMineralsDiv')"> Mineral Stockpile
-                <br />
-                <input type="checkbox" id="CapHaveOres" value="1" onchange="hideThings(this, 'CapHaveOresDiv')"> Ore Stockpile
-                <br />
-                <input type="checkbox" id="CapFilterOres" value="1" onchange="hideThings(this, 'CapFilterOresDiv')"> Ore Filter
+                <div class="centered lefted-text">
+                    <div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="CapitalShipMaterialEfficiency" value="10">
+                            <span class="input-group-text">Ship Material Efficiency</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="CapitalStructureBonus" value="0">
+                            <span class="input-group-text">Ship Structure Bonus</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="CapitalRigBonus" value="0">
+                            <span class="input-group-text">Ship Rig Bonus</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="CapitalCompShipMaterialEfficiency" value="0">
+                            <span class="input-group-text">Component Material Efficiency</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="CapitalCompStructureBonus" value="0">
+                            <span class="input-group-text">Component Structure Bonus</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="CapitalCompRigBonus" value="0">
+                            <span class="input-group-text">Component Rig Bonus</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="CapitalShipReprocessingPercentage" value="0">
+                            <span class="input-group-text">Reprocessing Percentage</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="CapitalShipQuantity" value="0">
+                            <span class="input-group-text">Quantity</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div id="CapHaveMineralsDiv" class="centered">
+                        Minerals
+                        <div id="CapMinList" class="lefted-text"></div>
+                    </div>
+                    <div id="CapHaveOresDiv" class="centered">
+                        Ores
+                        <div id="CapOreList" class="lefted-text"></div>
+                    </div>
+                    <div id="CapFilterOresDiv" class="centered">
+                        Filter Ores
+                        <br />
+                        <table id="CapCoreList" class="table"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="centered mb-3">
+                <div class="input-group-prepend input-group-text centered">
+                    <input type="checkbox" id="CapHaveMinerals" value="1" onchange="hideThings(this, 'CapHaveMineralsDiv')">
+                    Mineral Stockpile
+                </div>
+                <div class="input-group-prepend input-group-text centered">
+                    <input type="checkbox" id="CapHaveOres" value="1" onchange="hideThings(this, 'CapHaveOresDiv')">
+                    Ore Stockpile
+                </div>
+                <div class="input-group-prepend input-group-text centered">
+                    <input type="checkbox" id="CapFilterOres" value="1" onchange="hideThings(this, 'CapFilterOresDiv')">
+                    Ore Filter
+                </div>
             </div>
             <br />
             <input type="submit" value="Calculate" onclick="calcShipCap()" />
