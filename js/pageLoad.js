@@ -1,35 +1,29 @@
 window.onload = async function()
 {
-    let params = "";
-    for(mins in utilities.minerals) params += utilities.minerals[mins] + "%0A";
-    for(ore in utilities.ores) params += ore + "%0A";
 
     unloadDivs();
 
-    tempJita = await this.getEVEPraisal(params, "Jita");
-    tempAmarr = await this.getEVEPraisal(params, "Amarr");
-    tempDodixie = await this.getEVEPraisal(params, "Dodixie");
-    tempRens = await this.getEVEPraisal(params, "Rens");
-
-    utilities.buySellAll = Object.freeze({
-        "Jita" : tempJita,
-        "Amarr" : tempAmarr,
-        "Dodixie" : tempDodixie,
-        "Rens" : tempRens
-    });
-        
-    let loadDrops = loadElementsIntoSheet.loadDropdown(["Jita", "Amarr", "Dodixie", "Rens"])
-    loadDrops("SelectMarket");
-    loadDrops("MECMarket");
-
-    loadElementsIntoSheet.loadDropdown(Object.keys(utilities.T1Ships))("SelectShip");
-    loadElementsIntoSheet.loadDropdown(Object.keys(utilities.capitals))("SelectShipCap");
-
-    let reduceFromOres = loadElementsIntoSheet.reduceFrom(Object.keys(utilities.ores));
+    // Load the Reprocessing tab for ores
+    document.getElementById("Reprocessing").innerHTML += 
+    HTMLGenerator.generateDivMBCentered(
+        HTMLGenerator.generateDivInpGroup(
+            HTMLGenerator.generateDivInpPrep("Reprocessing Percentage") +
+            `<input type="text" class="form-control" id="ReprocessingPercentage" value="50">`
+        ) +
+        HTMLGenerator.generateDivInpGroup(
+            HTMLGenerator.generateDivInpPrep("Market") +
+            `<select id="SelectMarket" class="custom-select"></select>`
+        )
+    ) + `<button type="button" class="btn btn-secondary mb-3" onclick="calcOres()">Recalculate</button><table id="OreTable" class="table"></table>`;
+    
+    // Load the dropdowns in the repro tab and MEC tab
+    let loadDrops = loadElementsIntoSheet.loadDropdown(["Jita", "Amarr", "Dodixie", "Rens"]);
+    ["SelectMarket", "MECMarket"].forEach(elems => loadDrops(elems));
 
     let inputMineralReduction = loadElementsIntoSheet.reduceFrom(utilities.minerals)(loadElementsIntoSheet.makeInputs);
     document.getElementById("MECInpList").innerHTML = inputMineralReduction("MEC");
-
+    
+    let reduceFromOres = loadElementsIntoSheet.reduceFrom(Object.keys(utilities.ores));
     ["MEC", "Ship", "Cap"].forEach(
         prevs => {
             ["HaveMinerals", "HaveOres", "FilterOres"].forEach(
@@ -45,6 +39,21 @@ window.onload = async function()
             document.getElementById(prevs + "MinList").innerHTML = inputMineralReduction(prevs + "MinListCheck");
         }
     );
+
+    tempJita = await this.getEVEPraisal(params, "Jita");
+    tempAmarr = await this.getEVEPraisal(params, "Amarr");
+    tempDodixie = await this.getEVEPraisal(params, "Dodixie");
+    tempRens = await this.getEVEPraisal(params, "Rens");
+
+    loadElementsIntoSheet.loadDropdown(Object.keys(utilities.T1Ships))("SelectShip");
+    loadElementsIntoSheet.loadDropdown(Object.keys(utilities.capitals))("SelectShipCap");
+
+    utilities.buySellAll = Object.freeze({
+        "Jita" : tempJita,
+        "Amarr" : tempAmarr,
+        "Dodixie" : tempDodixie,
+        "Rens" : tempRens
+    });
 
     this.calcOres();
 }
@@ -89,6 +98,34 @@ var loadElementsIntoSheet = {
     },
     makeInputs : function(current, post)
     {
-        return `<div class="input-group"><input type="text" class="form-control" id="` + current + post + `"/><span class="input-group-append input-group-text">` + current + `</span></div>`;
+        return HTMLGenerator.generateDivInpGroup(`<input type="text" class="form-control" id="` + current + post + `"/>` +
+                HTMLGenerator.generateTag("span")(["input-group-append","input-group-text"])(current));
+    }
+}
+
+var HTMLGenerator = {
+    generateTag : function(tagName)
+    {
+        return function(classList)
+        {
+            return function(internal)
+            {
+                return `<` + tagName + ` class="` + classList.reduce((acc, curr) => acc + " " + curr) + `">` +
+                    internal +
+                    `</` + tagName + `>`;
+            }
+        }
+    },
+    generateDivMBCentered : function(internal)
+    {
+        return this.generateTag("div")(["mb-3", "centered"])(internal)
+    },
+    generateDivInpGroup : function(internal)
+    {
+        return this.generateTag("div")(["input-group"])(internal)
+    },
+    generateDivInpPrep : function(internal)
+    {
+        return this.generateTag("div")(["input-group-prepend", "input-group-text"])(internal)
     }
 }

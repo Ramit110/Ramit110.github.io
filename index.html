@@ -22,6 +22,7 @@
                 <a class="nav-item nav-link" id="nav4" onclick="moveTo(4)">Capital Manufacturing</a>
             </div>
         </nav>
+
         <div id="Main" class="dived outlined">
             <p>Hello and welcome to Ramit110's Industry Site!</p>
             <br />
@@ -39,20 +40,9 @@
             If you find any bugs and issues feel free to <a href="https://github.com/Ramit110/Ramit110.github.io/issues">report them at any time.</a>
             <p>Thanks and enjoy using this place!</p>
         </div>
-        <div id="Reprocessing" class="centered dived outlined padded-text">
-            <div class="mb-3 centered">
-                <div class="input-group">
-                    <div class="input-group-prepend input-group-text">Reprocessing Percentage</div>
-                    <input type="text" class="form-control" id="ReprocessingPercentage" value="50">
-                </div>
-                <div class="input-group">
-                    <div class="input-group-prepend input-group-text">Market</div>
-                    <select class="custom-select" id="SelectMarket"></select>
-                </div>
-            </div>
-            <button type="button" class="btn btn-secondary mb-3" onclick="calcOres()">Recalculate</button>
-            <table id="OreTable" class="table"></table>
-        </div>
+        
+        <div id="Reprocessing" class="centered dived outlined padded-text"></div>
+
         <div id="MostEfficientCompressed" class="centered dived outlined padded-text">
             <div id="MECMain">
                 <div class="centered">
@@ -82,15 +72,15 @@
                     <select class="custom-select" id="MECMarket"></select>
                 </div>
                 <div class="centered">
-                    <div class="input-group-prepend input-group-text centered">
+                    <div class="input-group-prepend input-group-text">
                         <input type="checkbox" id="MECHaveMinerals" value="1" onchange="hideThings(this, 'MECHaveMineralsDiv')">
                         Mineral Stockpile
                     </div>
-                    <div class="input-group-prepend input-group-text centered">
+                    <div class="input-group-prepend input-group-text">
                         <input type="checkbox" id="MECHaveOres" value="1" onchange="hideThings(this, 'MECHaveOresDiv')">
                         Ore Stockpile
                     </div>
-                    <div class="input-group-prepend input-group-text centered">
+                    <div class="input-group-prepend input-group-text">
                         <input type="checkbox" id="MECFilterOres" value="1" onchange="hideThings(this, 'MECFilterOresDiv')">
                         Ore Filter
                     </div>
@@ -98,8 +88,9 @@
             </div>
             <br />
             <button type="button" class="btn btn-secondary mb-3" onclick="calcMinimumOre()">Get minimum compressed ore needed</button>
-            <div id="MECOut"></div>
+            <div id="MECOreTable"></div>
         </div>
+
         <div id="T1Ship" class="centered dived outlined padded-text">
             <div class="mb-3 centered">
                 <div class="input-group">
@@ -145,15 +136,15 @@
                 </div>
             </div>
             <div class="centered mb-3">
-                <div class="input-group-prepend input-group-text centered">
+                <div class="input-group-prepend input-group-text">
                     <input type="checkbox" id="ShipHaveMinerals" value="1" onchange="hideThings(this, 'ShipHaveMineralsDiv')">
                     Mineral Stockpile
                 </div>
-                <div class="input-group-prepend input-group-text centered">
+                <div class="input-group-prepend input-group-text">
                     <input type="checkbox" id="ShipHaveOres" value="1" onchange="hideThings(this, 'ShipHaveOresDiv')">
                     Ore Stockpile
                 </div>
-                <div class="input-group-prepend input-group-text centered">
+                <div class="input-group-prepend input-group-text">
                     <input type="checkbox" id="ShipFilterOres" value="1" onchange="hideThings(this, 'ShipFilterOresDiv')">
                     Ore Filter
                 </div>
@@ -161,8 +152,9 @@
             <br />
             <input type="submit" value="Calculate" onclick="calcShip()" />
             <br />
-            <div id="OreTableShips"></div>
+            <div id="ShipOreTable"></div>
         </div>
+        
         <div id="Capitals" class="centered dived outlined padded-text">
             <div class="mb-3 centered">
                 <div class="input-group mb-3">
@@ -192,7 +184,7 @@
                     </div>
                     <div>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="CapitalCompShipMaterialEfficiency" value="0">
+                            <input type="text" class="form-control" id="CapitalCompShipMaterialEfficiency" value="10">
                             <span class="input-group-text">Component Material Efficiency</span>
                         </div>
                     </div>
@@ -210,13 +202,13 @@
                     </div>
                     <div>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="CapitalShipReprocessingPercentage" value="0">
+                            <input type="text" class="form-control" id="CapitalShipReprocessingPercentage" value="50">
                             <span class="input-group-text">Reprocessing Percentage</span>
                         </div>
                     </div>
                     <div>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="CapitalShipQuantity" value="0">
+                            <input type="text" class="form-control" id="CapitalShipQuantity" value="1">
                             <span class="input-group-text">Quantity</span>
                         </div>
                     </div>
@@ -238,15 +230,15 @@
                 </div>
             </div>
             <div class="centered mb-3">
-                <div class="input-group-prepend input-group-text centered">
+                <div class="input-group-prepend input-group-text">
                     <input type="checkbox" id="CapHaveMinerals" value="1" onchange="hideThings(this, 'CapHaveMineralsDiv')">
                     Mineral Stockpile
                 </div>
-                <div class="input-group-prepend input-group-text centered">
+                <div class="input-group-prepend input-group-text">
                     <input type="checkbox" id="CapHaveOres" value="1" onchange="hideThings(this, 'CapHaveOresDiv')">
                     Ore Stockpile
                 </div>
-                <div class="input-group-prepend input-group-text centered">
+                <div class="input-group-prepend input-group-text">
                     <input type="checkbox" id="CapFilterOres" value="1" onchange="hideThings(this, 'CapFilterOresDiv')">
                     Ore Filter
                 </div>
@@ -254,7 +246,7 @@
             <br />
             <input type="submit" value="Calculate" onclick="calcShipCap()" />
             <br />
-            <div id="OreTableCapShips"></div>
+            <div id="CapShipOreTable"></div>
         </div>
     </body>
 </html>

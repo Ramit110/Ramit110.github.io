@@ -10,7 +10,7 @@ function calcOres()
 function calcMinimumOre()
 {
     calcMinimum(
-        "MECOut",
+        "MECOreTable",
         calcMin.generateFromOptimalOre(utilities.getFromDocument("ReprocessingPercentageTwo", 50))
     )
 }
@@ -18,7 +18,7 @@ function calcMinimumOre()
 function calcShip()
 {
     calcMinimum(
-        "OreTableShips",
+        "ShipOreTable",
         calcMin.generateFromBlueprints(
             utilities.getFromDocument("ShipMaterialEfficiency", 10),
             utilities.getFromDocument("StructureBonus", 0),
@@ -32,7 +32,7 @@ function calcShip()
 function calcShipCap()
 {
     calcMinimum(
-        "OreTableCapShips",
+        "CapShipOreTable",
         calcMin.generateCapMinerals(
             utilities.getFromDocument("CapitalShipMaterialEfficiency", 10),
             utilities.getFromDocument("CapitalStructureBonus", 0),
