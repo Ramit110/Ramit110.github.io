@@ -40,6 +40,10 @@ window.onload = async function()
         }
     );
 
+    let params = "";
+    for(mins in utilities.minerals) params += utilities.minerals[mins] + "%0A";
+    for(ore in utilities.ores) params += ore + "%0A";
+
     tempJita = await this.getEVEPraisal(params, "Jita");
     tempAmarr = await this.getEVEPraisal(params, "Amarr");
     tempDodixie = await this.getEVEPraisal(params, "Dodixie");
