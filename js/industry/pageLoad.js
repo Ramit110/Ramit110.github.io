@@ -4,18 +4,22 @@ window.onload = async function()
     unloadDivs();
 
     // Load the Reprocessing tab for ores
-    document.getElementById("Reprocessing").innerHTML += 
-    HTMLGenerator.generateDivMBCentered(
-        HTMLGenerator.generateDivInpGroup(
-            HTMLGenerator.generateDivInpPrep("Reprocessing Percentage") +
-            `<input type="text" class="form-control" id="ReprocessingPercentage" value="50">`
-        ) +
-        HTMLGenerator.generateDivInpGroup(
-            HTMLGenerator.generateDivInpPrep("Market") +
-            `<select id="SelectMarket" class="custom-select"></select>`
-        )
-    ) + `<button type="button" class="btn btn-secondary mb-3" onclick="calcOres()">Recalculate</button><table id="OreTable" class="table"></table>`;
-    
+
+    let ReproDiv = HTMLGenerator.generateElements("div")(["mb-3", "centered"])(document.getElementById("Reprocessing"))("");
+
+    [
+        ["Reprocessing Percentage", `<input type="text" class="form-control" id="ReprocessingPercentage" value="50">`],
+        ["Market", `<select id="SelectMarket" class="custom-select"></select>`]
+    ].forEach(elems => {
+        let temp = HTMLGenerator.generateElements("div")(["input-group"])(ReproDiv)("");
+        HTMLGenerator.generateElements("div")(["input-group-prepend", "input-group-text"])(temp)(elems[0]);
+        temp.innerHTML  += elems[1];
+    });
+
+    // Repro Done
+
+    document.getElementById("Reprocessing").innerHTML += `<button type="button" class="btn btn-secondary mb-3" onclick="calcOres()">Recalculate</button><table id="OreTable" class="table"></table>`;
+
     // Load the dropdowns in the repro tab and MEC tab
     let loadDrops = loadElementsIntoSheet.loadDropdown(["Jita", "Amarr", "Dodixie", "Rens"]);
     ["SelectMarket", "MECMarket"].forEach(elems => loadDrops(elems));
@@ -102,12 +106,32 @@ var loadElementsIntoSheet = {
     },
     makeInputs : function(current, post)
     {
-        return HTMLGenerator.generateDivInpGroup(`<input type="text" class="form-control" id="` + current + post + `"/>` +
-                HTMLGenerator.generateTag("span")(["input-group-append","input-group-text"])(current));
+        let tbr = HTMLGenerator.generateTag("div")(["input-group"])(
+            `<input type="text" class="form-control" id="` + current + post + `"/>` +
+            HTMLGenerator.generateTag("span")(["input-group-append","input-group-text"])(current)
+        );
+        return tbr;
     }
 }
 
 var HTMLGenerator = {
+    generateElements : function(tagName)
+    {
+        return function(classList)
+        {
+            return function(parent)
+            {
+                return function(internal)
+                {
+                    let newNode = document.createElement(tagName);
+                    parent.appendChild(newNode);
+                    classList.forEach(cssElement => newNode.classList.add(cssElement));
+                    newNode.innerHTML = internal;
+                    return newNode;
+                }
+            }
+        }
+    },
     generateTag : function(tagName)
     {
         return function(classList)
@@ -119,18 +143,6 @@ var HTMLGenerator = {
                     `</` + tagName + `>`;
             }
         }
-    },
-    generateDivMBCentered : function(internal)
-    {
-        return this.generateTag("div")(["mb-3", "centered"])(internal)
-    },
-    generateDivInpGroup : function(internal)
-    {
-        return this.generateTag("div")(["input-group"])(internal)
-    },
-    generateDivInpPrep : function(internal)
-    {
-        return this.generateTag("div")(["input-group-prepend", "input-group-text"])(internal)
     }
 }
 
