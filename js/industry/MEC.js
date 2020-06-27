@@ -83,7 +83,7 @@ let calcMin = {
                 for(reproOres in utilities.ores[ore])
                     this.model["variables"][ore][reproOres] = Math.floor(utilities.ores[ore][reproOres]*repro/100);
                 try {
-                    this.model["variables"][ore]["isk"] = utilities.getMarketDataFromDropdown("MECMarket")[ore]["sell"];        
+                    this.model["variables"][ore]["isk"] = utilities.getMarketDataFromDropdown(name + "Market")[ore]["sell"];        
                 }
                 catch (e) { console.log(e) }
             }
@@ -220,7 +220,7 @@ let reprocessing = {
             toBeAssigned += "<th>" + ore + "</th>";
             let mineralValueSell = 0;
             let mineralValueBuy = 0;
-            let localList = utilities.getMarketDataFromDropdown("SelectMarket");
+            let localList = utilities.getMarketDataFromDropdown("ReprocessMarket");
         
             utilities.minerals.forEach(Element => {
                 let temp =  utilities.ores[ore][Element];

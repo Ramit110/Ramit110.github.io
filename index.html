@@ -41,8 +41,8 @@
         
         <div id="Reprocessing" class="centered dived outlined"></div>
 
-        <div id="MostEfficientCompressed" class="centered dived outlined">
-            <div id="MECMain">
+        <div id="MEC" class="centered dived outlined">
+            <div>
                 <div class="centered">
                     Target Minerals
                     <div id="MECInpList"></div>
@@ -89,7 +89,7 @@
             <div id="MECOreTable"></div>
         </div>
 
-        <div id="T1Ship" class="centered dived outlined">
+        <div id="Ship" class="centered dived outlined">
             <div class="mb-3 centered">
                 <div class="input-group">
                     <div class="input-group-prepend input-group-text">Select Ship</div>
@@ -113,6 +113,10 @@
                     <div class="input-group">
                         <input type="text" class="form-control" id="ShipReprocessingPercentage" value="50">
                         <span class="input-group-text">Reprocessing Percentage</span>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend input-group-text">Market</div>
+                        <select class="custom-select" id="ShipMarket"></select>
                     </div>
                     <div class="input-group">
                         <input type="text" class="form-control" id="ShipQuantity" value="1">
@@ -153,7 +157,7 @@
             <div id="ShipOreTable"></div>
         </div>
         
-        <div id="Capitals" class="centered dived outlined">
+        <div id="Cap" class="centered dived outlined">
             <div class="mb-3 centered">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend input-group-text">Select Ship</div>
@@ -202,6 +206,10 @@
                         <div class="input-group">
                             <input type="text" class="form-control" id="CapitalShipReprocessingPercentage" value="50">
                             <span class="input-group-text">Reprocessing Percentage</span>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend input-group-text">Market</div>
+                            <select class="custom-select" id="CapMarket"></select>
                         </div>
                     </div>
                     <div>

@@ -1,60 +1,91 @@
 window.onload = async function()
 {
-
     unloadDivs();
 
     // Load the Reprocessing tab for ores
 
-    let ReproDiv = HTMLGenerator.generateElements("div")(["mb-3", "centered"])(document.getElementById("Reprocessing"))("");
+    // inner div needed to stop input/selector being max length
+    let ReproDiv = HTMLGenerator.generateElements
+        ("div")
+        (["mb-3", "centered"])
+        (document.getElementById("Reprocessing"))
+        ("");
 
     [
-        ["Reprocessing Percentage", `<input type="text" class="form-control" id="ReprocessingPercentage" value="50">`],
-        ["Market", `<select id="SelectMarket" class="custom-select"></select>`]
+        [
+            "Reprocessing Percentage",
+            `<input type="text" class="form-control" id="ReprocessingPercentage" value="50">`
+        ], [
+            "Market",
+            `<select id="ReprocessMarket" class="custom-select"></select>`
+        ]
     ].forEach(elems => {
-        let temp = HTMLGenerator.generateElements("div")(["input-group"])(ReproDiv)("");
-        HTMLGenerator.generateElements("div")(["input-group-prepend", "input-group-text"])(temp)(elems[0]);
-        temp.innerHTML  += elems[1];
+        let temp = HTMLGenerator.generateElements
+            ("div")
+            (["input-group"])
+            (ReproDiv)
+            ("");
+        HTMLGenerator.generateElements
+            ("div")
+            (["input-group-prepend", "input-group-text"])
+            (temp)
+            (elems[0]);
+        temp.innerHTML += elems[1];
     });
-
-    // Repro Done
-
-    document.getElementById("Reprocessing").innerHTML += `<button type="button" class="btn btn-secondary mb-3" onclick="calcOres()">Recalculate</button><table id="OreTable" class="table"></table>`;
-
-    // Load the dropdowns in the repro tab and MEC tab
-    let loadDrops = loadElementsIntoSheet.loadDropdown(["Jita", "Amarr", "Dodixie", "Rens"]);
-    ["SelectMarket", "MECMarket"].forEach(elems => loadDrops(elems));
-
-    let inputMineralReduction = loadElementsIntoSheet.reduceFrom(utilities.minerals)(loadElementsIntoSheet.makeInputs);
-    document.getElementById("MECInpList").innerHTML = inputMineralReduction("MEC");
     
-    let reduceFromOres = loadElementsIntoSheet.reduceFrom(Object.keys(utilities.ores));
+    ReproDiv.innerHTML += `<button type="button" class="btn btn-secondary" onclick="calcOres()">Recalculate</button>`;
+    document.getElementById("Reprocessing").innerHTML += `<table id="OreTable" class="table"></table>`;
+    
+    // Load market Dropdowns
+    let loadMarketDrops = loadElementsIntoSheet.loadDropdown(["Jita", "Amarr", "Dodixie", "Rens"]);
+    ["Reprocess", "MEC", "Ship", "Cap"].forEach(elems => loadMarketDrops(elems + "Market"));
+
+    // Repro Done, Load the MEC, Ship and Cap tabs
+
+    // Prepare loading the dropdowns in the repro tab and MEC tab
+    let reduceFromOres = loadElementsIntoSheet.reduceFromList(Object.keys(utilities.ores));
+    let inputMineralReductionList = loadElementsIntoSheet.reduceFromList
+        (utilities.minerals)
+        (loadElementsIntoSheet.makeInputTags);
+
+    // Load the user inputs for MEC, Ships and Caps
+    inputMineralReductionList(document.getElementById("MECInpList"))("MEC");
+    loadElementsIntoSheet.loadDropdown(Object.keys(utilities.T1Ships))("SelectShip");
+    loadElementsIntoSheet.loadDropdown(Object.keys(utilities.capitals))("SelectShipCap");
+
     ["MEC", "Ship", "Cap"].forEach(
         prevs => {
             ["HaveMinerals", "HaveOres", "FilterOres"].forEach(
                 posts => hideThings(document.getElementById(prevs + posts), prevs + posts + "Div")
             )
             
-            document.getElementById(prevs + "CoreList").innerHTML = 
-                reduceFromOres(loadElementsIntoSheet.makeCheckboxes)(prevs + "CoreListCheck");
+            reduceFromOres
+                (loadElementsIntoSheet.makeCheckboxTags)
+                (document.getElementById(prevs + "CoreList"))
+                (prevs + "CoreListCheck");
 
-            document.getElementById(prevs + "OreList").innerHTML = 
-                reduceFromOres(loadElementsIntoSheet.makeInputs)(prevs + "OreListCheck");
+            reduceFromOres
+                (loadElementsIntoSheet.makeInputTags)
+                (document.getElementById(prevs + "OreList"))
+                (prevs + "OreListCheck");
 
-            document.getElementById(prevs + "MinList").innerHTML = inputMineralReduction(prevs + "MinListCheck");
+            inputMineralReductionList
+                (document.getElementById(prevs + "MinList"))
+                (prevs + "MinListCheck");
         }
     );
 
     let params = "";
     for(mins in utilities.minerals) params += utilities.minerals[mins] + "%0A";
     for(ore in utilities.ores) params += ore + "%0A";
+    for(ships in utilities.T1Ships) params += ships + "%0A";
+    for(caps in utilities.capitals) params += caps + "%0A";
+
 
     tempJita = await this.getEVEPraisal(params, "Jita");
     tempAmarr = await this.getEVEPraisal(params, "Amarr");
     tempDodixie = await this.getEVEPraisal(params, "Dodixie");
     tempRens = await this.getEVEPraisal(params, "Rens");
-
-    loadElementsIntoSheet.loadDropdown(Object.keys(utilities.T1Ships))("SelectShip");
-    loadElementsIntoSheet.loadDropdown(Object.keys(utilities.capitals))("SelectShipCap");
 
     utilities.buySellAll = Object.freeze({
         "Jita" : tempJita,
@@ -75,15 +106,16 @@ function unloadDivs()
 }
 
 var loadElementsIntoSheet = {
-    reduceFrom : function(inplist)
+    reduceFromList : function(inplist)
     {
         return function(func)
         {
-            return function(post)
+            return function(parent)
             {
-                return inplist.reduce((accumulation, current) =>
-                    accumulation += func(current, post), ""
-                );
+                return function(post)
+                {
+                    inplist.forEach((current) => func(current, post, parent));
+                }
             }
         }
     },
@@ -98,19 +130,24 @@ var loadElementsIntoSheet = {
             });
         }
     },
-    makeCheckboxes : function(current, post)
+    makeCheckboxTags : function(current, post, parent)
     {
-        return utilities.addRow(
+        parent.innerHTML += utilities.addRow(
             [`<input type="checkbox" id="` + current + post + `" checked />`, current]
         )
     },
-    makeInputs : function(current, post)
+    makeInputTags(current, post, parent)
     {
-        let tbr = HTMLGenerator.generateTag("div")(["input-group"])(
-            `<input type="text" class="form-control" id="` + current + post + `"/>` +
-            HTMLGenerator.generateTag("span")(["input-group-append","input-group-text"])(current)
-        );
-        return tbr;
+        let tbr = HTMLGenerator.generateElements
+            ("div")
+            (["input-group"])
+            (parent)
+            (`<input type="text" class="form-control" id="` + current + post + `"/>`);
+        HTMLGenerator.generateElements
+            ("span")
+            (["input-group-append","input-group-text"])
+            (tbr)
+            (current);
     }
 }
 
@@ -129,18 +166,6 @@ var HTMLGenerator = {
                     newNode.innerHTML = internal;
                     return newNode;
                 }
-            }
-        }
-    },
-    generateTag : function(tagName)
-    {
-        return function(classList)
-        {
-            return function(internal)
-            {
-                return `<` + tagName + ` class="` + classList.reduce((acc, curr) => acc + " " + curr) + `">` +
-                    internal +
-                    `</` + tagName + `>`;
             }
         }
     }
