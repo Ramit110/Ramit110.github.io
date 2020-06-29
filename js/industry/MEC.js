@@ -15,11 +15,10 @@ function calcMinimum(location, model)
 {
     let strOut = "";
 
-    solution = solver.Solve(model);
+    let solution = solver.Solve(model);
 
-    market = utilities.getMarketDataFromDropdown("MECMarket");
-
-    total = { "sell": 0, "buy": 0,  "volume": 0 };
+    let market = utilities.getMarketDataFromDropdown(location + "Market");
+    let total = { "sell": 0, "buy": 0,  "volume": 0 };
 
     strOut += "<div>Ores Calculated<br /><table class=\"table table-hover\">";
 
@@ -28,7 +27,7 @@ function calcMinimum(location, model)
         out = Math.ceil(solution[ore]);
         if(out != 0 && !isNaN(out) && out != undefined)
         {
-            try{
+            try {
                 total["sell"] += out*market[ore]["sell"];
                 total["buy"] += out*market[ore]["buy"];
                 total["volume"] += out*market[ore]["volume"];
@@ -58,7 +57,36 @@ function calcMinimum(location, model)
         ]);
     strOut += "</table></div>";
     
-    document.getElementById(location).innerHTML = strOut;
+    document.getElementById(location + "OreTable").innerHTML = strOut;
+}
+
+function calcMinimumShip(location, model)
+{
+    let market = utilities.getMarketDataFromDropdown(location + "Market");
+    let total = { "sell": 0, "buy": 0};
+    let quant = utilities.getFromDocument(location + "Quantity", 1);
+
+    let ship = document.getElementById("SelectShip");
+    ship = ship.options[ship.selectedIndex].value;
+
+    console.log(total);
+
+    try {
+        // template: total["sell"] += out*market[ore]["sell"];
+        total["sell"] += quant*market[ship]["sell"];
+        total["buy"] += quant*market[ship]["buy"];
+    }
+    catch (e) { console.log(e) }
+
+    console.log(total);
+
+    calcMinimum(location, model);
+    strOut = "<div>Ship Info<br /><table class=\"table table-hover\">" +
+        utilities.addRow(["Sell Price:", utilities.addCommas(Math.ceil(total["sell"])) + " ISK"]) +
+        utilities.addRow(["Buy Price:", utilities.addCommas(Math.ceil(total["buy"])) + " ISK"]) +
+        "</table></div>";
+
+    document.getElementById(location + "OreTable").innerHTML += strOut;
 }
 
 let calcMin = {
@@ -83,7 +111,7 @@ let calcMin = {
                 for(reproOres in utilities.ores[ore])
                     this.model["variables"][ore][reproOres] = Math.floor(utilities.ores[ore][reproOres]*repro/100);
                 try {
-                    this.model["variables"][ore]["isk"] = utilities.getMarketDataFromDropdown("MECMarket")[ore]["sell"];        
+                    this.model["variables"][ore]["isk"] = utilities.getMarketDataFromDropdown(name + "Market")[ore]["sell"];        
                 }
                 catch (e) { console.log(e) }
             }
@@ -220,7 +248,7 @@ let reprocessing = {
             toBeAssigned += "<th>" + ore + "</th>";
             let mineralValueSell = 0;
             let mineralValueBuy = 0;
-            let localList = utilities.getMarketDataFromDropdown("SelectMarket");
+            let localList = utilities.getMarketDataFromDropdown("ReprocessMarket");
         
             utilities.minerals.forEach(Element => {
                 let temp =  utilities.ores[ore][Element];
