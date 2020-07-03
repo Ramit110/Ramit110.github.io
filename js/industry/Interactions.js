@@ -1,10 +1,15 @@
 
-divs = ["Main", "Reprocessing", "MEC", "Ship", "Cap"];
+divs = ["Main", "ReprocessingOre", "MEC", "Ship", "Cap", "ReprocessingIce"];
 current = 0;
 
 function calcOres()
 {
-    reprocessing.loadReprocessing(utilities.getFromDocument("ReprocessingPercentage", 50), "OreTable");
+    reprocessing.loadReprocessing(utilities.getFromDocument("ReprocessingPercentageOre", 50), "OreTable", "ReprocessOreMarket", utilities.ores, utilities.minerals);
+}
+
+function calcIce()
+{
+    reprocessing.loadReprocessing(utilities.getFromDocument("ReprocessingPercentageIce", 50), "IceTable", "ReprocessIceMarket", utilities.ices, utilities.iceMinerals);
 }
 
 function calcMinimumOre()

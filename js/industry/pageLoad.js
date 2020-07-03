@@ -2,22 +2,21 @@ window.onload = async function()
 {
     unloadDivs();
 
-    // Load the Reprocessing tab for ores
+    // Load the Reprocessing tab for ores AND ICE
 
     // inner div needed to stop input/selector being max length
     let ReproDiv = HTMLGenerator.generateElements
         ("div")
         (["mb-3", "centered"])
-        (document.getElementById("Reprocessing"))
+        (document.getElementById("ReprocessingOre"))
         ("");
-
     [
         [
             "Reprocessing Percentage",
-            `<input type="text" class="form-control" id="ReprocessingPercentage" value="50">`
+            `<input type="text" class="form-control" id="ReprocessingPercentageOre" value="50">`
         ], [
             "Market",
-            `<select id="ReprocessMarket" class="custom-select"></select>`
+            `<select id="ReprocessOreMarket" class="custom-select"></select>`
         ]
     ].forEach(elems => {
         let temp = HTMLGenerator.generateElements
@@ -32,13 +31,44 @@ window.onload = async function()
             (elems[0]);
         temp.innerHTML += elems[1];
     });
+
+    let ReproDivIce = HTMLGenerator.generateElements
+        ("div")
+        (["mb-3", "centered"])
+        (document.getElementById("ReprocessingIce"))
+        ("");
+    [
+        [
+            "Reprocessing Percentage",
+            `<input type="text" class="form-control" id="ReprocessingPercentageIce" value="50">`
+        ], [
+            "Market",
+            `<select id="ReprocessIceMarket" class="custom-select"></select>`
+        ]
+    ].forEach(elems => {
+        let temp = HTMLGenerator.generateElements
+            ("div")
+            (["input-group"])
+            (ReproDivIce)
+            ("");
+        HTMLGenerator.generateElements
+            ("div")
+            (["input-group-prepend", "input-group-text"])
+            (temp)
+            (elems[0]);
+        temp.innerHTML += elems[1];
+    });
     
     ReproDiv.innerHTML += `<button type="button" class="btn btn-secondary" onclick="calcOres()">Recalculate</button>`;
-    document.getElementById("Reprocessing").innerHTML += `<table id="OreTable" class="table"></table>`;
+    ReproDivIce.innerHTML += `<button type="button" class="btn btn-secondary" onclick="calcIce()">Recalculate</button>`;
+
+
+    document.getElementById("ReprocessingOre").innerHTML += `<table id="OreTable" class="table"></table>`;
+    document.getElementById("ReprocessingIce").innerHTML += `<table id="IceTable" class="table"></table>`;
     
     // Load market Dropdowns
     let loadMarketDrops = loadElementsIntoSheet.loadDropdown(["Jita", "Amarr", "Dodixie", "Rens"]);
-    ["Reprocess", "MEC", "Ship", "Cap"].forEach(elems => loadMarketDrops(elems + "Market"));
+    ["ReprocessOre", "ReprocessIce", "MEC", "Ship", "Cap"].forEach(elems => loadMarketDrops(elems + "Market"));
 
     // Repro Done, Load the MEC, Ship and Cap tabs
 
@@ -76,10 +106,12 @@ window.onload = async function()
     );
 
     let params = "";
-    for(mins in utilities.minerals) params += utilities.minerals[mins] + "%0A";
-    for(ore in utilities.ores) params += ore + "%0A";
-    for(ships in utilities.T1Ships) params += ships + "%0A";
-    for(caps in utilities.capitals) params += caps + "%0A";
+    [utilities.minerals, utilities.iceMinerals].forEach(elems => {
+        for(mins in elems) params += elems[mins] + "%0A"
+    });
+    [utilities.ores, utilities.ices, utilities.T1Ships, utilities.capitals].forEach(elems => {
+        for(item in elems) params += item + "%0A"
+    });
 
 
     tempJita = await this.getEVEPraisal(params, "Jita");
@@ -95,6 +127,7 @@ window.onload = async function()
     });
 
     this.calcOres();
+    this.calcIce();
 }
 
 function unloadDivs()

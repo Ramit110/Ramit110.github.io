@@ -236,22 +236,22 @@ let calcMin = {
 
 
 let reprocessing = {
-    loadReprocessing : function (value, location)
+    loadReprocessing : function (value, location, dropdownName, dictOres, mins)
     {
         let toBeAssigned = "<tr><th>Name</th>";
-        utilities.minerals.forEach(Element => { toBeAssigned+= "<th>" + Element + "</th>"; });
+        mins.forEach(Element => { toBeAssigned+= "<th>" + Element + "</th>"; });
         toBeAssigned+="<th>Ore Buy</th><th>Ore Sell</th><th>Mineral Buy</th><th>Mineral Sell</th></tr>";
         
-        for(ore in utilities.ores)
+        for(ore in dictOres)
         {
             toBeAssigned += "<tr>";
             toBeAssigned += "<th>" + ore + "</th>";
             let mineralValueSell = 0;
             let mineralValueBuy = 0;
-            let localList = utilities.getMarketDataFromDropdown("ReprocessMarket");
+            let localList = utilities.getMarketDataFromDropdown(dropdownName);
         
-            utilities.minerals.forEach(Element => {
-                let temp =  utilities.ores[ore][Element];
+            mins.forEach(Element => {
+                let temp =  dictOres[ore][Element];
                 temp = temp == undefined ? 0 : temp;
                 toBeAssigned += "<th>" + utilities.addCommas(Math.floor(temp*value/100)) + "</th>";
                 try {
