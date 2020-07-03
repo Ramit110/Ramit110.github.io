@@ -63,13 +63,11 @@ function calcMinimum(location, model)
 function calcMinimumShip(location, model)
 {
     let market = utilities.getMarketDataFromDropdown(location + "Market");
-    let total = { "sell": 0, "buy": 0};
+    let total = { "sell": 0, "buy": 0 };
     let quant = utilities.getFromDocument(location + "Quantity", 1);
 
     let ship = document.getElementById("SelectShip");
     ship = ship.options[ship.selectedIndex].value;
-
-    console.log(total);
 
     try {
         // template: total["sell"] += out*market[ore]["sell"];
@@ -77,8 +75,6 @@ function calcMinimumShip(location, model)
         total["buy"] += quant*market[ship]["buy"];
     }
     catch (e) { console.log(e) }
-
-    console.log(total);
 
     calcMinimum(location, model);
     strOut = "<div>Ship Info<br /><table class=\"table table-hover\">" +
@@ -97,6 +93,8 @@ let calcMin = {
         "constraints": { },
         "variables": { }
     },
+
+    // Adds ore to models and deals with the ore filter
     addOreToModel : function(name, repro)
     {
         for(ore in utilities.ores)
@@ -117,31 +115,40 @@ let calcMin = {
             }
         }
     },
+
+    // Deals with a mineral stockpile
+    addStockpileMinsToModel : function(name)
+    {
+        if(document.getElementById(name + "HaveMinerals").checked) for(mins in utilities.minerals)
+        {
+            calcMin.model["constraints"][utilities.minerals[mins]]["min"] -= 
+                utilities.getFromDocument(utilities.minerals[mins] + name + "MinListCheck", 0)
+        }
+    },
+
+    // Deals with an ore stockpile
+    addStockpileOresToModel : function(name, repro)
+    {
+        if(document.getElementById(name + "HaveOres").checked) for(ore in utilities.ores)
+        {
+            for(mins in utilities.ores[ore]) if(utilities.ores[ore][mins] != undefined)
+            {
+                calcMin.model["constraints"][mins]["min"] -= 
+                    utilities.getFromDocument(ore + name + "OreListCheck", 0) * utilities.ores[ore][mins] * repro/100
+            }
+        }
+    },
     
     generateFromOptimalOre : function(repro)
     {
+        this.addOreToModel("MEC", repro);
+
         for(mins in utilities.minerals)
-        {
             calcMin.model["constraints"][utilities.minerals[mins]] = 
                 { "min": utilities.getFromDocument(utilities.minerals[mins] + "MEC", 0), "tot": 0 }
-            if(document.getElementById("MECHaveMinerals").checked)
-                calcMin.model["constraints"][utilities.minerals[mins]]["min"] -= 
-                    utilities.getFromDocument(utilities.minerals[mins] + "MECMinListCheck", 0)
-        }
         
-        this.addOreToModel("MEC", repro);
-        for(ore in utilities.ores)
-        {
-            if(document.getElementById("MECHaveOres").checked)
-            {
-                for(mins in utilities.ores[ore]) if(utilities.ores[ore][mins] != undefined)
-                {
-                    calcMin.model["constraints"][mins]["min"] -= 
-                        utilities.getFromDocument(ore + "MECOreListCheck", 0) * utilities.ores[ore][mins] * repro/100
-                }
-            }
-        }
-
+        this.addStockpileMinsToModel("MEC");
+        this.addStockpileOresToModel("MEC", repro);
         return calcMin.model;
     },
     
@@ -149,38 +156,26 @@ let calcMin = {
     {
         this.addOreToModel("Ship", repro);
 
-        e = document.getElementById("SelectShip");
-        for(mins in utilities.minerals)
-        {
-            if(utilities.T1Ships[e.options[e.selectedIndex].value] != undefined) 
-                amount = 
-                    quantity*
-                    Math.ceil(
-                        utilities.T1Ships[e.options[e.selectedIndex].value][utilities.minerals[mins]]*
-                        (1-(me/100))*
-                        (1-(structure/100))*
-                        (1-(rig/100))
-                    );
-            else amount = 0;
-            
+        let ship = document.getElementById("SelectShip");
+        ship = utilities.T1Ships[e.options[e.selectedIndex].value];
+
+        if(e != undefined) for(mins in utilities.minerals)
+        { 
             amount = 
-                isNaN(amount) ? 
-                    (document.getElementById("ShipHaveMinerals").checked ? utilities.getFromDocument(utilities.minerals[mins] + "ShipMinListCheck", 0) : 0)
-                    :
-                    amount - (document.getElementById("ShipHaveMinerals").checked ? utilities.getFromDocument(utilities.minerals[mins] + "ShipMinListCheck", 0) : 0);
+                quantity *
+                Math.ceil(
+                    ship[utilities.minerals[mins]]*
+                    (1-(me/100))*
+                    (1-(structure/100))*
+                    (1-(rig/100))
+                );
             
-            if(document.getElementById("ShipHaveOres").checked) for(ore in utilities.ores)
-                {
-                    if(utilities.ores[ore][utilities.minerals[mins]] != undefined)
-                    {
-                        amount -= 
-                            utilities.getFromDocument(ore + "ShipOreListCheck", 0) * utilities.ores[ore][utilities.minerals[mins]] * (isNaN(repro/100) ? 0 : repro/100)
-                    }
-                };
-        
             calcMin.model["constraints"][utilities.minerals[mins]] = 
                 { "min": amount, "tot": 0 };
         }
+
+        this.addStockpileMinsToModel("Ship");
+        this.addStockpileOresToModel("Ship", repro);
         return calcMin.model;
     },
 
@@ -188,48 +183,36 @@ let calcMin = {
     {
         this.addOreToModel("Cap", repro);
         
-        e = document.getElementById("SelectShipCap");
+        let capitalShip = document.getElementById("SelectShipCap");
+        capitalShip = utilities.capitals[e.options[e.selectedIndex].value];
         neededminerals = { }
         
         for(minerals in utilities.minerals) neededminerals[utilities.minerals[minerals]] = 0;
 
-        if(utilities.capitals[e.options[e.selectedIndex].value] != undefined) 
-            for(comps in utilities.capitals[e.options[e.selectedIndex].value])
-            {
-                for(mins in utilities.capitalComponents[comps])
-                    neededminerals[mins] +=
-                        Math.ceil(
-                            utilities.capitals[e.options[e.selectedIndex].value][comps]
-                            *(1-(capme/100))
-                            *(1-(capstructure/100))
-                            *(1-(caprig/100))
-                        )*
-                        Math.ceil(
-                            utilities.capitalComponents[comps][mins]
-                            *(1-(me/100))
-                            *(1-(structure/100))
-                            *(1-(rig/100))
-                        )*
-                        Math.ceil(quantity);
-            }
+        if(capitalShip != undefined) for(comps in e)
+        {
+            for(mins in utilities.capitalComponents[comps])
+                neededminerals[mins] +=
+                    Math.ceil(
+                        capitalShip[comps]
+                        *(1-(capme/100))
+                        *(1-(capstructure/100))
+                        *(1-(caprig/100))
+                    )*
+                    Math.ceil(
+                        utilities.capitalComponents[comps][mins]
+                        *(1-(me/100))
+                        *(1-(structure/100))
+                        *(1-(rig/100))
+                    )*
+                    Math.ceil(quantity);
+        }
         
-        if(document.getElementById("CapHaveOres").checked) for(ore in utilities.ores)
-        {
-            for(mins in utilities.minerals)
-            {
-                if(utilities.ores[ore][utilities.minerals[mins]] != undefined)
-                {
-                    neededminerals[utilities.minerals[mins]] -= utilities.getFromDocument(ore + "CapOreListCheck", 0) * utilities.ores[ore][utilities.minerals[mins]] * (isNaN(repro/100) ? 0 : repro/100);
-                }
-            }
-        }
-
         for(minName in neededminerals)
-        {
-            neededminerals[minName] -= (document.getElementById("CapHaveMinerals").checked ? utilities.getFromDocument(minName + "CapMinListCheck", 0) : 0);
             calcMin.model["constraints"][minName] = { "min": neededminerals[minName], "tot": 0 };
-        }
 
+        this.addStockpileMinsToModel("Cap");
+        this.addStockpileOresToModel("Cap", repro);
         return calcMin.model;
     }
 }
