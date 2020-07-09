@@ -68,7 +68,7 @@ window.onload = async function()
     
     // Load market Dropdowns
     let loadMarketDrops = loadElementsIntoSheet.loadDropdown(["Jita", "Amarr", "Dodixie", "Rens"]);
-    ["ReprocessOre", "ReprocessIce", "MEC", "Ship", "Cap"].forEach(elems => loadMarketDrops(elems + "Market"));
+    ["ReprocessOre", "ReprocessIce", "MEC", "Ship", "Cap", "MECIce"].forEach(elems => loadMarketDrops(elems + "Market"));
 
     // Repro Done, Load the MEC, Ship and Cap tabs
 
@@ -77,6 +77,7 @@ window.onload = async function()
     let inputMineralReductionList = loadElementsIntoSheet.reduceFromList
         (utilities.minerals)
         (loadElementsIntoSheet.makeInputTags);
+
 
     // Load the user inputs for MEC, Ships and Caps
     inputMineralReductionList(document.getElementById("MECInpList"))("MEC");
@@ -105,6 +106,29 @@ window.onload = async function()
         }
     );
 
+    let inputIceReductionList = loadElementsIntoSheet.reduceFromList
+        (utilities.iceMinerals)
+        (loadElementsIntoSheet.makeInputTags);
+    let reduceFromIces = loadElementsIntoSheet.reduceFromList(Object.keys(utilities.ices));
+
+    inputIceReductionList(document.getElementById("MECIceInpList"))("MECIce");
+
+    ["HaveMinerals", "HaveOres", "FilterOres"].forEach(
+        posts => hideThings(document.getElementById("MECIce" + posts), "MECIce" + posts + "Div")
+    )
+    inputIceReductionList
+        (document.getElementById("MECIceMinList"))
+        ("MECIceMinListCheck");
+    reduceFromIces
+        (loadElementsIntoSheet.makeCheckboxTags)
+        (document.getElementById("MECIceCoreList"))
+        ("MECIceCoreListCheck");
+    reduceFromIces
+        (loadElementsIntoSheet.makeInputTags)
+        (document.getElementById("MECIceOreList"))
+        ("MECIceOreListCheck");
+
+    
     let params = "";
     [utilities.minerals, utilities.iceMinerals].forEach(elems => {
         for(mins in elems) params += elems[mins] + "%0A"

@@ -1,5 +1,5 @@
 
-divs = ["Main", "ReprocessingOre", "MEC", "Ship", "Cap", "ReprocessingIce"];
+divs = ["Main", "ReprocessingOre", "MEC", "Ship", "Cap", "ReprocessingIce", "MECIce"];
 current = 0;
 
 function calcOres()
@@ -17,6 +17,14 @@ function calcMinimumOre()
     calcMinimum(
         "MEC",
         calcMin.generateFromOptimalOre(utilities.getFromDocument("ReprocessingPercentageTwo", 50))
+    )
+}
+
+function calcMinimumIce()
+{
+    calcMinimumIceTwo(
+        "MECIce",
+        calcMinIce.generateFromOptimalIce(utilities.getFromDocument("ReprocessingPercentageThree", 50))
     )
 }
 
