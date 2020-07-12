@@ -161,7 +161,7 @@ let calcMin = {
         this.addOreToModel("Ship", repro);
 
         let ship = document.getElementById("SelectShip");
-        ship = utilities.T1Ships[e.options[e.selectedIndex].value];
+        ship = utilities.T1Ships[ship.options[ship.selectedIndex].value];
 
         if(ship != undefined) for(mins in utilities.minerals)
             calcMin.model["constraints"][utilities.minerals[mins]] = 
@@ -180,7 +180,7 @@ let calcMin = {
         this.addOreToModel("Cap", repro);
         
         let capitalShip = document.getElementById("SelectShipCap");
-        capitalShip = utilities.capitals[e.options[e.selectedIndex].value];
+        capitalShip = utilities.capitals[capitalShip.options[capitalShip.selectedIndex].value];
         neededminerals = { }
         
         for(minerals in utilities.minerals) neededminerals[utilities.minerals[minerals]] = 0;
