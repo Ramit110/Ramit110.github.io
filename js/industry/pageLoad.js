@@ -81,8 +81,8 @@ window.onload = async function()
 
     // Load the user inputs for MEC, Ships and Caps
     inputMineralReductionList(document.getElementById("MECInpList"))("MEC");
-    loadElementsIntoSheet.loadDropdown(Object.keys(utilities.T1Ships))("SelectShip");
-    loadElementsIntoSheet.loadDropdown(Object.keys(utilities.capitals))("SelectShipCap");
+    loadElementsIntoSheet.loadDropdown(Object.keys(utilities.T1Ships).sort())("SelectShip");
+    loadElementsIntoSheet.loadDropdown(Object.keys(utilities.capitals).sort())("SelectShipCap");
 
     ["MEC", "Ship", "Cap"].forEach(
         prevs => {
