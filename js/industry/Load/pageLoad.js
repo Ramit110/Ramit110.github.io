@@ -1,12 +1,3 @@
-divs = [
-    ["Main"],
-    ["ReprocessingOre", "Ore Table"],
-    ["ReprocessingIce", "Ice Table"],
-    ["MEC", "Optimal Ore"],
-    ["MECIce", "Optimal Ice"],
-    ["Ship", "Sub Capital Manufacturing"],
-    ["Cap", "Capital Manufacturing"]
-];
 current = 0;
 
 window.onload = async function()
@@ -17,65 +8,17 @@ window.onload = async function()
     // Load the Reprocessing tab for ores AND ICE
 
     // inner div needed to stop input/selector being max length
-    let ReproDiv = HTMLGenerator.generateElementsWithAttributes
-        ("div")
-        (document.getElementById("ReprocessingOre"))
-        (["class", ["mb-3", "centered"]]);
-    
-    [
-        [
-            "Reprocessing Percentage",
-            `<input type="text" class="form-control" id="ReprocessingPercentageOre" value="50">`
-        ], [
-            "Market",
-            `<select id="ReprocessOreMarket" class="custom-select"></select>`
-        ]
-    ].forEach(elems => {
-        let temp = loadElementsIntoSheet.divInputGroup()
-            (ReproDiv)
-            ("");
-        HTMLGenerator.generateElementsWithInternal
-            ("div")
-            (["input-group-prepend", "input-group-text"])
-            (temp)
-            (elems[0]);
-        temp.innerHTML += elems[1];
-    });
-
-    let ReproDivIce = HTMLGenerator.generateElements
-        ("div")
-        (["mb-3", "centered"])
-        (document.getElementById("ReprocessingIce"));
-    [
-        [
-            "Reprocessing Percentage",
-            `<input type="text" class="form-control" id="ReprocessingPercentageIce" value="50">`
-        ], [
-            "Market",
-            `<select id="ReprocessIceMarket" class="custom-select"></select>`
-        ]
-    ].forEach(elems => {
-        let temp = loadElementsIntoSheet.divInputGroup()
-            (ReproDivIce)
-            ("");
-        HTMLGenerator.generateElementsWithInternal
-            ("div")
-            (["input-group-prepend", "input-group-text"])
-            (temp)
-            (elems[0]);
-        temp.innerHTML += elems[1];
-    });
-    
-    ReproDiv.innerHTML += `<button type="button" class="btn btn-secondary" onclick="calcOres()">Recalculate</button>`;
-    ReproDivIce.innerHTML += `<button type="button" class="btn btn-secondary" onclick="calcIce()">Recalculate</button>`;
-
+    generateReproTable("ReprocessingOre", `<button type="button" class="btn btn-secondary" onclick="calcOres()">Recalculate</button>`);
+    generateReproTable("ReprocessingIce", `<button type="button" class="btn btn-secondary" onclick="calcIce()">Recalculate</button>`);
 
     document.getElementById("ReprocessingOre").innerHTML += `<table id="OreTable" class="table"></table>`;
     document.getElementById("ReprocessingIce").innerHTML += `<table id="IceTable" class="table"></table>`;
     
     // Load market Dropdowns
-    let loadMarketDrops = loadElementsIntoSheet.loadDropdown(["Jita", "Amarr", "Dodixie", "Rens"]);
-    ["ReprocessOre", "ReprocessIce", "MEC", "Ship", "Cap", "MECIce"].forEach(elems => loadMarketDrops(elems + "Market"));
+    ["ReprocessingOre", "ReprocessingIce", "MEC", "Ship", "Cap", "MECIce"].forEach(elems => 
+        loadElementsIntoSheet.loadDropdown(["Jita", "Amarr", "Dodixie", "Rens"])
+        (elems + "Market")
+    );
 
     // Repro Done, Load the MEC, Ship and Cap tabs
 
@@ -177,7 +120,7 @@ function generateNav()
         (HTMLGenerator.generateElementsWithAttributes("div")(document.getElementById("NavBar"))([["class", ["navbar-nav"]]]));
         
     let counter = 1;
-    divs.slice(1).forEach(params => {
+    utilities.mainSite.slice(1).forEach(params => {
         let temp = NavBasic([
             ["id", ["nav" + counter]],
             ["class", ["nav-item", "nav-link"]],
@@ -190,19 +133,47 @@ function generateNav()
 
 function unloadDivs()
 {
-    divs.slice(1).forEach(element => {
+    utilities.mainSite.slice(1).forEach(element => {
         document.getElementById(element[0]).style.display = "none";
     });
     moveTo(current);
 }
 
+// TODO: the divExtraText better, much better pls
+function generateReproTable(parentID, divExtraText)
+{
+    let ReproDiv = HTMLGenerator.generateElementsWithAttributes
+        ("div")
+        (document.getElementById(parentID))
+        ([["class", ["mb-3", "centered"]]]);
+
+    [
+        [
+            "Reprocessing Percentage",
+            `<input type="text" class="form-control" id="` + parentID  + `Input" value="50">`
+        ], [
+            "Market",
+            `<select id="` + parentID + `Market" class="custom-select"></select>`
+        ]
+    ].forEach(elems => {
+        let temp = HTMLGenerator.generateElementsWithAttributes
+            ("div")
+            (ReproDiv)
+            ([["class", ["input-group"]]]);
+        let divMade = HTMLGenerator.generateElementsWithAttributes
+            ("div")
+            (temp)
+            ([["class", ["input-group-prepend", "input-group-text"]]])
+        
+        divMade.innerHTML = elems[0];
+        temp.innerHTML += elems[1];
+    });
+    
+    ReproDiv.innerHTML += divExtraText;
+}
+
 var loadElementsIntoSheet =
 {
-    divInputGroup : function ()
-    {
-        return HTMLGenerator.generateElementsWithInternal("div")(["input-group"])
-    },
-
     reduceFromList : function(inplist)
     {
         return function(func)
@@ -235,20 +206,15 @@ var loadElementsIntoSheet =
     },
     makeInputTags(current, post, parent)
     {
-        let tbr = loadElementsIntoSheet.divInputGroup()
+        let tbr = HTMLGenerator.generateElementsWithInternal
+            ("div")
+            (["input-group"])
             (parent)
             (`<input type="text" class="form-control" id="` + current + post + `"/>`);
-        HTMLGenerator.generateElementsWithInternal
+        let currtbr = HTMLGenerator.generateElementsWithAttributes
             ("span")
-            (["input-group-append","input-group-text"])
             (tbr)
-            (current);
-    },
-    makeTable (name)
-    {
-        let ReproDiv = HTMLGenerator.generateElements
-            ("div")
-            (["mb-3", "centered"])
-            ("Reprocessing" + name);
+            ([["class", ["input-group-append","input-group-text"]]]);
+        currtbr.innerHTML = current;
     }
 }

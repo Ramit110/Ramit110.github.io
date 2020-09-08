@@ -1838,7 +1838,7 @@ let utilities =
         "Nitrogen Isotopes"
     ]),
     buySellAll : Object.freeze({ }),
-    mainSite : divs = [
+    mainSite : Object.freeze([
         ["Main"],
         ["ReprocessingOre", "Ore Table"],
         ["ReprocessingIce", "Ice Table"],
@@ -1846,7 +1846,7 @@ let utilities =
         ["MECIce", "Optimal Ice"],
         ["Ship", "Sub Capital Manufacturing"],
         ["Cap", "Capital Manufacturing"]
-    ],
+    ]),
 
     getMainSite : function ()
     {
