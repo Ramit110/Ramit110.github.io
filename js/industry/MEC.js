@@ -1,6 +1,7 @@
 
 /*
-example = {
+example =
+{
     "optimize": "isk",
     "opType": "min",
     "constraints": {
@@ -87,7 +88,8 @@ function calcMinimumShip(location, model)
     document.getElementById(location + "OreTable").innerHTML += strOut;
 }
 
-let calcMin = {
+let calcMin =
+{
     // empty model
     model : {
         "optimize": "isk",
@@ -251,7 +253,8 @@ function calcMinimumIceTwo(location, model){
     document.getElementById(location + "Table").innerHTML = strOut;
 }
 
-let calcMinIce = {
+let calcMinIce =
+{
     // empty model
     model : {
         "optimize": "isk",
@@ -307,7 +310,8 @@ let calcMinIce = {
 }
 
 
-let reprocessing = {
+let reprocessing =
+{
     loadReprocessing : function (value, location, dropdownName, dictOres, mins)
     {
         let toBeAssigned = "<tr><th>Name</th>";

@@ -1,5 +1,6 @@
 
-let utilities = {
+let utilities =
+{
     // aquired from my EVEStuff repo at https://github.com/Ramit110/EveStuff
     ores : Object.freeze({
         "Compressed Arkonor": {
@@ -1837,6 +1838,20 @@ let utilities = {
         "Nitrogen Isotopes"
     ]),
     buySellAll : Object.freeze({ }),
+    mainSite : divs = [
+        ["Main"],
+        ["ReprocessingOre", "Ore Table"],
+        ["ReprocessingIce", "Ice Table"],
+        ["MEC", "Optimal Ore"],
+        ["MECIce", "Optimal Ice"],
+        ["Ship", "Sub Capital Manufacturing"],
+        ["Cap", "Capital Manufacturing"]
+    ],
+
+    getMainSite : function ()
+    {
+        return this.mainSite.splice(1);
+    },
 
     getFromDocument : function (elementID, defaultValue)
     {
