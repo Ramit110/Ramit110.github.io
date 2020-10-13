@@ -3,71 +3,61 @@ let utilities = {
     // aquired from my EVEStuff repo at https://github.com/Ramit110/EveStuff
     ores : Object.freeze({
         "Compressed Arkonor": {
-            "Megacyte": 320,
-            "Mexallon": 2500,
-            "Tritanium": 22000
+            "Pyreite": 3200,
+            "Megacyte": 120,
+            "Mexallon": 1200
         },
         "Compressed Bistot": {
-            "Megacyte": 100,
-            "Pyerite": 12000,
-            "Zydrine": 450
+            "Mexallon": 1200,
+            "Pyerite": 3200,
+            "Zydrine": 160
         },
         "Compressed Crokite": {
-            "Nocxium": 760,
-            "Tritanium": 21000,
-            "Zydrine": 135
+            "Mexallon": 2000,
+            "Nocxium": 800,
+            "Pyerite": 800
         },
         "Compressed Dark Ochre": {
-            "Isogen": 1600,
-            "Nocxium": 120,
-            "Tritanium": 10000
+            "Isogen": 1200,
+            "Mexallon": 1360,
+            "Nocxium": 320
         },
         "Compressed Gneiss": {
-            "Isogen": 300,
-            "Mexallon": 2400,
-            "Pyerite": 2200
+            "Isogen": 800,
+            "Mexallon": 1500,
+            "Pyerite": 2000
         },
         "Compressed Hedbergite": {
-            "Isogen": 200,
-            "Nocxium": 100,
-            "Pyerite": 1000,
-            "Zydrine": 19
+            "Pyerite": 450,
+            "Nocxium": 120
         },
         "Compressed Hemorphite": {
-            "Isogen": 100,
-            "Nocxium": 120,
-            "Tritanium": 2200,
-            "Zydrine": 15
+            "Isogen": 240,
+            "Nocxium": 90
         },
         "Compressed Jaspet": {
-            "Mexallon": 350,
-            "Nocxium": 75,
-            "Zydrine": 8
+            "Mexallon": 150,
+            "Nocxium": 50
         },
         "Compressed Kernite": {
-            "Isogen": 134,
-            "Mexallon": 267,
-            "Tritanium": 134
+            "Isogen": 120,
+            "Mexallon": 60
         },
         "Compressed Omber": {
-            "Isogen": 85,
-            "Pyerite": 100,
-            "Tritanium": 800
+            "Isogen": 75,
+            "Pyerite": 90
         },
         "Compressed Plagioclase": {
-            "Mexallon": 107,
-            "Pyerite": 213,
-            "Tritanium": 107
+            "Mexallon": 70,
+            "Tritanium": 175
         },
         "Compressed Pyroxeres": {
-            "Mexallon": 50,
-            "Nocxium": 5,
-            "Pyerite": 25,
-            "Tritanium": 351
+            "Mexallon": 30,
+            "Pyerite": 90
         },
         "Compressed Scordite": {
-            "Pyerite": 173,
-            "Tritanium": 346
+            "Pyerite": 90,
+            "Tritanium": 150
         },
         "Compressed Spodumain": {
             "Isogen": 450,
@@ -76,7 +66,7 @@ let utilities = {
             "Tritanium": 56000
         },
         "Compressed Veldspar": {
-            "Tritanium": 415
+            "Tritanium": 400
         }
     }),
     ices : Object.freeze({
