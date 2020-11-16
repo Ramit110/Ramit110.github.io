@@ -16,8 +16,9 @@ window.onload = async function()
     
     // Load market Dropdowns
     ["ReprocessingOre", "ReprocessingIce", "MEC", "Ship", "Cap", "MECIce"].forEach(elems => 
-        loadElementsIntoSheet.loadDropdown(["Jita", "Amarr", "Dodixie", "Rens"])
-        (elems + "Market")
+        loadElementsIntoSheet.loadDropdown
+            (["Jita", "Amarr", "Dodixie", "Rens"])
+            (elems + "Market")
     );
 
     // Repro Done, Load the MEC, Ship and Cap tabs
