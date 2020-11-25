@@ -1,25 +1,74 @@
-current = 0;
-
 window.onload = async function()
 {
-    generateNav();
     unloadDivs();
 
     // Load the Reprocessing tab for ores AND ICE
 
     // inner div needed to stop input/selector being max length
-    generateReproTable("ReprocessingOre", `<button type="button" class="btn btn-secondary" onclick="calcOres()">Recalculate</button>`);
-    generateReproTable("ReprocessingIce", `<button type="button" class="btn btn-secondary" onclick="calcIce()">Recalculate</button>`);
+    let ReproDiv = HTMLGenerator.generateElements
+        ("div")
+        (["mb-3", "centered"])
+        (document.getElementById("ReprocessingOre"))
+        ("");
+    [
+        [
+            "Reprocessing Percentage",
+            `<input type="text" class="form-control" id="ReprocessingPercentageOre" value="50">`
+        ], [
+            "Market",
+            `<select id="ReprocessOreMarket" class="custom-select"></select>`
+        ]
+    ].forEach(elems => {
+        let temp = HTMLGenerator.generateElements
+            ("div")
+            (["input-group"])
+            (ReproDiv)
+            ("");
+        HTMLGenerator.generateElements
+            ("div")
+            (["input-group-prepend", "input-group-text"])
+            (temp)
+            (elems[0]);
+        temp.innerHTML += elems[1];
+    });
+
+    let ReproDivIce = HTMLGenerator.generateElements
+        ("div")
+        (["mb-3", "centered"])
+        (document.getElementById("ReprocessingIce"))
+        ("");
+    [
+        [
+            "Reprocessing Percentage",
+            `<input type="text" class="form-control" id="ReprocessingPercentageIce" value="50">`
+        ], [
+            "Market",
+            `<select id="ReprocessIceMarket" class="custom-select"></select>`
+        ]
+    ].forEach(elems => {
+        let temp = HTMLGenerator.generateElements
+            ("div")
+            (["input-group"])
+            (ReproDivIce)
+            ("");
+        HTMLGenerator.generateElements
+            ("div")
+            (["input-group-prepend", "input-group-text"])
+            (temp)
+            (elems[0]);
+        temp.innerHTML += elems[1];
+    });
+    
+    ReproDiv.innerHTML += `<button type="button" class="btn btn-secondary" onclick="calcOres()">Recalculate</button>`;
+    ReproDivIce.innerHTML += `<button type="button" class="btn btn-secondary" onclick="calcIce()">Recalculate</button>`;
+
 
     document.getElementById("ReprocessingOre").innerHTML += `<table id="OreTable" class="table"></table>`;
     document.getElementById("ReprocessingIce").innerHTML += `<table id="IceTable" class="table"></table>`;
     
     // Load market Dropdowns
-    ["ReprocessingOre", "ReprocessingIce", "MEC", "Ship", "Cap", "MECIce"].forEach(elems => 
-        loadElementsIntoSheet.loadDropdown
-            (["Jita", "Amarr", "Dodixie", "Rens"])
-            (elems + "Market")
-    );
+    let loadMarketDrops = loadElementsIntoSheet.loadDropdown(["Jita", "Amarr", "Dodixie", "Rens"]);
+    ["ReprocessOre", "ReprocessIce", "MEC", "Ship", "Cap", "MECIce"].forEach(elems => loadMarketDrops(elems + "Market"));
 
     // Repro Done, Load the MEC, Ship and Cap tabs
 
@@ -105,76 +154,15 @@ window.onload = async function()
     this.calcIce();
 }
 
-function generateNav()
-{
-    let NavBar = HTMLGenerator.generateElementsWithAttributes
-        ("a")
-        (document.getElementById("NavBar"))
-        ([
-            ["id", ["nav0"]],
-            ["class", ["navbar-brand"]],
-            ["onclick", ["moveTo(0)"]]
-        ]);
-    NavBar.innerHTML = "R110's IS";
-    let NavBasic = HTMLGenerator.generateElementsWithAttributes
-        ("a")
-        (HTMLGenerator.generateElementsWithAttributes("div")(document.getElementById("NavBar"))([["class", ["navbar-nav"]]]));
-        
-    let counter = 1;
-    utilities.mainSite.slice(1).forEach(params => {
-        let temp = NavBasic([
-            ["id", ["nav" + counter]],
-            ["class", ["nav-item", "nav-link"]],
-            ["onclick", ["moveTo(" + counter + ")"]]
-        ]);
-        temp.innerHTML = params[1];
-        counter++;
-    })
-}
-
 function unloadDivs()
 {
-    utilities.mainSite.slice(1).forEach(element => {
-        document.getElementById(element[0]).style.display = "none";
+    divs.forEach(element => {
+        document.getElementById(element).style.display = "none";
     });
     moveTo(current);
 }
 
-// TODO: the divExtraText better, much better pls
-function generateReproTable(parentID, divExtraText)
-{
-    let ReproDiv = HTMLGenerator.generateElementsWithAttributes
-        ("div")
-        (document.getElementById(parentID))
-        ([["class", ["mb-3", "centered"]]]);
-
-    [
-        [
-            "Reprocessing Percentage",
-            `<input type="text" class="form-control" id="` + parentID  + `Input" value="50">`
-        ], [
-            "Market",
-            `<select id="` + parentID + `Market" class="custom-select"></select>`
-        ]
-    ].forEach(elems => {
-        let temp = HTMLGenerator.generateElementsWithAttributes
-            ("div")
-            (ReproDiv)
-            ([["class", ["input-group"]]]);
-        let divMade = HTMLGenerator.generateElementsWithAttributes
-            ("div")
-            (temp)
-            ([["class", ["input-group-prepend", "input-group-text"]]])
-        
-        divMade.innerHTML = elems[0];
-        temp.innerHTML += elems[1];
-    });
-    
-    ReproDiv.innerHTML += divExtraText;
-}
-
-var loadElementsIntoSheet =
-{
+var loadElementsIntoSheet = {
     reduceFromList : function(inplist)
     {
         return function(func)
@@ -207,15 +195,61 @@ var loadElementsIntoSheet =
     },
     makeInputTags(current, post, parent)
     {
-        let tbr = HTMLGenerator.generateElementsWithInternal
+        let tbr = HTMLGenerator.generateElements
             ("div")
             (["input-group"])
             (parent)
             (`<input type="text" class="form-control" id="` + current + post + `"/>`);
-        let currtbr = HTMLGenerator.generateElementsWithAttributes
+        HTMLGenerator.generateElements
             ("span")
+            (["input-group-append","input-group-text"])
             (tbr)
-            ([["class", ["input-group-append","input-group-text"]]]);
-        currtbr.innerHTML = current;
+            (current);
     }
+}
+
+var HTMLGenerator = {
+    generateElements : function(tagName)
+    {
+        return function(classList)
+        {
+            return function(parent)
+            {
+                return function(internal)
+                {
+                    let newNode = document.createElement(tagName);
+                    parent.appendChild(newNode);
+                    classList.forEach(cssElement => newNode.classList.add(cssElement));
+                    newNode.innerHTML = internal;
+                    return newNode;
+                }
+            }
+        }
+    }
+}
+
+getEVEPraisal = async (params, location) => {
+    try {
+        const fetchResponse = await fetch(
+            "https://cors-anywhere.herokuapp.com/https://evepraisal.com/appraisal.json?market=" + location.toLowerCase() + "&raw_textarea=" + params,
+            {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
+        let data = (await fetchResponse.json())['appraisal']['items'];
+
+        let tbr = {};
+        for(items in data) tbr[data[items]['name']] = {
+            'buy': data[items]['prices']['buy']['max'],
+            'sell': data[items]['prices']['sell']['min'],
+            'volume': data[items]['typeVolume']
+        };
+        return Object.freeze(tbr);
+    } catch (e) {
+        console.log("Error getting Evepraisal");
+        return Object.freeze({ })
+    };
 }
