@@ -1,32 +1,31 @@
 
-let utilities =
-{
+let utilities = {
     // aquired from my EVEStuff repo at https://github.com/Ramit110/EveStuff
     ores : Object.freeze({
         "Compressed Arkonor": {
-            "Pyerite": 3200,
-            "Mexallon": 1200,
-            "Megacyte": 120
+            "Pyreite": 3200,
+            "Megacyte": 120,
+            "Mexallon": 1200
         },
         "Compressed Bistot": {
-            "Pyerite": 3200,
             "Mexallon": 1200,
+            "Pyerite": 3200,
             "Zydrine": 160
         },
         "Compressed Crokite": {
-            "Pyerite": 800,
             "Mexallon": 2000,
-            "Nocxium": 800
+            "Nocxium": 800,
+            "Pyerite": 800
         },
         "Compressed Dark Ochre": {
-            "Mexallon": 1360,
             "Isogen": 1200,
+            "Mexallon": 1360,
             "Nocxium": 320
         },
         "Compressed Gneiss": {
-            "Pyerite": 2000,
+            "Isogen": 800,
             "Mexallon": 1500,
-            "Isogen": 800
+            "Pyerite": 2000
         },
         "Compressed Hedbergite": {
             "Pyerite": 450,
@@ -41,31 +40,30 @@ let utilities =
             "Nocxium": 50
         },
         "Compressed Kernite": {
-            "Mexallon": 60,
-            "Isogen": 120
+            "Isogen": 120,
+            "Mexallon": 60
         },
         "Compressed Omber": {
-            "Pyerite": 90,
-            "Isogen": 75
-        },
-        "Compressed Plagioclase": {
-            "Tritanium": 175,
-            "Mexallon": 70
-        },
-        "Compressed Pyroxeres": {
-            "Pyerite": 90,
-            "Mexallon": 30
-        },
-        "Compressed Scordite": {
-            "Tritanium": 150,
+            "Isogen": 75,
             "Pyerite": 90
         },
+        "Compressed Plagioclase": {
+            "Mexallon": 70,
+            "Tritanium": 175
+        },
+        "Compressed Pyroxeres": {
+            "Mexallon": 30,
+            "Pyerite": 90
+        },
+        "Compressed Scordite": {
+            "Pyerite": 90,
+            "Tritanium": 150
+        },
         "Compressed Spodumain": {
-            "Tritanium": 48000,
-            "Isogen": 1000,
-            "Nocxium": 160,
-            "Zydrine": 80,
-            "Megacyte": 40
+            "Isogen": 450,
+            "Mexallon": 2100,
+            "Pyerite": 12050,
+            "Tritanium": 56000
         },
         "Compressed Veldspar": {
             "Tritanium": 400
@@ -1829,20 +1827,6 @@ let utilities =
         "Nitrogen Isotopes"
     ]),
     buySellAll : Object.freeze({ }),
-    mainSite : Object.freeze([
-        ["Main"],
-        ["ReprocessingOre", "Ore Table"],
-        ["ReprocessingIce", "Ice Table"],
-        ["MEC", "Optimal Ore"],
-        ["MECIce", "Optimal Ice"],
-        ["Ship", "Sub Capital Manufacturing"],
-        ["Cap", "Capital Manufacturing"]
-    ]),
-
-    getMainSite : function ()
-    {
-        return this.mainSite.splice(1);
-    },
 
     getFromDocument : function (elementID, defaultValue)
     {

@@ -1,11 +1,15 @@
+
+divs = ["Main", "ReprocessingOre", "MEC", "Ship", "Cap", "ReprocessingIce", "MECIce"];
+current = 0;
+
 function calcOres()
 {
-    reprocessing.loadReprocessing(utilities.getFromDocument("ReprocessingOreInput", 50), "OreTable", "ReprocessingOreMarket", utilities.ores, utilities.minerals);
+    reprocessing.loadReprocessing(utilities.getFromDocument("ReprocessingPercentageOre", 50), "OreTable", "ReprocessOreMarket", utilities.ores, utilities.minerals);
 }
 
 function calcIce()
 {
-    reprocessing.loadReprocessing(utilities.getFromDocument("ReprocessingIceInput", 50), "IceTable", "ReprocessingIceMarket", utilities.ices, utilities.iceMinerals);
+    reprocessing.loadReprocessing(utilities.getFromDocument("ReprocessingPercentageIce", 50), "IceTable", "ReprocessIceMarket", utilities.ices, utilities.iceMinerals);
 }
 
 function calcMinimumOre()
@@ -65,7 +69,7 @@ function moveTo(number)
 {
     document.getElementById("nav" + current).classList.remove("active");
     document.getElementById("nav" + number).classList.add("active");
-    document.getElementById(utilities.mainSite[current][0]).style.display = "none";
-    document.getElementById(utilities.mainSite[number][0]).style.display = "block";
+    document.getElementById(divs[current]).style.display = "none";
+    document.getElementById(divs[number]).style.display = "block";
     current = number;
 }
