@@ -3,29 +3,29 @@ let utilities = {
     // aquired from my EVEStuff repo at https://github.com/Ramit110/EveStuff
     ores : Object.freeze({
         "Compressed Arkonor": {
-            "Pyreite": 3200,
-            "Megacyte": 120,
-            "Mexallon": 1200
+            "Pyerite": 3200,
+            "Mexallon": 1200,
+            "Megacyte": 120
         },
         "Compressed Bistot": {
-            "Mexallon": 1200,
             "Pyerite": 3200,
+            "Mexallon": 1200,
             "Zydrine": 160
         },
         "Compressed Crokite": {
+            "Pyerite": 800,
             "Mexallon": 2000,
-            "Nocxium": 800,
-            "Pyerite": 800
+            "Nocxium": 800
         },
         "Compressed Dark Ochre": {
-            "Isogen": 1200,
             "Mexallon": 1360,
+            "Isogen": 1200,
             "Nocxium": 320
         },
         "Compressed Gneiss": {
-            "Isogen": 800,
+            "Pyerite": 2000,
             "Mexallon": 1500,
-            "Pyerite": 2000
+            "Isogen": 800
         },
         "Compressed Hedbergite": {
             "Pyerite": 450,
@@ -40,30 +40,31 @@ let utilities = {
             "Nocxium": 50
         },
         "Compressed Kernite": {
-            "Isogen": 120,
-            "Mexallon": 60
+            "Mexallon": 60,
+            "Isogen": 120
         },
         "Compressed Omber": {
-            "Isogen": 75,
-            "Pyerite": 90
+            "Pyerite": 90,
+            "Isogen": 75
         },
         "Compressed Plagioclase": {
-            "Mexallon": 70,
-            "Tritanium": 175
+            "Tritanium": 175,
+            "Mexallon": 70
         },
         "Compressed Pyroxeres": {
-            "Mexallon": 30,
-            "Pyerite": 90
+            "Pyerite": 90,
+            "Mexallon": 30
         },
         "Compressed Scordite": {
-            "Pyerite": 90,
-            "Tritanium": 150
+            "Tritanium": 150,
+            "Pyerite": 90
         },
         "Compressed Spodumain": {
-            "Isogen": 450,
-            "Mexallon": 2100,
-            "Pyerite": 12050,
-            "Tritanium": 56000
+            "Tritanium": 48000,
+            "Isogen": 1000,
+            "Nocxium": 160,
+            "Zydrine": 80,
+            "Megacyte": 40
         },
         "Compressed Veldspar": {
             "Tritanium": 400
