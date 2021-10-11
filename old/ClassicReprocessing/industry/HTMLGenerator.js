@@ -51,6 +51,7 @@ var HTMLGenerator =
 }
 
 getEVEPraisal = async (params, location) => {
+    /*
     try {
         const fetchResponse = await fetch(
             "https://cors-anywhere.herokuapp.com/https://evepraisal.com/appraisal.json?market=" + location.toLowerCase() + "&raw_textarea=" + params,
@@ -74,4 +75,5 @@ getEVEPraisal = async (params, location) => {
         console.log("Error getting Evepraisal");
         return (await this.getEVEPraisal(params, location));
     };
+    */
 }
