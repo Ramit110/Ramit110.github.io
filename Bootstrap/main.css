@@ -1,0 +1,27 @@
+
+body {
+    background-image: url("./background.png");
+    /* min-height: 75rem; */
+}
+
+textarea {
+    resize: none !important;
+    width: 90%;
+    max-width: 90%;
+    max-height: 30%;
+}
+
+.blued
+{
+    color: aqua;
+}
+
+.reded
+{
+    color: red;
+}
+
+.greened
+{
+    color: green;
+}

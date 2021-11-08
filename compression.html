@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="Bootstrap/main.css">
+        <link rel="stylesheet" href="Bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="Bootstrap/css/sidebars.css">
+        <script src="js/Solver.js"></script>
+        <script src="js/PageCompression.js"></script>
+        <script src="js/Utilties.js"></script>
+        <script src="Bootstrap/js/bootstrap.bundle.min.js"></script>
+        <title>Ramit110's Industry Site</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="./index.html">Ramit110's Industry Site</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="./compression.html">Compression</a>
+                    </li>
+                </ul>
+                </div>
+            </div>
+        </nav>
+          
+        <main class="container">
+            <div class="bg-dark p-5 text-light text-center">
+                <h1 class="reded">Compression</h1>
+                <p class="lead">
+                    <br />
+                    <textarea id="CompressionMinerals" rows="5" placeholder="Minerals to be Compressed"></textarea>
+                    <br />
+                    <textarea id="CompressionPercentage" rows="1" placeholder="Reprocessing percentage"></textarea>
+                    <br />
+                    <br />
+                    <button type="button" onclick="OnCompressionButtonPress()">Compress</button>
+                    <br />
+                    <div id="CompressionOutput"></div>
+                </p>
+            </div>
+        </main>
+    </body>
+</html>
